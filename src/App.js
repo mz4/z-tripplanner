@@ -12,19 +12,22 @@ class App extends Component {
     trips: [
       {
         name: 'Rome',
-        dateStart: '25/08/2019',
+        dateStart: '19/08/2019',
+        dateEnd: '29/08/2019',
         isConfirmed: false,
         isEditing: false
       },
       {
         name: 'Paris',
         dateStart: '15/06/2019',
+        dateEnd: '29/06/2019',
         isConfirmed: true,
         isEditing: false
       },
       {
         name: 'Malta',
-        dateStart: '05/02/2019',
+        dateStart: '01/02/2019',
+        dateEnd: '08/02/2019',
         isConfirmed: false,
         isEditing: false
       }
@@ -84,6 +87,19 @@ class App extends Component {
       })
     });
 
+  setDateEndAt = (dateEnd, indexToChange) =>
+    this.setState({
+      trips: this.state.trips.map((trip, index) => {
+        if (index === indexToChange) {
+          return {
+            ...trip,
+            dateEnd
+          };
+        }
+        return trip;
+      })
+    });
+
   toggleFilter = () =>
     this.setState({ isFiltered: !this.state.isFiltered });
 
@@ -96,7 +112,8 @@ class App extends Component {
       trips: [
         {
           name: this.state.pendingTrip,
-          dateStart: '01/01/2019',
+          dateStart: '01/01/2025',
+          dateEnd: '01/01/2025',
           isConfirmed: false,
           isEditing: false
         },
@@ -133,19 +150,24 @@ class App extends Component {
           </form>
         </header>
         <div className="main">
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                onChange={this.toggleFilter}
-                checked={this.state.isFiltered} />
-            </label>
-          </div>
+          <div className="options">
 
-          <Counter
-            totalTrips={totalTrips}
-            numberConfirmed={numberConfirmed}
-            numberUnconfirmed={numberUnconfirmed} />
+            <div className="filter">
+              <label>
+                Show Confirmed
+                <input
+                  type="checkbox"
+                  onChange={this.toggleFilter}
+                  checked={this.state.isFiltered} />
+              </label>
+            </div>
+
+            <Counter
+              totalTrips={totalTrips}
+              numberConfirmed={numberConfirmed}
+              numberUnconfirmed={numberUnconfirmed} />
+
+          </div>
 
           <TripList
             trips={this.state.trips}
@@ -153,6 +175,7 @@ class App extends Component {
             toggleEditingAt={this.toggleEditingAt}
             setNameAt={this.setNameAt}
             setDateStartAt={this.setDateStartAt}
+            setDateEndAt={this.setDateEndAt}
             isFiltered={this.state.isFiltered}
             removeTripAt={this.removeTripAt}
             pendingTrip={this.state.pendingTrip}

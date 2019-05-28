@@ -7,7 +7,7 @@ const TripDate = props => {
       <input
         type="text"
         value={props.children}
-        onChange={props.handleDateStartEdits} />
+        onChange={props.handleDateEdits} />
     );
   }
 
@@ -20,7 +20,7 @@ const TripDate = props => {
 
 TripDate.propTypes = {
   isEditing: PropTypes.bool.isRequired,
-  handleDateStartEdits: PropTypes.func.isRequired
+  handleDateEdits: PropTypes.func.isRequired
 };
 
 export default TripDate;

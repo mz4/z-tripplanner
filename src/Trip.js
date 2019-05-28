@@ -13,8 +13,13 @@ const Trip = props =>
     </TripName>
     <TripDate
         isEditing={props.isEditing}
-        handleDateStartEdits={e => props.setDateStart(e.target.value)}>
+        handleDateEdits={e => props.setDateStart(e.target.value)}>
       {props.dateStart}
+    </TripDate>
+    <TripDate
+        isEditing={props.isEditing}
+        handleDateEdits={e => props.setDateEnd(e.target.value)}>
+      {props.dateEnd}
     </TripDate>
     <label>
       <input
@@ -31,12 +36,14 @@ const Trip = props =>
 Trip.propTypes = {
   name: PropTypes.string.isRequired,
   dateStart: PropTypes.string.isRequired,
+  dateEnd: PropTypes.string.isRequired,
   isConfirmed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   handleConfirmation: PropTypes.func.isRequired,
   handeToggleEditing: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired,
   setDateStart: PropTypes.func.isRequired,
+  setDateEnd: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired
 };
 

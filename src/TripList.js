@@ -14,12 +14,14 @@ const TripList = props =>
           key={index}
           name={trip.name}
           dateStart={trip.dateStart}
+          dateEnd={trip.dateEnd}
           isConfirmed={trip.isConfirmed}
           isEditing={trip.isEditing}
           handleConfirmation={() => props.toggleConfirmationAt(index)}
           handeToggleEditing={() => props.toggleEditingAt(index)}
           setName={text => props.setNameAt(text, index)}
           setDateStart={text => props.setDateStartAt(text, index)}
+          setDateEnd={text => props.setDateEndAt(text, index)}
           handleRemove={() => props.removeTripAt(index)} />
       )}
   </ul>;
@@ -30,6 +32,7 @@ TripList.propTypes = {
   toggleEditingAt: PropTypes.func.isRequired,
   setNameAt: PropTypes.func.isRequired,
   setDateStartAt: PropTypes.func.isRequired,
+  setDateEndAt: PropTypes.func.isRequired,
   isFiltered: PropTypes.bool.isRequired,
   removeTripAt: PropTypes.func.isRequired,
   pendingTrip: PropTypes.string.isRequired

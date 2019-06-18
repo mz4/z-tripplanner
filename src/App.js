@@ -112,8 +112,8 @@ class App extends Component {
       trips: [
         {
           name: this.state.pendingTrip,
-          dateStart: '01/01/2025',
-          dateEnd: '01/01/2025',
+          dateStart: '',
+          dateEnd: '',
           isConfirmed: false,
           isEditing: false
         },
@@ -139,7 +139,7 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h2>Trips List</h2>
+          <h2></h2>
           <form onSubmit={this.newTripSubmitHandler}>
             <input
               type="text"

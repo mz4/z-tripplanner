@@ -15,7 +15,7 @@ body {
 
 .App {
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 2.5em auto;
   border-radius: .35em;
   background: #fcfcfc;
@@ -158,10 +158,6 @@ div > label {
   color: #767676;
 }
 
-.counter {
-  display: block;
-}
-
 tr {
   color: rgba(118, 118, 118, .75);
 }
@@ -232,15 +228,34 @@ td:last-child {
   .main {
     padding: 2em 1em .75em;
   }
-  .counter {
-    margin-top: 1.65em;
-    padding-top: 1.5em;
-    border-top: 1px dotted rgba(0, 0, 0, .15);
-  }
   tr {
     display: inline-block;
     padding: 0 12px 0 0;
   }
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.counter__type {
+  width: 240px;
+  height: 120px;
+  padding: 20px;
+  text-align: center;
+  background-color: #e6e6e6;
+}
+
+.counter__type__title {
+  padding: 0.5em;
+}
+
+.counter__type__value {
+  padding: 0.5em;
+  font-size: 1.5em;
 }
 
 @media (min-width: 769px) {
@@ -278,11 +293,6 @@ td:last-child {
   .filter {
     display: inline-block;
   }
-  .counter {
-    float: right;
-    text-align: right;
-    margin-right: 1.25%;
-  }
   td:last-child {
     padding-left: 5px;
   }
@@ -304,15 +314,15 @@ td:last-child {
   ul li {
     -ms-flex-positive: 1;
     flex-grow: 1;
-    -ms-flex-preferred-size: 47.5%;
-    flex-basis: 47.5%;
-    margin: 0 1.25% 1em;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    /* margin: 0 1.25% 1em; */
   }
 }
 
 @media (min-width: 880px) {
   ul li {
-    -ms-flex-preferred-size: 20%;
-    flex-basis: 20%;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
   }
 }

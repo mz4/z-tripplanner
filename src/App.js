@@ -7,7 +7,9 @@ import Counter from './Counter';
 class App extends Component {
 
   state = {
-    isFiltered: false,
+    showConfirmed: false,
+    showUnConfirmed: false,
+    showAll: true,
     pendingTrip: "",
     trips: [
       {
@@ -100,8 +102,29 @@ class App extends Component {
       })
     });
 
-  toggleFilter = () =>
-    this.setState({ isFiltered: !this.state.isFiltered });
+  setConfirmed() {
+    this.setState({ 
+      showConfirmed: true,
+      showUnConfirmed: false,
+      showAll: false
+    });
+  }
+
+  setUnConfirmed() {
+    this.setState({ 
+      showConfirmed: false,
+      showUnConfirmed: true,
+      showAll: false
+    });
+  }
+
+  setAll() {
+    this.setState({ 
+      showConfirmed: true,
+      showUnConfirmed: false,
+      showAll: true
+    });
+  }
 
   handleNameInput = e =>
     this.setState({ pendingTrip: e.target.value });
@@ -135,17 +158,19 @@ class App extends Component {
     const totalTrips = this.getTotalTrips();
     const numberConfirmed = this.getConfirmedTrips();
     const numberUnconfirmed = totalTrips - numberConfirmed;
-
+    const setConfirmed = () => this.setConfirmed();
+    const setUnConfirmed = () => this.setUnConfirmed();
+    const setAll = () => this.setAll();
     return (
       <div className="App">
         <header>
-          <h2></h2>
+          <h2>AAA</h2>
           <form onSubmit={this.newTripSubmitHandler}>
             <input
               type="text"
               onChange={this.handleNameInput}
               value={this.state.pendingTrip}
-              placeholder="Where do you want to go?" />
+              placeholder="..." />
             <button type="submit" name="submit" value="submit">Submit</button>
           </form>
         </header>
@@ -158,14 +183,18 @@ class App extends Component {
                 <input
                   type="checkbox"
                   onChange={this.toggleFilter}
-                  checked={this.state.isFiltered} />
+                  checked={this.state.isConfirmed} />
               </label>
             </div>
 
             <Counter
               totalTrips={totalTrips}
               numberConfirmed={numberConfirmed}
-              numberUnconfirmed={numberUnconfirmed} />
+              numberUnconfirmed={numberUnconfirmed}
+              setConfirmed={setConfirmed} 
+              setUnConfirmed={setUnConfirmed}
+              setAll={setAll}
+            />
 
           </div>
 
@@ -176,7 +205,9 @@ class App extends Component {
             setNameAt={this.setNameAt}
             setDateStartAt={this.setDateStartAt}
             setDateEndAt={this.setDateEndAt}
-            isFiltered={this.state.isFiltered}
+            showConfirmed={this.state.showConfirmed}
+            showUnConfirmed={this.state.showUnConfirmed}
+            showAll={this.state.showAll}
             removeTripAt={this.removeTripAt}
             pendingTrip={this.state.pendingTrip}
           />

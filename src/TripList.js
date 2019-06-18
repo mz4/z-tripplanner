@@ -7,8 +7,8 @@ import PendingTrip from './PendingTrip';
 const TripList = props =>
   <ul>
     <PendingTrip name={props.pendingTrip} />
-    {props.trips
-      .filter(trip => !props.isFiltered || trip.isConfirmed)
+    {
+      props.trips
       .map((trip, index) =>
         <Trip
           key={index}
@@ -23,7 +23,8 @@ const TripList = props =>
           setDateStart={text => props.setDateStartAt(text, index)}
           setDateEnd={text => props.setDateEndAt(text, index)}
           handleRemove={() => props.removeTripAt(index)} />
-      )}
+      )
+    }
   </ul>;
 
 TripList.propTypes = {
@@ -33,7 +34,9 @@ TripList.propTypes = {
   setNameAt: PropTypes.func.isRequired,
   setDateStartAt: PropTypes.func.isRequired,
   setDateEndAt: PropTypes.func.isRequired,
-  isFiltered: PropTypes.bool.isRequired,
+  showConfirmed: PropTypes.bool.isRequired,
+  showUnConfirmed: PropTypes.bool.isRequired,
+  showAll: PropTypes.bool.isRequired,
   removeTripAt: PropTypes.func.isRequired,
   pendingTrip: PropTypes.string.isRequired
 };

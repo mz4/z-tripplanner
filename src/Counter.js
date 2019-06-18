@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Counter = props =>
-  <div className="counter">
-    <div className="counter__type">
+const Counter = (props) => {
+  const { setConfirmed, setUnConfirmed, setAll } = props;
+  return (
+    <div className="counter">
+    <div className="counter__type" onClick={setConfirmed}>
       <div className="counter__type__title">
         Confirmed
       </div>
@@ -11,7 +13,7 @@ const Counter = props =>
         {props.numberConfirmed}
       </div>
     </div>
-    <div className="counter__type">
+    <div className="counter__type" onClick={setUnConfirmed}>
       <div className="counter__type__title">
         Unconfirmed
       </div>
@@ -19,20 +21,25 @@ const Counter = props =>
         {props.numberUnconfirmed}
       </div>
     </div>
-    <div className="counter__type">
+    <div className="counter__type" onClick={setAll}>
       <div className="counter__type__title">
-        Total
+        All
       </div>
       <div className="counter__type__value">
         {props.totalTrips}
       </div>
     </div>
-  </div>;
+  </div>
+  )
+}
 
 Counter.propTypes = {
   numberConfirmed: PropTypes.number,
   numberUnconfirmed: PropTypes.number,
-  totalTrips: PropTypes.number
+  totalTrips: PropTypes.number,
+  setConfirmed: PropTypes.func.isRequired,
+  setUnConfirmed: PropTypes.func.isRequired,
+  setAll: PropTypes.func.isRequired,
 };
 
 export default Counter;

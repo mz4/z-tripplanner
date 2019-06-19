@@ -3,7 +3,6 @@ import './App.css';
 
 import TripList from './TripList';
 import Counter from './Counter';
-import TripDate from './TripDate';
 
 class App extends Component {
 
@@ -196,20 +195,19 @@ class App extends Component {
             </form>
           </div>
 
-          <div className="trips">
-            <TripList
-              trips={this.state.trips}
-              toggleConfirmationAt={this.toggleConfirmationAt}
-              toggleEditingAt={this.toggleEditingAt}
-              setNameAt={this.setNameAt}
-              setDateStartAt={this.setDateStartAt}
-              setDateEndAt={this.setDateEndAt}
-              showConfirmed={this.state.showConfirmed}
-              showUnConfirmed={this.state.showUnConfirmed}
-              removeTripAt={this.removeTripAt}
-              pendingTrip={this.state.pendingTrip}
-            />
-          </div>
+          <TripList
+            trips={this.state.trips}
+            toggleConfirmationAt={this.toggleConfirmationAt}
+            toggleEditingAt={this.toggleEditingAt}
+            setNameAt={this.setNameAt}
+            setDateStartAt={this.setDateStartAt}
+            setDateEndAt={this.setDateEndAt}
+            showConfirmed={this.state.showConfirmed}
+            showUnConfirmed={this.state.showUnConfirmed}
+            removeTripAt={this.removeTripAt}
+            pendingTrip={this.state.pendingTrip}
+          />
+
         </div>
       </div>
     );

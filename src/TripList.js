@@ -5,7 +5,7 @@ import Trip from './Trip';
 import PendingTrip from './PendingTrip';
 
 const TripList = props =>
-  <ul>
+  <div className="trip">
     <PendingTrip name={props.pendingTrip} />
     {
       props.trips
@@ -36,7 +36,7 @@ const TripList = props =>
           handleRemove={() => props.removeTripAt(trip.id)} />
       )
     }
-  </ul>;
+  </div>;
 
 TripList.propTypes = {
   trips: PropTypes.array.isRequired,

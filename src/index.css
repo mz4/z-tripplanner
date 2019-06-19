@@ -62,13 +62,7 @@ form button {
   border-radius: .2em;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 2em 0 1em;
-}
-
-ul li {
+.trip {
   padding: 1em;
   background: #fff;
   border-radius: .2em;
@@ -96,8 +90,9 @@ button {
 .destination input {
   padding: 12px;
   font-size: 1.15em;
-  width: 100%;
+  width: 80%;
   border-bottom: 3px solid #e3e3e3;
+  margin-right: 5%;
 }
 
 li span,
@@ -193,9 +188,6 @@ td:last-child {
   h1 {
     font-size: 3.6em;
     margin: .3em 0 0;
-  }
-  ul li {
-    margin-bottom: 1em;
   }
   form {
     width: 95%;
@@ -294,11 +286,9 @@ td:last-child {
     padding-left: 5px;
   }
   .main > div {
-    margin-left: 1.25%;
-    margin-bottom: 0.5em;
-    margin-top: 2.5em;
+    margin-top: 2em;
   }
-  ul {
+  .trip {
     display: -ms-flexbox;
     display: flex;
     clear: both;
@@ -308,7 +298,7 @@ td:last-child {
     flex-wrap: wrap;
     padding-top: 1.25em;
   }
-  ul li {
+  .trip__item {
     -ms-flex-positive: 1;
     flex-grow: 1;
     -ms-flex-preferred-size: 90%;
@@ -318,7 +308,7 @@ td:last-child {
 }
 
 @media (min-width: 880px) {
-  ul li {
+  .trip__item {
     -ms-flex-preferred-size: 90%;
     flex-basis: 90%;
   }

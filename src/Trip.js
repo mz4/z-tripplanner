@@ -5,7 +5,7 @@ import TripName from './TripName';
 import TripDate from './TripDate';
 
 const Trip = props =>
-  <li>
+  <div className="trip__item">
     <TripName
       isEditing={props.isEditing}
       handleNameEdits={e => props.setName(e.target.value)}>
@@ -31,7 +31,7 @@ const Trip = props =>
       {props.isEditing ? "save" : "edit"}
     </button>
     <button onClick={props.handleRemove}>remove</button>
-  </li>;
+  </div>;
 
 Trip.propTypes = {
   name: PropTypes.string.isRequired,

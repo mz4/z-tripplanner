@@ -47,14 +47,12 @@ p {
 }
 
 form {
-  width: 60%;
+  width: 90%;
   background: white;
   display: inline-block;
   overflow: hidden;
   display: -ms-flexbox;
   display: flex;
-  border-radius: .2em;
-  border: solid 4px white;
 }
 
 form button {
@@ -89,18 +87,17 @@ button {
   outline: none;
 }
 
-header {
+.destination {
   text-align: center;
-  /*background: linear-gradient(90deg, #d4eece, #55b3d0, #1e7eb7),
-    url(./images/header-bg.jpg) no-repeat;*/
   background-blend-mode: multiply;
   background-size: cover;
 }
 
-header input {
+.destination input {
   padding: 12px;
   font-size: 1.15em;
   width: 100%;
+  border-bottom: 3px solid #e3e3e3;
 }
 
 li span,
@@ -193,9 +190,6 @@ td:last-child {
 ==================================== */
 
 @media (max-width: 768px) {
-  header {
-    padding: 1.25em;
-  }
   h1 {
     font-size: 3.6em;
     margin: .3em 0 0;
@@ -222,7 +216,7 @@ td:last-child {
     margin: 0;
   }
   .main {
-    padding: 2em 1em .75em;
+    padding: 1em 1em 1em;
   }
   tr {
     display: inline-block;
@@ -246,6 +240,11 @@ td:last-child {
   background-color: #e6e6e6;
 }
 
+.counter__type--selected {
+  color: #f3f3f3;
+  background-color: #06a3b8;
+}
+
 .counter__type:hover {
   cursor: pointer;
   color: #f3f3f3;
@@ -262,11 +261,6 @@ td:last-child {
 }
 
 @media (min-width: 769px) {
-  header {
-    height: 140px;
-    padding: 2.5em 1em 1em;
-    background-position: 0 -95px;
-  }
   div > label {
     margin-top: 12px;
   }
@@ -285,7 +279,7 @@ td:last-child {
     width: 90%;
   }
   .main {
-    padding: 3.8em 1.5em .75em;
+    padding: 1em 1em 1em;
     position: relative;
     z-index: 10;
   }
@@ -317,15 +311,19 @@ td:last-child {
   ul li {
     -ms-flex-positive: 1;
     flex-grow: 1;
-    -ms-flex-preferred-size: 100%;
-    flex-basis: 100%;
+    -ms-flex-preferred-size: 90%;
+    flex-basis: 90%;
     /* margin: 0 1.25% 1em; */
   }
 }
 
 @media (min-width: 880px) {
   ul li {
-    -ms-flex-preferred-size: 100%;
-    flex-basis: 100%;
+    -ms-flex-preferred-size: 90%;
+    flex-basis: 90%;
   }
+}
+
+.trips {
+  width: 100%;
 }

@@ -9,6 +9,17 @@ const TripList = props =>
     <PendingTrip name={props.pendingTrip} />
     {
       props.trips
+      .filter(trip => {
+        if (trip.isConfirmed === true && props.showConfirmed === true) {
+          return true
+        } 
+        if (trip.isConfirmed === false && props.showUnConfirmed === true) {
+          return true
+        }        
+        else {
+          return false
+        }
+      })
       .map((trip, index) =>
         <Trip
           key={index}
@@ -17,12 +28,12 @@ const TripList = props =>
           dateEnd={trip.dateEnd}
           isConfirmed={trip.isConfirmed}
           isEditing={trip.isEditing}
-          handleConfirmation={() => props.toggleConfirmationAt(index)}
-          handeToggleEditing={() => props.toggleEditingAt(index)}
-          setName={text => props.setNameAt(text, index)}
-          setDateStart={text => props.setDateStartAt(text, index)}
-          setDateEnd={text => props.setDateEndAt(text, index)}
-          handleRemove={() => props.removeTripAt(index)} />
+          handleConfirmation={() => props.toggleConfirmationAt(trip.id)}
+          handeToggleEditing={() => props.toggleEditingAt(trip.id)}
+          setName={text => props.setNameAt(text, trip.id)}
+          setDateStart={text => props.setDateStartAt(text, trip.id)}
+          setDateEnd={text => props.setDateEndAt(text, trip.id)}
+          handleRemove={() => props.removeTripAt(trip.id)} />
       )
     }
   </ul>;
@@ -36,7 +47,6 @@ TripList.propTypes = {
   setDateEndAt: PropTypes.func.isRequired,
   showConfirmed: PropTypes.bool.isRequired,
   showUnConfirmed: PropTypes.bool.isRequired,
-  showAll: PropTypes.bool.isRequired,
   removeTripAt: PropTypes.func.isRequired,
   pendingTrip: PropTypes.string.isRequired
 };

@@ -3,16 +3,18 @@ import './App.css';
 
 import TripList from './TripList';
 import Counter from './Counter';
+import TripDate from './TripDate';
 
 class App extends Component {
 
   state = {
-    showConfirmed: false,
-    showUnConfirmed: false,
+    showConfirmed: true,
+    showUnConfirmed: true,
     showAll: true,
     pendingTrip: "",
     trips: [
       {
+        id: 0,
         name: 'Rome',
         dateStart: '19/08/2019',
         dateEnd: '29/08/2019',
@@ -20,6 +22,7 @@ class App extends Component {
         isEditing: false
       },
       {
+        id: 1,
         name: 'Paris',
         dateStart: '15/06/2019',
         dateEnd: '29/06/2019',
@@ -27,6 +30,7 @@ class App extends Component {
         isEditing: false
       },
       {
+        id: 2,
         name: 'Malta',
         dateStart: '01/02/2019',
         dateEnd: '08/02/2019',
@@ -52,13 +56,14 @@ class App extends Component {
   toggleConfirmationAt = index =>
     this.toggleTripPropertyAt("isConfirmed", index);
 
-  removeTripAt = index =>
+  removeTripAt = (index) => {
+    // var arrb = this.state.trips.filter(trip => trip.id !== index);
+    // // var prova = this.state.trips.splice(this.state.trips.findIndex(trip => trip.id !== index), 1);
+    // console.log(arrb);
     this.setState({
-      trips: [
-        ...this.state.trips.slice(0, index),
-        ...this.state.trips.slice(index + 1)
-      ]
+      trips: this.state.trips.filter(trip => trip.id !== index)
     });
+  }
 
   toggleEditingAt = index =>
     this.toggleTripPropertyAt("isEditing", index);
@@ -106,7 +111,7 @@ class App extends Component {
     this.setState({ 
       showConfirmed: true,
       showUnConfirmed: false,
-      showAll: false
+      showAll: false,
     });
   }
 
@@ -114,15 +119,15 @@ class App extends Component {
     this.setState({ 
       showConfirmed: false,
       showUnConfirmed: true,
-      showAll: false
+      showAll: false,
     });
   }
 
   setAll() {
     this.setState({ 
       showConfirmed: true,
-      showUnConfirmed: false,
-      showAll: true
+      showUnConfirmed: true,
+      showAll: true,
     });
   }
 
@@ -163,30 +168,10 @@ class App extends Component {
     const setAll = () => this.setAll();
     return (
       <div className="App">
-        <header>
-          <h2>AAA</h2>
-          <form onSubmit={this.newTripSubmitHandler}>
-            <input
-              type="text"
-              onChange={this.handleNameInput}
-              value={this.state.pendingTrip}
-              placeholder="..." />
-            <button type="submit" name="submit" value="submit">Submit</button>
-          </form>
-        </header>
         <div className="main">
+          <h2>AAA</h2>
+
           <div className="options">
-
-            <div className="filter">
-              <label>
-                Show Confirmed
-                <input
-                  type="checkbox"
-                  onChange={this.toggleFilter}
-                  checked={this.state.isConfirmed} />
-              </label>
-            </div>
-
             <Counter
               totalTrips={totalTrips}
               numberConfirmed={numberConfirmed}
@@ -194,24 +179,37 @@ class App extends Component {
               setConfirmed={setConfirmed} 
               setUnConfirmed={setUnConfirmed}
               setAll={setAll}
+              showConfirmed={this.state.showConfirmed}
+              showUnConfirmed={this.state.showUnConfirmed}
+              showAll={this.state.showAll}
             />
-
           </div>
 
-          <TripList
-            trips={this.state.trips}
-            toggleConfirmationAt={this.toggleConfirmationAt}
-            toggleEditingAt={this.toggleEditingAt}
-            setNameAt={this.setNameAt}
-            setDateStartAt={this.setDateStartAt}
-            setDateEndAt={this.setDateEndAt}
-            showConfirmed={this.state.showConfirmed}
-            showUnConfirmed={this.state.showUnConfirmed}
-            showAll={this.state.showAll}
-            removeTripAt={this.removeTripAt}
-            pendingTrip={this.state.pendingTrip}
-          />
+          <div className="destination">
+            <form onSubmit={this.newTripSubmitHandler}>
+              <input
+                type="text"
+                onChange={this.handleNameInput}
+                value={this.state.pendingTrip}
+                placeholder="..." />
+              <button type="submit" name="submit" value="submit">Submit</button>
+            </form>
+          </div>
 
+          <div className="trips">
+            <TripList
+              trips={this.state.trips}
+              toggleConfirmationAt={this.toggleConfirmationAt}
+              toggleEditingAt={this.toggleEditingAt}
+              setNameAt={this.setNameAt}
+              setDateStartAt={this.setDateStartAt}
+              setDateEndAt={this.setDateEndAt}
+              showConfirmed={this.state.showConfirmed}
+              showUnConfirmed={this.state.showUnConfirmed}
+              removeTripAt={this.removeTripAt}
+              pendingTrip={this.state.pendingTrip}
+            />
+          </div>
         </div>
       </div>
     );

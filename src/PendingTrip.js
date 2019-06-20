@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 const PendingTrip = props => {
   if (props.name) {
     return (
-      <li className="pending">
-        <span>
+      <div className="pending">
           {props.name}
-        </span>
-      </li>
+      </div>
     );
   }
   return null;

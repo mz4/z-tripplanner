@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 
 import TripList from './TripList';
 import Counter from './Counter';
@@ -167,47 +167,59 @@ class App extends Component {
     const setAll = () => this.setAll();
     return (
       <div className="App">
-        <div className="main">
-          <h2>AAA</h2>
+        <div className="App">
+          <div className="main">
+            <h2>AAA</h2>
 
-          <div className="options">
-            <Counter
-              totalTrips={totalTrips}
-              numberConfirmed={numberConfirmed}
-              numberUnconfirmed={numberUnconfirmed}
-              setConfirmed={setConfirmed} 
-              setUnConfirmed={setUnConfirmed}
-              setAll={setAll}
+            <div className="options">
+              <Counter
+                totalTrips={totalTrips}
+                numberConfirmed={numberConfirmed}
+                numberUnconfirmed={numberUnconfirmed}
+                setConfirmed={setConfirmed} 
+                setUnConfirmed={setUnConfirmed}
+                setAll={setAll}
+                showConfirmed={this.state.showConfirmed}
+                showUnConfirmed={this.state.showUnConfirmed}
+                showAll={this.state.showAll}
+              />
+            </div>
+
+            <div className="destination">
+              <form onSubmit={this.newTripSubmitHandler}>
+                <input
+                  type="text"
+                  onChange={this.handleNameInput}
+                  value={this.state.pendingTrip}
+                  placeholder="..." />
+                <button type="submit" name="submit" value="submit">Submit</button>
+              </form>
+            </div>
+
+            <TripList
+              trips={this.state.trips}
+              toggleConfirmationAt={this.toggleConfirmationAt}
+              toggleEditingAt={this.toggleEditingAt}
+              setNameAt={this.setNameAt}
+              setDateStartAt={this.setDateStartAt}
+              setDateEndAt={this.setDateEndAt}
               showConfirmed={this.state.showConfirmed}
               showUnConfirmed={this.state.showUnConfirmed}
-              showAll={this.state.showAll}
+              removeTripAt={this.removeTripAt}
+              pendingTrip={this.state.pendingTrip}
             />
+
           </div>
+        </div>
 
-          <div className="destination">
-            <form onSubmit={this.newTripSubmitHandler}>
-              <input
-                type="text"
-                onChange={this.handleNameInput}
-                value={this.state.pendingTrip}
-                placeholder="..." />
-              <button type="submit" name="submit" value="submit">Submit</button>
-            </form>
-          </div>
-
-          <TripList
-            trips={this.state.trips}
-            toggleConfirmationAt={this.toggleConfirmationAt}
-            toggleEditingAt={this.toggleEditingAt}
-            setNameAt={this.setNameAt}
-            setDateStartAt={this.setDateStartAt}
-            setDateEndAt={this.setDateEndAt}
-            showConfirmed={this.state.showConfirmed}
-            showUnConfirmed={this.state.showUnConfirmed}
-            removeTripAt={this.removeTripAt}
-            pendingTrip={this.state.pendingTrip}
-          />
-
+        <div className="challenge">
+          <div className="header">Header</div>
+          <div className="small-box-1">Small box 1</div>
+          <div className="small-box-2">Small box 2</div>
+          <div className="small-box-3">Small box 3</div>
+          <div className="main-content">Main content</div>
+          <div className="sidebar">Sidebar</div>
+          <div className="footer">Footer</div>
         </div>
       </div>
     );

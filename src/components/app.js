@@ -1,8 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App.js";
+import "./app.scss";
 
-const Index = () => {
+const App = () => {
   return (
     <div className="full-screen">
       <div>
@@ -15,12 +14,11 @@ const Index = () => {
           href="https://github.com/deityhub"
           target="_blank"
         >
-          Know more
+          Know more now
         </a>
       </div>
     </div>
   );
 };
 
-export default Index;
-ReactDOM.render(<App />, document.getElementById("app"));
+export default App;

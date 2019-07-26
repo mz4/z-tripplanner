@@ -10,7 +10,7 @@
 body {
   font-family: 'Lato', sans-serif;
   color: #9e9e9e;
-  background: #f3f3f3;
+  background: #000;
 }
 
 .App {
@@ -344,7 +344,7 @@ td:last-child {
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(135deg, #fa782e 8%, #c82930 83%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fa782e', endColorstr='#c82930', GradientType=1);
+  // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fa782e', endColorstr='#c82930', GradientType=1);
   /* IE6-9 fallback on horizontal gradient */
   border-radius: 25px 25px 0 0;
 }

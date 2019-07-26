@@ -1,0 +1,167 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  }
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%; //1 rem = 10px; 10px/16px = 62.5%
+
+  @include respond(tab-land) { // width < 1200?
+      font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+  }
+
+  @include respond(tab-port) { // width < 900?
+      font-size: 50%; //1 rem = 8px, 8/16 = 50%
+  }
+  
+  @include respond(big-desktop) {
+      font-size: 75%; //1rem = 12, 12/16
+  }
+}
+
+h1,
+p,
+form button {
+  color: $color-white;
+}
+
+h1 {
+  line-height: .65;
+  margin-top: .5em;
+  margin-bottom: 0;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 0.35em;
+}
+
+form {
+  width: 90%;
+  background: $color-white;
+  display: inline-block;
+  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+form button {
+  padding: 0 1em;
+  font-size: 1em;
+  background: $color-grey-dark-2;
+  border-radius: 3px;
+  margin-left: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+}
+
+
+li span,
+li input[type=text] {
+  color: #707070;
+  font-size: 1.3em;
+  margin-bottom: .3em;
+}
+
+li input[type=text] {
+  padding: .2em;
+  width: 95%;
+  border: 1px dotted rgba(0, 0, 0, .2);
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+li label {
+  font-size: .9em;
+  display: block;
+  color: rgba(112, 112, 112, .55);
+}
+
+li span,
+li input[type=text]:first-child {
+  display: block;
+}
+
+li button {
+  font-size: .78em;
+  margin-top: 1.65em;
+  margin-right: .4em;
+  border-radius: .3em;
+  padding: .4em .6em;
+  color: white;
+  background: #58b7cd;
+}
+
+li button:last-child {
+  background: rgba(88, 183, 205, .5);
+}
+
+div > input:last-child {
+  font-size: 1em;
+  margin-left: 6px;
+}
+
+div > label {
+  color: #767676;
+}
+
+tr {
+  color: rgba(118, 118, 118, .75);
+}
+
+td:last-child {
+  font-weight: bold;
+  font-size: 1.16em;
+  color: rgb(118, 118, 118);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3.6em;
+    margin: .3em 0 0;
+  }
+  form {
+    width: 95%;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2.5em;
+  }
+  form button {
+    padding: 12px 0;
+    margin-top: .5em;
+  }
+  form input {
+    font-size: 1em;
+    text-align: center;
+  }
+  .wrapper {
+    margin: 0;
+  }
+  .main {
+    padding: 1em 1em 1em;
+  }
+  tr {
+    display: inline-block;
+    padding: 0 12px 0 0;
+  }
+}

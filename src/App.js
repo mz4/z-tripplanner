@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.scss';
 
 import TripList from './TripList';
 import Counter from './Counter';
@@ -7,8 +6,8 @@ import Counter from './Counter';
 class App extends Component {
 
   state = {
-    showConfirmed: true,
-    showUnConfirmed: true,
+    showConfirmed: false,
+    showUnConfirmed: false,
     showAll: true,
     pendingTrip: "",
     trips: [
@@ -166,35 +165,47 @@ class App extends Component {
     const setUnConfirmed = () => this.setUnConfirmed();
     const setAll = () => this.setAll();
     return (
-      <div className="App">
+      <React.Fragment>
         <div className="App">
           <div className="main">
-            <h2>AAA</h2>
 
-            <div className="options">
-              <Counter
-                totalTrips={totalTrips}
-                numberConfirmed={numberConfirmed}
-                numberUnconfirmed={numberUnconfirmed}
-                setConfirmed={setConfirmed} 
-                setUnConfirmed={setUnConfirmed}
-                setAll={setAll}
-                showConfirmed={this.state.showConfirmed}
-                showUnConfirmed={this.state.showUnConfirmed}
-                showAll={this.state.showAll}
-              />
-            </div>
+            <header className="header">
+              <div className="header__logo">
+                <h2>Trip Planner</h2>
+              </div>
+            </header>
 
-            <div className="destination">
-              <form onSubmit={this.newTripSubmitHandler}>
-                <input
-                  type="text"
-                  onChange={this.handleNameInput}
-                  value={this.state.pendingTrip}
-                  placeholder="..." />
-                <button type="submit" name="submit" value="submit">Submit</button>
-              </form>
-            </div>
+            <form onSubmit={this.newTripSubmitHandler}>
+              <div className="destination">
+                <div className="row">
+                  <div className="col-3-of-4">
+                    <input
+                      type="text"
+                      onChange={this.handleNameInput}
+                      value={this.state.pendingTrip}
+                      placeholder="..." 
+                    />
+                  </div>
+                  <div className="col-1-of-4">
+                    <button type="submit" name="submit" value="submit">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <Counter
+              totalTrips={totalTrips}
+              numberConfirmed={numberConfirmed}
+              numberUnconfirmed={numberUnconfirmed}
+              setConfirmed={setConfirmed} 
+              setUnConfirmed={setUnConfirmed}
+              setAll={setAll}
+              showConfirmed={this.state.showConfirmed}
+              showUnConfirmed={this.state.showUnConfirmed}
+              showAll={this.state.showAll}
+            />
 
             <TripList
               trips={this.state.trips}
@@ -203,15 +214,16 @@ class App extends Component {
               setNameAt={this.setNameAt}
               setDateStartAt={this.setDateStartAt}
               setDateEndAt={this.setDateEndAt}
-              showConfirmed={this.state.showConfirmed}
-              showUnConfirmed={this.state.showUnConfirmed}
               removeTripAt={this.removeTripAt}
               pendingTrip={this.state.pendingTrip}
+              showConfirmed={this.state.showConfirmed}
+              showUnConfirmed={this.state.showUnConfirmed}
+              showAll={this.state.showAll}
             />
 
           </div>
         </div>
-
+{/* 
         <div className="challenge">
           <div className="header">Header</div>
           <div className="small-box-1">Small box 1</div>
@@ -220,8 +232,8 @@ class App extends Component {
           <div className="main-content">Main content</div>
           <div className="sidebar">Sidebar</div>
           <div className="footer">Footer</div>
-        </div>
-      </div>
+        </div> */}
+      </React.Fragment>
     );
   }
 }

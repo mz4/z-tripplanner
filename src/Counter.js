@@ -6,34 +6,34 @@ const Counter = (props) => {
   return (
     <div className="counter">
 
-    <div className={"counter__type " + (showAll ? "counter__type--selected" : "")} onClick={setAll}>
-      <div className="counter__type__title">
-        All
+      <div className={"counter__type " + (showAll ? "counter__type--selected" : "")} onClick={setAll}>
+        <div className="counter__type__title">
+          All
+        </div>
+        <div className="counter__type__value">
+          {props.totalTrips}
+        </div>
       </div>
-      <div className="counter__type__value">
-        {props.totalTrips}
-      </div>
-    </div>
 
-    <div className={"counter__type " + (showConfirmed ? "counter__type--selected" : "")} onClick={setConfirmed}>
-      <div className="counter__type__title">
-        Confirmed
+      <div className={"counter__type " + (showConfirmed ? "counter__type--selected" : "")} onClick={setConfirmed}>
+        <div className="counter__type__title">
+          Confirmed
+        </div>
+        <div className="counter__type__value">
+          {props.numberConfirmed}
+        </div>
       </div>
-      <div className="counter__type__value">
-        {props.numberConfirmed}
-      </div>
-    </div>
 
-    <div className={"counter__type " + (showUnConfirmed ? "counter__type--selected" : "")} onClick={setUnConfirmed}>
-      <div className="counter__type__title">
-        Unconfirmed
+      <div className={"counter__type " + (showUnConfirmed ? "counter__type--selected" : "")} onClick={setUnConfirmed}>
+        <div className="counter__type__title">
+          Unconfirmed
+        </div>
+        <div className="counter__type__value">
+          {props.numberUnconfirmed}
+        </div>
       </div>
-      <div className="counter__type__value">
-        {props.numberUnconfirmed}
-      </div>
-    </div>
 
-  </div>
+    </div>
   )
 }
 

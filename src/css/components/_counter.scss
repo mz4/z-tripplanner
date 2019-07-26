@@ -1,0 +1,47 @@
+.counter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid $color-border;
+}
+
+.counter__type {
+  min-width: 200px;
+  height: 30px;
+  padding: 2em;
+  color: $color-grey-light-1;
+  background-color: $color-tertiary-blue;
+  text-align: center;
+  position: relative;
+}
+
+.counter__type__title {
+  margin: 0;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
+.counter__type__value {
+  margin: 0;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+}
+
+.counter__type--selected {
+  color: $color-grey-light-2;
+  background-color: $color-tertiary-light;
+}
+
+.counter__type:hover {
+  cursor: pointer;
+}

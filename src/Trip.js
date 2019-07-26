@@ -90,11 +90,6 @@ const Trip = props =>
       </div>
     </div>
 
-    <div className="yt">
-      <a href="https://www.youtube.com/watch?v=jYAmKNOJ4Ck" target="_blank">
-        <img width="151" src="https://s5.postimg.cc/vzwuxmw87/template.png" alt="" />
-      </a>
-    </div>
   </div>;
 
 Trip.propTypes = {

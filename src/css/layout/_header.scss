@@ -1,0 +1,16 @@
+.header {
+  height: 4rem;
+  position: relative;
+  background-color: $color-grey-light-1;
+  border: 1px solid $color-border;
+
+  &__logo {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    padding-left: 1rem;
+  }
+}
+

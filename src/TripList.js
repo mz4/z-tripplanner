@@ -15,7 +15,10 @@ const TripList = props =>
         } 
         if (trip.isConfirmed === false && props.showUnConfirmed === true) {
           return true
-        }        
+        }
+        if (props.showAll) {
+          return true
+        }      
         else {
           return false
         }
@@ -45,10 +48,11 @@ TripList.propTypes = {
   setNameAt: PropTypes.func.isRequired,
   setDateStartAt: PropTypes.func.isRequired,
   setDateEndAt: PropTypes.func.isRequired,
+  removeTripAt: PropTypes.func.isRequired,
+  pendingTrip: PropTypes.string.isRequired,
   showConfirmed: PropTypes.bool.isRequired,
   showUnConfirmed: PropTypes.bool.isRequired,
-  removeTripAt: PropTypes.func.isRequired,
-  pendingTrip: PropTypes.string.isRequired
+  showAll: PropTypes.bool.isRequired
 };
 
 export default TripList;

@@ -1,0 +1,29 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    ["transform-class-properties", { "loose": true }],
+    ["transform-imports", {
+        "lodash": {
+            "transform": "lodash/${member}",
+            "preventFullImport": true
+        },
+        "react-router": {
+            "transform": "react-router/${member}",
+            "preventFullImport": true
+        }
+    }],
+    ["transform-react-remove-prop-types"],
+    ["@babel/proposal-class-properties"]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/preset-react",
+        "@babel/preset-env"
+      ]
+    }
+  }
+}

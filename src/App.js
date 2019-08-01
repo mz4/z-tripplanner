@@ -6,10 +6,16 @@ import Counter from './Counter';
 class App extends Component {
 
   state = {
-    showConfirmed: false,
-    showUnConfirmed: false,
-    showAll: true,
-    pendingTrip: "",
+    filter: {
+      showConfirmed: false,
+      showUnConfirmed: false,
+      showAll: true
+    },
+    form: {
+      name: "",
+      dateStart: "",
+      dateEnd: ""
+    },
     trips: [
       {
         id: 0,
@@ -34,6 +40,14 @@ class App extends Component {
         dateEnd: '08/02/2019',
         isConfirmed: false,
         isEditing: false
+      },
+      {
+        id: 3,
+        name: 'Budapest',
+        dateStart: '01/02/2019',
+        dateEnd: '08/02/2019',
+        isConfirmed: false,
+        isEditing: false
       }
     ]
   };
@@ -54,12 +68,9 @@ class App extends Component {
   toggleConfirmationAt = index =>
     this.toggleTripPropertyAt("isConfirmed", index);
 
-  removeTripAt = (index) => {
-    // var arrb = this.state.trips.filter(trip => trip.id !== index);
-    // // var prova = this.state.trips.splice(this.state.trips.findIndex(trip => trip.id !== index), 1);
-    // console.log(arrb);
+  removeTripAt = (id) => {
     this.setState({
-      trips: this.state.trips.filter(trip => trip.id !== index)
+      trips: this.state.trips.filter(trip => trip.id !== id)
     });
   }
 
@@ -107,45 +118,86 @@ class App extends Component {
 
   setConfirmed() {
     this.setState({ 
-      showConfirmed: true,
-      showUnConfirmed: false,
-      showAll: false,
+      filter: {
+        showConfirmed: true,
+        showUnConfirmed: false,
+        showAll: false,
+      }
     });
   }
 
   setUnConfirmed() {
-    this.setState({ 
-      showConfirmed: false,
-      showUnConfirmed: true,
-      showAll: false,
+    this.setState({
+      filter: {
+        showConfirmed: false,
+        showUnConfirmed: true,
+        showAll: false,
+      }
     });
   }
 
   setAll() {
-    this.setState({ 
-      showConfirmed: true,
-      showUnConfirmed: true,
-      showAll: true,
+    this.setState({
+      filter: {
+        showConfirmed: true,
+        showUnConfirmed: true,
+        showAll: true,
+      }
     });
   }
 
   handleNameInput = e =>
-    this.setState({ pendingTrip: e.target.value });
+    this.setState({
+      form: {
+        ...this.state.form,
+        name: e.target.value
+      }
+    });
+
+  handleDateStart = e =>
+    this.setState({
+      form: {
+        ...this.state.form,
+        dateStart: e.target.value
+      }
+    });
+
+  handleDateEnd = e =>
+    this.setState({
+      form: {
+        ...this.state.form,
+        dateEnd: e.target.value
+      }
+    });
 
   newTripSubmitHandler = e => {
     e.preventDefault();
+    const { trips, form } = this.state;
+    const maxId = trips.reduce(
+      (a, b) => 
+        (a.id > b.id) 
+        ? a.id 
+        : b.id
+    );
+    const newId = parseInt(maxId) + 1;
+    console.log(JSON.stringify(form));
     this.setState({
       trips: [
         {
-          name: this.state.pendingTrip,
-          dateStart: '',
-          dateEnd: '',
+          id: newId,
+          name: form.name,
+          dateStart: form.dateStart,
+          dateEnd: form.dateEnd,
           isConfirmed: false,
           isEditing: false
         },
         ...this.state.trips
       ],
-      pendingTrip: ''
+      form: {
+        name: '',
+        dateStart: '',
+        dateEnd: ''
+      }
     });
   }
 
@@ -178,15 +230,31 @@ class App extends Component {
             <form onSubmit={this.newTripSubmitHandler}>
               <div className="destination">
                 <div className="row">
-                  <div className="col-3-of-4">
+                  <div className="col-md-4">
                     <input
                       type="text"
+                      value={this.state.form.name}
+                      placeholder="Name" 
                       onChange={this.handleNameInput}
-                      value={this.state.pendingTrip}
-                      placeholder="..." 
+                  />
+                  </div>
+                  <div className="col-md-2">
+                    <input
+                      type="text"
+                      value={this.state.form.dateStart}
+                      placeholder="Date Start" 
+                      onChange={this.handleDateStart}
+                  />
+                  </div>
+                  <div className="col-md-2">
+                    <input
+                      type="text"
+                      value={this.state.form.dateEnd}
+                      placeholder="Date End"
+                      onChange={this.handleDateEnd} 
                     />
                   </div>
-                  <div className="col-1-of-4">
+                  <div className="col-md-2">
                     <button type="submit" name="submit" value="submit">
                       Submit
                     </button>
@@ -202,9 +270,9 @@ class App extends Component {
               setConfirmed={setConfirmed} 
               setUnConfirmed={setUnConfirmed}
               setAll={setAll}
-              showConfirmed={this.state.showConfirmed}
-              showUnConfirmed={this.state.showUnConfirmed}
-              showAll={this.state.showAll}
+              showConfirmed={this.state.filter.showConfirmed}
+              showUnConfirmed={this.state.filter.showUnConfirmed}
+              showAll={this.state.filter.showAll}
             />
 
             <TripList
@@ -215,10 +283,10 @@ class App extends Component {
               setDateStartAt={this.setDateStartAt}
               setDateEndAt={this.setDateEndAt}
               removeTripAt={this.removeTripAt}
-              pendingTrip={this.state.pendingTrip}
-              showConfirmed={this.state.showConfirmed}
-              showUnConfirmed={this.state.showUnConfirmed}
-              showAll={this.state.showAll}
+              name={this.state.form.name}
+              showConfirmed={this.state.filter.showConfirmed}
+              showUnConfirmed={this.state.filter.showUnConfirmed}
+              showAll={this.state.filter.showAll}
             />
 
           </div>

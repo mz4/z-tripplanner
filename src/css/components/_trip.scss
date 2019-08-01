@@ -1,0 +1,20 @@
+.trip {
+    padding: 1em;
+    border: 1px solid rgba(88, 183, 205, .15);
+  }
+
+  .trip button {
+    background-color: #4CAF50;
+    border: 1px solid #d5d5d5;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+  }
+  
+  .trip button:hover {
+    cursor: pointer;
+    background-color: rgb(95, 219, 99);
+  }

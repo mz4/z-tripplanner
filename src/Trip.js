@@ -8,9 +8,6 @@ const Trip = props =>
     <div className="col-md-1-3">
       <div className="trip">
         <div>
-          {props.id}
-        </div>
-        <div>
           <TripName
             isEditing={props.isEditing}
             handleNameEdits={e => props.setName(e.target.value, props.id)}>

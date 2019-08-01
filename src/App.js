@@ -176,14 +176,14 @@ class App extends Component {
   newTripSubmitHandler = e => {
     e.preventDefault();
     const { trips, form } = this.state;
-    const maxId = trips.reduce(
-      (a, b) => 
-        (a.id > b.id) 
-        ? a.id 
-        : b.id
-    );
-    const newId = parseInt(maxId) + 1;
-    console.log(JSON.stringify(form));
+    let tripId = 0;
+    let newId = 0;
+    trips.map((trip) => {
+      if (trip.id > tripId) {
+        tripId = trip.id
+      }
+    });
+    newId = parseInt(tripId) + 1;
     this.setState({
       trips: [
         {

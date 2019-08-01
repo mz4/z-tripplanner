@@ -4,58 +4,61 @@ import TripList from './TripList';
 import Counter from './Counter';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filter: {
+        showConfirmed: false,
+        showUnConfirmed: false,
+        showAll: true
+      },
+      form: {
+        name: "",
+        dateStart: "",
+        dateEnd: ""
+      },
+      trips: [
+        {
+          id: 0,
+          name: 'Rome',
+          dateStart: '19/08/2019',
+          dateEnd: '29/08/2019',
+          isConfirmed: false,
+          isEditing: false
+        },
+        {
+          id: 1,
+          name: 'Paris',
+          dateStart: '15/06/2019',
+          dateEnd: '29/06/2019',
+          isConfirmed: true,
+          isEditing: false
+        },
+        {
+          id: 2,
+          name: 'Malta',
+          dateStart: '01/02/2019',
+          dateEnd: '08/02/2019',
+          isConfirmed: false,
+          isEditing: false
+        },
+        {
+          id: 3,
+          name: 'Budapest',
+          dateStart: '01/02/2019',
+          dateEnd: '08/02/2019',
+          isConfirmed: false,
+          isEditing: false
+        }
+      ]
+    };
+  
+  }
 
-  state = {
-    filter: {
-      showConfirmed: false,
-      showUnConfirmed: false,
-      showAll: true
-    },
-    form: {
-      name: "",
-      dateStart: "",
-      dateEnd: ""
-    },
-    trips: [
-      {
-        id: 0,
-        name: 'Rome',
-        dateStart: '19/08/2019',
-        dateEnd: '29/08/2019',
-        isConfirmed: false,
-        isEditing: false
-      },
-      {
-        id: 1,
-        name: 'Paris',
-        dateStart: '15/06/2019',
-        dateEnd: '29/06/2019',
-        isConfirmed: true,
-        isEditing: false
-      },
-      {
-        id: 2,
-        name: 'Malta',
-        dateStart: '01/02/2019',
-        dateEnd: '08/02/2019',
-        isConfirmed: false,
-        isEditing: false
-      },
-      {
-        id: 3,
-        name: 'Budapest',
-        dateStart: '01/02/2019',
-        dateEnd: '08/02/2019',
-        isConfirmed: false,
-        isEditing: false
-      }
-    ]
-  };
-
-  toggleTripPropertyAt = (property, indexToChange) =>
+  toggleTripPropertyAt = (property, id) =>
     this.setState({
       trips: this.state.trips.map((trip, index) => {
-        if (index === indexToChange) {
+        if (trip.id === id) {
           return {
             ...trip,
             [property]: !trip[property]
@@ -65,8 +68,8 @@ class App extends Component {
       })
     });
 
-  toggleConfirmationAt = index =>
-    this.toggleTripPropertyAt("isConfirmed", index);
+  toggleConfirmationAt = id =>
+    this.toggleTripPropertyAt("isConfirmed", id);
 
   removeTripAt = (id) => {
     this.setState({
@@ -74,13 +77,13 @@ class App extends Component {
     });
   }
 
-  toggleEditingAt = index =>
-    this.toggleTripPropertyAt("isEditing", index);
+  toggleEditingAt = id =>
+    this.toggleTripPropertyAt("isEditing", id);
 
-  setNameAt = (name, indexToChange) =>
+  setNameAt = (name, id) =>
     this.setState({
       trips: this.state.trips.map((trip, index) => {
-        if (index === indexToChange) {
+        if (id === trip.id) {
           return {
             ...trip,
             name
@@ -90,10 +93,10 @@ class App extends Component {
       })
     });
 
-  setDateStartAt = (dateStart, indexToChange) =>
+  setDateStartAt = (dateStart, id) =>
     this.setState({
       trips: this.state.trips.map((trip, index) => {
-        if (index === indexToChange) {
+        if (id === trip.id) {
           return {
             ...trip,
             dateStart
@@ -103,10 +106,10 @@ class App extends Component {
       })
     });
 
-  setDateEndAt = (dateEnd, indexToChange) =>
+  setDateEndAt = (dateEnd, id) =>
     this.setState({
       trips: this.state.trips.map((trip, index) => {
-        if (index === indexToChange) {
+        if (id === trip.id) {
           return {
             ...trip,
             dateEnd

@@ -13,21 +13,21 @@ const Trip = props =>
         <div>
           <TripName
             isEditing={props.isEditing}
-            handleNameEdits={e => props.setName(e.target.value)}>
+            handleNameEdits={e => props.setName(e.target.value, props.id)}>
             {props.name}
           </TripName>
         </div>
         <div>
           <TripDate
             isEditing={props.isEditing}
-            handleDateEdits={e => props.setDateStart(e.target.value)}>
+            handleDateEdits={e => props.setDateStart(e.target.value, props.id)}>
             {props.dateStart}
           </TripDate>
         </div>
         <div>
           <TripDate
             isEditing={props.isEditing}
-            handleDateEdits={e => props.setDateEnd(e.target.value)}>
+            handleDateEdits={e => props.setDateEnd(e.target.value, props.id)}>
             {props.dateEnd}
           </TripDate>
         </div>

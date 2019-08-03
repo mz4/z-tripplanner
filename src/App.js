@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import connect from 'react-redux';
 import TripList from './TripList';
 import Counter from './Counter';
 
@@ -294,7 +294,7 @@ class App extends Component {
 
           </div>
         </div>
-{/* 
+        {/* 
         <div className="challenge">
           <div className="header">Header</div>
           <div className="small-box-1">Small box 1</div>
@@ -309,4 +309,21 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    dispatch1: () => {
+      dispatch(actionCreator)
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

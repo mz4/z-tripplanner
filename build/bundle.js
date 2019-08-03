@@ -25742,18 +25742,149 @@ var App =
 function (_Component) {
   _inherits(App, _Component);
 
-  function App() {
-    var _getPrototypeOf2;
-
-    var _temp, _this;
+  function App(props) {
+    var _this;
 
     _classCallCheck(this, App);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
 
-    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+    _this.toggleTripPropertyAt = function (property, id) {
+      return _this.setState({
+        trips: _this.state.trips.map(function (trip, index) {
+          if (trip.id === id) {
+            return _objectSpread({}, trip, _defineProperty({}, property, !trip[property]));
+          }
+
+          return trip;
+        })
+      });
+    };
+
+    _this.toggleConfirmationAt = function (id) {
+      return _this.toggleTripPropertyAt("isConfirmed", id);
+    };
+
+    _this.removeTripAt = function (id) {
+      _this.setState({
+        trips: _this.state.trips.filter(function (trip) {
+          return trip.id !== id;
+        })
+      });
+    };
+
+    _this.toggleEditingAt = function (id) {
+      return _this.toggleTripPropertyAt("isEditing", id);
+    };
+
+    _this.setNameAt = function (name, id) {
+      return _this.setState({
+        trips: _this.state.trips.map(function (trip, index) {
+          if (id === trip.id) {
+            return _objectSpread({}, trip, {
+              name: name
+            });
+          }
+
+          return trip;
+        })
+      });
+    };
+
+    _this.setDateStartAt = function (dateStart, id) {
+      return _this.setState({
+        trips: _this.state.trips.map(function (trip, index) {
+          if (id === trip.id) {
+            return _objectSpread({}, trip, {
+              dateStart: dateStart
+            });
+          }
+
+          return trip;
+        })
+      });
+    };
+
+    _this.setDateEndAt = function (dateEnd, id) {
+      return _this.setState({
+        trips: _this.state.trips.map(function (trip, index) {
+          if (id === trip.id) {
+            return _objectSpread({}, trip, {
+              dateEnd: dateEnd
+            });
+          }
+
+          return trip;
+        })
+      });
+    };
+
+    _this.handleNameInput = function (e) {
+      return _this.setState({
+        form: _objectSpread({}, _this.state.form, {
+          name: e.target.value
+        })
+      });
+    };
+
+    _this.handleDateStart = function (e) {
+      return _this.setState({
+        form: _objectSpread({}, _this.state.form, {
+          dateStart: e.target.value
+        })
+      });
+    };
+
+    _this.handleDateEnd = function (e) {
+      return _this.setState({
+        form: _objectSpread({}, _this.state.form, {
+          dateEnd: e.target.value
+        })
+      });
+    };
+
+    _this.newTripSubmitHandler = function (e) {
+      e.preventDefault();
+      var _this$state = _this.state,
+          trips = _this$state.trips,
+          form = _this$state.form;
+      var tripId = 0;
+      var newId = 0;
+      trips.map(function (trip) {
+        if (trip.id > tripId) {
+          tripId = trip.id;
+        }
+      });
+      newId = parseInt(tripId) + 1;
+
+      _this.setState({
+        trips: [{
+          id: newId,
+          name: form.name,
+          dateStart: form.dateStart,
+          dateEnd: form.dateEnd,
+          isConfirmed: false,
+          isEditing: false
+        }].concat(_toConsumableArray(_this.state.trips)),
+        form: {
+          name: '',
+          dateStart: '',
+          dateEnd: ''
+        }
+      });
+    };
+
+    _this.getTotalTrips = function () {
+      return _this.state.trips.length;
+    };
+
+    _this.getConfirmedTrips = function () {
+      return _this.state.trips.reduce(function (total, trip) {
+        return trip.isConfirmed ? total + 1 : total;
+      }, 0);
+    };
+
+    _this.state = {
       filter: {
         showConfirmed: false,
         showUnConfirmed: false,
@@ -25793,98 +25924,8 @@ function (_Component) {
         isConfirmed: false,
         isEditing: false
       }]
-    }, _this.toggleTripPropertyAt = function (property, indexToChange) {
-      return _this.setState({
-        trips: _this.state.trips.map(function (trip, index) {
-          if (index === indexToChange) {
-            return _objectSpread({}, trip, _defineProperty({}, property, !trip[property]));
-          }
-
-          return trip;
-        })
-      });
-    }, _this.toggleConfirmationAt = function (index) {
-      return _this.toggleTripPropertyAt("isConfirmed", index);
-    }, _this.removeTripAt = function (id) {
-      _this.setState({
-        trips: _this.state.trips.filter(function (trip) {
-          return trip.id !== id;
-        })
-      });
-    }, _this.toggleEditingAt = function (index) {
-      return _this.toggleTripPropertyAt("isEditing", index);
-    }, _this.setNameAt = function (name, indexToChange) {
-      return _this.setState({
-        trips: _this.state.trips.map(function (trip, index) {
-          if (index === indexToChange) {
-            return _objectSpread({}, trip, {
-              name: name
-            });
-          }
-
-          return trip;
-        })
-      });
-    }, _this.setDateStartAt = function (dateStart, indexToChange) {
-      return _this.setState({
-        trips: _this.state.trips.map(function (trip, index) {
-          if (index === indexToChange) {
-            return _objectSpread({}, trip, {
-              dateStart: dateStart
-            });
-          }
-
-          return trip;
-        })
-      });
-    }, _this.setDateEndAt = function (dateEnd, indexToChange) {
-      return _this.setState({
-        trips: _this.state.trips.map(function (trip, index) {
-          if (index === indexToChange) {
-            return _objectSpread({}, trip, {
-              dateEnd: dateEnd
-            });
-          }
-
-          return trip;
-        })
-      });
-    }, _this.handleNameInput = function (e) {
-      return _this.setState({
-        name: e.target.value
-      });
-    }, _this.handleDateStart = function (e) {
-      return _this.setState({
-        dateStart: e.target.value
-      });
-    }, _this.handleDateEnd = function (e) {
-      return _this.setState({
-        dateEnd: e.target.value
-      });
-    }, _this.newTripSubmitHandler = function (e) {
-      e.preventDefault();
-      var trips = _this.state.trips; // const maxId = trips.reduce((prev, current) => (prev.id > current.id) ? prev : current);
-      // console.log(maxId);
-      // const newId = maxId + 1;
-
-      _this.setState({
-        trips: [{
-          id: _this.state.trips.length,
-          name: _this.state.form.name,
-          dateStart: _this.state.form.dateStart,
-          dateEnd: _this.state.form.dateEnd,
-          isConfirmed: false,
-          isEditing: false
-        }].concat(_toConsumableArray(_this.state.trips)),
-        name: ''
-      });
-    }, _this.getTotalTrips = function () {
-      return _this.state.trips.length;
-    }, _this.getConfirmedTrips = function () {
-      return _this.state.trips.reduce(function (total, trip) {
-        return trip.isConfirmed ? total + 1 : total;
-      }, 0);
-    }, _temp));
+    };
+    return _this;
   }
 
   _createClass(App, [{
@@ -25956,7 +25997,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-md-3"
+        className: "col-md-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         value: this.state.form.name,
@@ -25977,7 +26018,7 @@ function (_Component) {
         placeholder: "Date End",
         onChange: this.handleDateEnd
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-md-3"
+        className: "col-md-2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit",
         name: "submit",
@@ -25990,8 +26031,8 @@ function (_Component) {
         setUnConfirmed: setUnConfirmed,
         setAll: setAll,
         showConfirmed: this.state.filter.showConfirmed,
-        showUnConfirmed: this.state.showUnConfirmed,
-        showAll: this.state.showAll
+        showUnConfirmed: this.state.filter.showUnConfirmed,
+        showAll: this.state.filter.showAll
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TripList__WEBPACK_IMPORTED_MODULE_1__["default"], {
         trips: this.state.trips,
         toggleConfirmationAt: this.toggleConfirmationAt,
@@ -26000,10 +26041,10 @@ function (_Component) {
         setDateStartAt: this.setDateStartAt,
         setDateEndAt: this.setDateEndAt,
         removeTripAt: this.removeTripAt,
-        name: this.state.name,
+        name: this.state.form.name,
         showConfirmed: this.state.filter.showConfirmed,
-        showUnConfirmed: this.state.showUnConfirmed,
-        showAll: this.state.showAll
+        showUnConfirmed: this.state.filter.showUnConfirmed,
+        showAll: this.state.filter.showAll
       }))));
     }
   }]);
@@ -26093,20 +26134,20 @@ var Trip = function Trip(props) {
     className: "col-md-1-3"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "trip"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, props.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TripName__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TripName__WEBPACK_IMPORTED_MODULE_2__["default"], {
     isEditing: props.isEditing,
     handleNameEdits: function handleNameEdits(e) {
-      return props.setName(e.target.value);
+      return props.setName(e.target.value, props.id);
     }
   }, props.name)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TripDate__WEBPACK_IMPORTED_MODULE_3__["default"], {
     isEditing: props.isEditing,
     handleDateEdits: function handleDateEdits(e) {
-      return props.setDateStart(e.target.value);
+      return props.setDateStart(e.target.value, props.id);
     }
   }, props.dateStart)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TripDate__WEBPACK_IMPORTED_MODULE_3__["default"], {
     isEditing: props.isEditing,
     handleDateEdits: function handleDateEdits(e) {
-      return props.setDateEnd(e.target.value);
+      return props.setDateEnd(e.target.value, props.id);
     }
   }, props.dateEnd)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "checkboxes"

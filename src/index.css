@@ -47,7 +47,7 @@ p {
 }
 
 form {
-  width: 90%;
+  width: 100%;
   background: white;
   display: inline-block;
   overflow: hidden;
@@ -83,6 +83,7 @@ button {
 }
 
 .destination {
+  width: 100%;
   text-align: center;
   background-blend-mode: multiply;
   background-size: cover;
@@ -333,21 +334,21 @@ td:last-child {
   border: 1px solid #d5d5d5;
 }
 
-.card-head {
+/* .card-head {
   position: relative;
   height: 252px;
   background: #fa782e;
   /* Old browsers */
-  background: -moz-linear-gradient(-45deg, #fa782e 8%, #c82930 83%);
+  /* background: -moz-linear-gradient(-45deg, #fa782e 8%, #c82930 83%); */
   /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg, #fa782e 8%, #c82930 83%);
+  /* background: -webkit-linear-gradient(-45deg, #fa782e 8%, #c82930 83%); */
   /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg, #fa782e 8%, #c82930 83%);
+  /* background: linear-gradient(135deg, #fa782e 8%, #c82930 83%); */
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fa782e', endColorstr='#c82930', GradientType=1);
+  /* filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fa782e', endColorstr='#c82930', GradientType=1); */
   /* IE6-9 fallback on horizontal gradient */
-  border-radius: 25px 25px 0 0;
-}
+  /* border-radius: 25px 25px 0 0; */
+/*}*/
 
 .card-logo {
   width: 55px;

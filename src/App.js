@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import connect from 'react-redux';
+import { connect } from 'react-redux';
 import TripList from './TripList';
 import Counter from './Counter';
+import { hot } from 'react-hot-loader';
+import './css/main.scss';
 
 class App extends Component {
   constructor(props) {
@@ -16,48 +18,14 @@ class App extends Component {
         name: "",
         dateStart: "",
         dateEnd: ""
-      },
-      trips: [
-        {
-          id: 0,
-          name: 'Rome',
-          dateStart: '19/08/2019',
-          dateEnd: '29/08/2019',
-          isConfirmed: false,
-          isEditing: false
-        },
-        {
-          id: 1,
-          name: 'Paris',
-          dateStart: '15/06/2019',
-          dateEnd: '29/06/2019',
-          isConfirmed: true,
-          isEditing: false
-        },
-        {
-          id: 2,
-          name: 'Malta',
-          dateStart: '01/02/2019',
-          dateEnd: '08/02/2019',
-          isConfirmed: false,
-          isEditing: false
-        },
-        {
-          id: 3,
-          name: 'Budapest',
-          dateStart: '01/02/2019',
-          dateEnd: '08/02/2019',
-          isConfirmed: false,
-          isEditing: false
-        }
-      ]
+      }
     };
   
   }
 
   toggleTripPropertyAt = (property, id) =>
     this.setState({
-      trips: this.state.trips.map((trip, index) => {
+      trips: this.props.trips.map((trip, index) => {
         if (trip.id === id) {
           return {
             ...trip,
@@ -73,7 +41,7 @@ class App extends Component {
 
   removeTripAt = (id) => {
     this.setState({
-      trips: this.state.trips.filter(trip => trip.id !== id)
+      trips: this.props.trips.filter(trip => trip.id !== id)
     });
   }
 
@@ -82,7 +50,7 @@ class App extends Component {
 
   setNameAt = (name, id) =>
     this.setState({
-      trips: this.state.trips.map((trip, index) => {
+      trips: this.props.trips.map((trip, index) => {
         if (id === trip.id) {
           return {
             ...trip,
@@ -95,7 +63,7 @@ class App extends Component {
 
   setDateStartAt = (dateStart, id) =>
     this.setState({
-      trips: this.state.trips.map((trip, index) => {
+      trips: this.props.trips.map((trip, index) => {
         if (id === trip.id) {
           return {
             ...trip,
@@ -108,7 +76,7 @@ class App extends Component {
 
   setDateEndAt = (dateEnd, id) =>
     this.setState({
-      trips: this.state.trips.map((trip, index) => {
+      trips: this.props.trips.map((trip, index) => {
         if (id === trip.id) {
           return {
             ...trip,
@@ -194,7 +162,7 @@ class App extends Component {
           isConfirmed: false,
           isEditing: false
         },
-        ...this.state.trips
+        ...this.props.trips
       ],
       form: {
         name: '',
@@ -204,16 +172,17 @@ class App extends Component {
     });
   }
 
-  getTotalTrips = () => this.state.trips.length;
+  getTotalTrips = (trips) => trips.length;
 
   getConfirmedTrips = () =>
-    this.state.trips.reduce(
+    this.props.trips.reduce(
       (total, trip) => trip.isConfirmed ? total + 1 : total,
       0
     );
 
   render() {
-    const totalTrips = this.getTotalTrips();
+    const { trips } = this.props;
+    const totalTrips = this.getTotalTrips(trips);
     const numberConfirmed = this.getConfirmedTrips();
     const numberUnconfirmed = totalTrips - numberConfirmed;
     const setConfirmed = () => this.setConfirmed();
@@ -226,7 +195,7 @@ class App extends Component {
 
             <header className="header">
               <div className="header__logo">
-                <h2>Trip Planner</h2>
+                <h2>Trip Planner!</h2>
               </div>
             </header>
 
@@ -279,7 +248,7 @@ class App extends Component {
             />
 
             <TripList
-              trips={this.state.trips}
+              trips={this.props.trips}
               toggleConfirmationAt={this.toggleConfirmationAt}
               toggleEditingAt={this.toggleEditingAt}
               setNameAt={this.setNameAt}
@@ -311,7 +280,7 @@ class App extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    prop: state.prop
+    trips: state.trips
   }
 }
 
@@ -323,7 +292,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(
+export default hot(module)(connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App));

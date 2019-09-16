@@ -2,15 +2,17 @@ import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import getAPIUrl from '../constants/serverAPI';
 
-export const tripsList = (data) => {
+export const tripsList = (bool) => {
   return {
     type: types.TRIPS,
-    data
+    data: bool
   }
 }
 
-export const tripsListLoad = () => {
-  dispatch(tripsList(data));
+export const tripsListDispatcher = () => {
+  return dispatch => {
+    dispatch(tripsList(true));
+  }
   // return (dispatch) = () => {
   //   const host = getAPIUrl();
   //   const url = 'api/v1/trips';

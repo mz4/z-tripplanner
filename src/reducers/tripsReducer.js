@@ -2,48 +2,7 @@ import * as TripActionType from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 
 // import * as PlayerActionTypes from '../actiontypes/player';
-const initialState = {
-  trips: [
-    {
-      id: 0,
-      key: 0,
-      name: 'Rome',
-      dateStart: '19/08/2019',
-      dateEnd: '29/08/2019',
-      isConfirmed: false,
-      isEditing: false
-    },
-    {
-      id: 1,
-      key: 1,
-      name: 'Paris',
-      dateStart: '15/06/2019',
-      dateEnd: '29/06/2019',
-      isConfirmed: true,
-      isEditing: false
-    },
-    {
-      id: 2,
-      key: 2,
-      name: 'Malta',
-      dateStart: '01/02/2019',
-      dateEnd: '08/02/2019',
-      isConfirmed: false,
-      isEditing: false
-    },
-    {
-      id: 3,
-      key: 3,
-      name: 'Budapest',
-      dateStart: '01/02/2019',
-      dateEnd: '08/02/2019',
-      isConfirmed: false,
-      isEditing: false
-    }
-  ],
-}
-
-export default function TripReducer(state = initialState, action) {
+export default function TripReducer(state = [], action) {
 
   switch (action.type) {
     case TripActionType.ADD_TRIP: {

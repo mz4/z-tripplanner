@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TripList from './TripList';
 import Counter from './Counter';
 import { hot } from 'react-hot-loader';
+import { tripsListDispatcher } from '../src/actions/tripsActions';
 import './css/main.scss';
 
 class App extends Component {
@@ -20,29 +21,30 @@ class App extends Component {
         dateEnd: ""
       }
     };
-  
   }
 
   toggleTripPropertyAt = (property, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (trip.id === id) {
-          return {
-            ...trip,
-            [property]: !trip[property]
-          };
-        }
-        return trip;
-      })
-    });
+    console.log('toggle tri at');
+    // this.setState({
+    //   trips: this.props.trips.map((trip, index) => {
+    //     if (trip.id === id) {
+    //       return {
+    //         ...trip,
+    //         [property]: !trip[property]
+    //       };
+    //     }
+    //     return trip;
+    //   })
+    // });
 
   toggleConfirmationAt = id =>
     this.toggleTripPropertyAt("isConfirmed", id);
 
   removeTripAt = (id) => {
-    this.setState({
-      trips: this.props.trips.filter(trip => trip.id !== id)
-    });
+    console.log('trip removed!');
+    // this.setState({
+    //   trips: this.props.trips.filter(trip => trip.id !== id)
+    // });
   }
 
   toggleEditingAt = id =>
@@ -143,7 +145,9 @@ class App extends Component {
 
   newTripSubmitHandler = e => {
     e.preventDefault();
-    const { trips, form } = this.state;
+    const trip = {};
+    const { trips } = this.props;
+    const { form } = this.state;
     let tripId = 0;
     let newId = 0;
     trips.map((trip) => {
@@ -152,24 +156,14 @@ class App extends Component {
       }
     });
     newId = parseInt(tripId) + 1;
-    this.setState({
-      trips: [
-        {
-          id: newId,
-          name: form.name,
-          dateStart: form.dateStart,
-          dateEnd: form.dateEnd,
-          isConfirmed: false,
-          isEditing: false
-        },
-        ...this.props.trips
-      ],
-      form: {
-        name: '',
-        dateStart: '',
-        dateEnd: ''
-      }
-    });
+    console.log('new trip!', newId);
+    trip.id = newId;
+    trip.name = form.name;
+    trip.dateStart = form.dateStart;
+    trip.dateEnd = form.dateEnd;
+    trip.isConfirmed = false;
+    trip.isEditing = false;
+    this.props.tripsListLoad();
   }
 
   getTotalTrips = (trips) => trips.length;
@@ -284,13 +278,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    dispatch1: () => {
-      dispatch(actionCreator)
-    }
+    tripsListLoad: () => dispatch(tripsListDispatcher())
   }
-}
+};
 
 export default hot(module)(connect(
   mapStateToProps,

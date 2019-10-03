@@ -1,30 +1,64 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import TripList from './TripList';
-import Counter from './Counter';
+// import TripList from './TripList';
+// import Counter from './Counter';
 import { hot } from 'react-hot-loader';
 import { tripsListDispatcher } from '../src/actions/tripsActions';
 import './css/main.scss';
+// import { number, any } from 'prop-types';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filter: {
-        showConfirmed: false,
-        showUnConfirmed: false,
-        showAll: true
-      },
-      form: {
-        name: "",
-        dateStart: "",
-        dateEnd: ""
-      }
-    };
+interface MyProps {
+  trips: [
+    {
+      id: number,
+      dateStart: string,
+      dateEnd: string
+    }
+  ],
+  tripsListLoad: () => void;
+};
+interface MyTrip {
+  id: number,
+  name: string,
+  dateStart: string,
+  dateEnd: string,
+  isConfirmed: boolean,
+  isEditing: boolean,
+};
+
+// interface MyState {
+//   count: number;
+// }
+
+interface MyState {
+  filter: {
+    showConfirmed: boolean,
+    showUnConfirmed: boolean,
+    showAll: boolean
+  },
+  form: {
+    name: string,
+    dateStart: string,
+    dateEnd: string
   }
+};
 
-  toggleTripPropertyAt = (property, id) =>
-    console.log('toggle tri at');
+class App extends React.Component<MyProps, MyState> {
+  readonly state: MyState = {
+    filter: {
+      showConfirmed: false,
+      showUnConfirmed: false,
+      showAll: true
+    },
+    form: {
+      name: "",
+      dateStart: "",
+      dateEnd: ""
+    }
+  };
+
+  // toggleTripPropertyAt = (property, id) =>
+  //   console.log('toggle tri at');
     // this.setState({
     //   trips: this.props.trips.map((trip, index) => {
     //     if (trip.id === id) {
@@ -37,89 +71,90 @@ class App extends Component {
     //   })
     // });
 
-  toggleConfirmationAt = id =>
-    this.toggleTripPropertyAt("isConfirmed", id);
+  // toggleConfirmationAt = id =>
+  //   this.toggleTripPropertyAt("isConfirmed", id);
 
-  removeTripAt = (id) => {
-    console.log('trip removed!');
+  // removeTripAt = (id: number) => {
+  //   console.log('trip removed!');
     // this.setState({
     //   trips: this.props.trips.filter(trip => trip.id !== id)
     // });
-  }
+  // }
 
-  toggleEditingAt = id =>
-    this.toggleTripPropertyAt("isEditing", id);
+  // _toggleEditingAt = id =>
+  //   this.toggleTripPropertyAt("isEditing", id);
 
-  setNameAt = (name, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (id === trip.id) {
-          return {
-            ...trip,
-            name
-          };
-        }
-        return trip;
-      })
-    });
+  // setNameAt = (name: string, id: number) =>
+  //   let tripps: string[] = this.props.trips.map((trip, index) => {
+  //     if (id === trip.id) {
+  //       return {
+  //         ...trip,
+  //         name
+  //       };
+  //     }
+  //     return trip;
+  //   })
+  //   this.setState({
+  //     trips: tripps;
+  //   });
 
-  setDateStartAt = (dateStart, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (id === trip.id) {
-          return {
-            ...trip,
-            dateStart
-          };
-        }
-        return trip;
-      })
-    });
+  // setDateStartAt = (dateStart, id) =>
+  //   this.setState({
+  //     trips: this.props.trips.map((trip, index) => {
+  //       if (id === trip.id) {
+  //         return {
+  //           ...trip,
+  //           dateStart
+  //         };
+  //       }
+  //       return trip;
+  //     })
+  //   });
 
-  setDateEndAt = (dateEnd, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (id === trip.id) {
-          return {
-            ...trip,
-            dateEnd
-          };
-        }
-        return trip;
-      })
-    });
+  // setDateEndAt = (dateEnd, id) =>
+  //   this.setState({
+  //     trips: this.props.trips.map((trip, index) => {
+  //       if (id === trip.id) {
+  //         return {
+  //           ...trip,
+  //           dateEnd
+  //         };
+  //       }
+  //       return trip;
+  //     })
+  //   });
 
-  setConfirmed() {
-    this.setState({ 
-      filter: {
-        showConfirmed: true,
-        showUnConfirmed: false,
-        showAll: false,
-      }
-    });
-  }
+  // setConfirmed() {
+  //   this.setState({ 
+  //     filter: {
+  //       showConfirmed: true,
+  //       showUnConfirmed: false,
+  //       showAll: false,
+  //     }
+  //   });
+  // }
 
-  setUnConfirmed() {
-    this.setState({
-      filter: {
-        showConfirmed: false,
-        showUnConfirmed: true,
-        showAll: false,
-      }
-    });
-  }
+  // setUnConfirmed() {
+  //   this.setState({
+  //     filter: {
+  //       showConfirmed: false,
+  //       showUnConfirmed: true,
+  //       showAll: false,
+  //     }
+  //   });
+  // }
 
-  setAll() {
-    this.setState({
-      filter: {
-        showConfirmed: true,
-        showUnConfirmed: true,
-        showAll: true,
-      }
-    });
-  }
+  // setAll() {
+  //   this.setState({
+  //     filter: {
+  //       showConfirmed: true,
+  //       showUnConfirmed: true,
+  //       showAll: true,
+  //     }
+  //   });
+  // }
 
-  handleNameInput = e =>
+  private handleNameInput = e =>
     this.setState({
       form: {
         ...this.state.form,
@@ -127,7 +162,7 @@ class App extends Component {
       }
     });
 
-  handleDateStart = e =>
+  private handleDateStart = e =>
     this.setState({
       form: {
         ...this.state.form,
@@ -135,7 +170,7 @@ class App extends Component {
       }
     });
 
-  handleDateEnd = e =>
+  private handleDateEnd = e =>
     this.setState({
       form: {
         ...this.state.form,
@@ -145,17 +180,24 @@ class App extends Component {
 
   newTripSubmitHandler = e => {
     e.preventDefault();
-    const trip = {};
+    const trip: MyTrip = {
+      id: 0,
+      name: '',
+      dateStart: '',
+      dateEnd: '',
+      isConfirmed: false,
+      isEditing: false,
+    };
     const { trips } = this.props;
     const { form } = this.state;
-    let tripId = 0;
-    let newId = 0;
+    let tripId:number = 0;
+    let newId:number = 0;
     trips.map((trip) => {
       if (trip.id > tripId) {
-        tripId = trip.id
+        tripId = trip.id;
       }
     });
-    newId = parseInt(tripId) + 1;
+    newId = tripId + 1;
     console.log('new trip!', newId);
     trip.id = newId;
     trip.name = form.name;
@@ -166,22 +208,22 @@ class App extends Component {
     this.props.tripsListLoad();
   }
 
-  getTotalTrips = (trips) => trips.length;
+  // getTotalTrips = (trips) => trips.length;
 
-  getConfirmedTrips = () =>
-    this.props.trips.reduce(
-      (total, trip) => trip.isConfirmed ? total + 1 : total,
-      0
-    );
+  // getConfirmedTrips = () =>
+  //   this.props.trips.reduce(
+  //     (total, trip) => trip.isConfirmed ? total + 1 : total,
+  //     0
+  //   );
 
   render() {
-    const { trips } = this.props;
-    const totalTrips = this.getTotalTrips(trips);
-    const numberConfirmed = this.getConfirmedTrips();
-    const numberUnconfirmed = totalTrips - numberConfirmed;
-    const setConfirmed = () => this.setConfirmed();
-    const setUnConfirmed = () => this.setUnConfirmed();
-    const setAll = () => this.setAll();
+    // const { trips } = this.props;
+    // const totalTrips = this.getTotalTrips(trips);
+    // const numberConfirmed = this.getConfirmedTrips();
+    // const numberUnconfirmed = totalTrips - numberConfirmed;
+    // const setConfirmed = () => this.setConfirmed();
+    // const setUnConfirmed = () => this.setUnConfirmed();
+    // const setAll = () => this.setAll();
     return (
       <React.Fragment>
         <div className="App">
@@ -229,7 +271,7 @@ class App extends Component {
               </div>
             </form>
 
-            <Counter
+            {/* <Counter
               totalTrips={totalTrips}
               numberConfirmed={numberConfirmed}
               numberUnconfirmed={numberUnconfirmed}
@@ -253,26 +295,16 @@ class App extends Component {
               showConfirmed={this.state.filter.showConfirmed}
               showUnConfirmed={this.state.filter.showUnConfirmed}
               showAll={this.state.filter.showAll}
-            />
+            /> */}
 
           </div>
         </div>
-        {/* 
-        <div className="challenge">
-          <div className="header">Header</div>
-          <div className="small-box-1">Small box 1</div>
-          <div className="small-box-2">Small box 2</div>
-          <div className="small-box-3">Small box 3</div>
-          <div className="main-content">Main content</div>
-          <div className="sidebar">Sidebar</div>
-          <div className="footer">Footer</div>
-        </div> */}
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     trips: state.trips
   }
@@ -286,5 +318,5 @@ const mapDispatchToProps = (dispatch) => {
 
 export default hot(module)(connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(App));

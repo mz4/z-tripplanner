@@ -50,7 +50,18 @@ const store = configureStore(initialState);
 
 render(
   <Provider store={store}>
-    <App />
+    <App 
+      trips={
+        [{
+          id: 0,
+          dateStart: '',
+          dateEnd: '',
+          isConfirmed: false,
+          isEditing: false,
+        }]
+      }
+      tripsListLoad= {()=>{}}
+    />
   </Provider>,
   document.getElementById("app")
 );

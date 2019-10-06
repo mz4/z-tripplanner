@@ -15,9 +15,10 @@ module.exports = {
   module: {
     rules: [
       { 
-        test: /\.(t|j)sx?$/, 
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
         use: { 
-          loader: 'awesome-typescript-loader' 
+          loader: 'ts-loader'
         } 
       },
       {

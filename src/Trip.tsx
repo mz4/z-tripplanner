@@ -10,7 +10,8 @@ const Trip = props =>
         <div>
           <TripName
             isEditing={props.isEditing}
-            handleNameEdits={e => props.setName(e.target.value, props.id)}>
+            handleNameEdits={e => props.setName(e.target.value, props.id)}
+            >
             {props.name}
           </TripName>
         </div>

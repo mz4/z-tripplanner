@@ -4,7 +4,7 @@ import TripName from './TripName';
 import TripDate from './TripDate';
 
 const Trip = props =>
-  <div>
+  <div key={props.keyid}>
     <div className="col-md-10">
       <div className="trip">
         <div>
@@ -50,7 +50,7 @@ const Trip = props =>
   </div>;
 
 Trip.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   dateStart: PropTypes.string.isRequired,
   dateEnd: PropTypes.string.isRequired,
@@ -61,7 +61,9 @@ Trip.propTypes = {
   setName: PropTypes.func.isRequired,
   setDateStart: PropTypes.func.isRequired,
   setDateEnd: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired
+  handleRemove: PropTypes.func.isRequired,
+  key: PropTypes.any,
+  keyid: PropTypes.any,
 };
 
 export default Trip;

@@ -12,6 +12,8 @@ interface MyProps {
   trips: [
     {
       id: number,
+      key: number,
+      name: string,
       dateStart: string,
       dateEnd: string,
       isConfirmed: boolean,
@@ -23,6 +25,7 @@ interface MyProps {
 
 interface MyTrip {
   id: number,
+  key: number,
   name: string,
   dateStart: string,
   dateEnd: string,
@@ -49,32 +52,37 @@ interface MyState {
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
+
+    this.state = {
+      filter: {
+        showConfirmed: false,
+        showUnConfirmed: false,
+        showAll: true
+      },
+      form: {
+        name: "",
+        dateStart: "",
+        dateEnd: ""
+      },
+      count: 0,
+      trips: [{
+        id: 0,
+        key: 0,
+        name: "",
+        dateStart: "",
+        dateEnd: "",
+        isConfirmed: false,
+        isEditing: false,      
+      }],
+      pippo: [""]
+    };
     this.getTotalTrips = this.getTotalTrips.bind(this);
   }
 
-  state: MyState = {
-    filter: {
-      showConfirmed: false,
-      showUnConfirmed: false,
-      showAll: true
-    },
-    form: {
-      name: "",
-      dateStart: "",
-      dateEnd: ""
-    },
-    count: 0,
-    trips: [{
-      id: 0,
-      dateStart: "",
-      dateEnd: "",
-      isConfirmed: false,
-      isEditing: false,      
-    }],
-    pippo: [""]
-  };
-
-
+  componentDidMount() {
+    console.log('DIDMOUNT')
+    this.props.tripsListLoad();
+  }
 
   toggleTripPropertyAt = (property, id) =>
     this.setState({
@@ -203,6 +211,7 @@ class App extends React.Component<MyProps, MyState> {
     e.preventDefault();
     const trip: MyTrip = {
       id: 0,
+      key: 0,
       name: '',
       dateStart: '',
       dateEnd: '',
@@ -339,5 +348,5 @@ const mapDispatchToProps = (dispatch) => {
 
 export default hot(module)(connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(App));

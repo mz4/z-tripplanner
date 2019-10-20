@@ -3,6 +3,6 @@ export default function getAPIUrl() {
     if(host === "production") {
         return "/"
     } else {
-        return "http://localhost:8080/"
+        return "http://localhost:3000/"
     }
 }

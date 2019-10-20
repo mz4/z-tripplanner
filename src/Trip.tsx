@@ -4,13 +4,14 @@ import TripName from './TripName';
 import TripDate from './TripDate';
 
 const Trip = props =>
-  <div>
+  <div key={props.keyid}>
     <div className="col-md-10">
       <div className="trip">
         <div>
           <TripName
             isEditing={props.isEditing}
-            handleNameEdits={e => props.setName(e.target.value, props.id)}>
+            handleNameEdits={e => props.setName(e.target.value, props.id)}
+            >
             {props.name}
           </TripName>
         </div>
@@ -33,14 +34,14 @@ const Trip = props =>
             <input
               type="checkbox"
               checked={props.isConfirmed}
-              onChange={props.handleConfirmation} /> 
-              <span className="confirmed">Confirmed</span>
+              onChange={props.handleConfirmation} />
+            <span className="confirmed">Confirmed</span>
           </label>
         </div>
         <button onClick={props.handeToggleEditing}>
           {props.isEditing ? "save" : "edit"}
         </button>
-        <button 
+        <button
           onClick={props.handleRemove}>
           remove
         </button>
@@ -49,7 +50,7 @@ const Trip = props =>
   </div>;
 
 Trip.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   dateStart: PropTypes.string.isRequired,
   dateEnd: PropTypes.string.isRequired,
@@ -60,7 +61,9 @@ Trip.propTypes = {
   setName: PropTypes.func.isRequired,
   setDateStart: PropTypes.func.isRequired,
   setDateEnd: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired
+  handleRemove: PropTypes.func.isRequired,
+  key: PropTypes.any,
+  keyid: PropTypes.any,
 };
 
 export default Trip;

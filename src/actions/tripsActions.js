@@ -10,19 +10,18 @@ export const tripsList = (bool) => {
 }
 
 export const tripsListDispatcher = () => {
-  return dispatch => {
-    dispatch(tripsList(true));
-  }
-  // return (dispatch) = () => {
-  //   const host = getAPIUrl();
-  //   const url = 'api/v1/trips';
-  //   return axios
-  //     .get(host + url)
-  //     .then(data => {
-  //       dispatch(tripsList(data));
-  //     })
-  //     .catch(error => {
-  //       throw error;
-  //     });
-  // };
+  console.log('GETTRIPS')
+  return (dispatch) => {
+    const host = getAPIUrl();
+    const url = 'api/v1/trips';
+    return axios
+      .get(host + url)
+      .then(data => {
+        console.log(JSON.stringify(data));
+        dispatch(tripsList(data));
+      })
+      .catch(error => {
+        throw error;
+      });
+  };
 };

@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TripDate = props => {
+interface tripDateProps {
+  isEditing: boolean,
+  handleDateEdits: any,
+  children: any
+};
+
+const TripDate = (props: tripDateProps) => {
   if (props.isEditing) {
     return (
       <input

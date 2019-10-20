@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TripName = props => {
+interface tripNameProps {
+  isEditing: boolean,
+  handleNameEdits: any,
+  children: any
+};
+
+const TripName = (props: tripNameProps) => {
   if (props.isEditing) {
     return (
       <input

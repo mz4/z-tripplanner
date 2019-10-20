@@ -80,7 +80,6 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    console.log('DIDMOUNT')
     this.props.tripsListLoad();
   }
 
@@ -101,9 +100,8 @@ class App extends React.Component<MyProps, MyState> {
     this.toggleTripPropertyAt("isConfirmed", id);
 
   removeTripAt = (id: number) => {
-    console.log('trip removed!');
     // const tripsc = this.props.trips.filter(trip => trip.id !== id);
-    const pippoc = ["aaaa"]
+    const pippoc = ["aaaa"];
     this.setState({
       pippo: pippoc
     });
@@ -228,7 +226,6 @@ class App extends React.Component<MyProps, MyState> {
       }
     });
     newId = tripId + 1;
-    console.log('new trip!', newId);
     trip.id = newId;
     trip.name = form.name;
     trip.dateStart = form.dateStart;

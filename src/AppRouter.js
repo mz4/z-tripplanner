@@ -12,18 +12,17 @@ import Login from './Login';
  * Private route checks if user is logged in
  * in case he is not login modal page will be shown
  */
-const App = (props) => {
+const AppRouter = (props) => {
   const { auth } = props;
+  console.log('-------------------------');
+  console.log(auth);
   return (
     <div>
       {
-        serverIsOffLine ?
-          <LostConnectionToServer />
-        :
-          <Switch>
-            <PrivateRoute exact path="/" component={App} isAuthenticated={auth} />
-            <PrivateRoute path="/*" component={NotFound} isAuthenticated={auth} />
-          </Switch>
+        <Switch>
+          <PrivateRoute exact path="/" component={App} isAuthenticated={auth} />
+          <PrivateRoute path="/*" component={App} isAuthenticated={auth} />
+        </Switch>
       }
     </div>
   );
@@ -48,11 +47,11 @@ const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
   />
 );
 
-App.defaultProps = {
+AppRouter.defaultProps = {
   auth: false,
 };
 
-App.propTypes = {
+AppRouter.propTypes = {
   auth: PropTypes.bool,
 };
 
@@ -71,4 +70,4 @@ const mapStateToProps = (state) => {
     auth: state.auth.isAuthenticated,
   };
 };
-export default withRouter(connect(mapStateToProps)(App));
+export default withRouter(connect(mapStateToProps)(AppRouter));

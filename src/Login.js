@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import auth from '../src/actions/authActions';
+import setAuth from '../src/actions/authActions';
 import LoginForm from './LoginForm';
+import axios from 'axios';
 // import { deleteCookie, getCookie, setCookie } from '../../common/Constants';
 
 class Login extends Component {
@@ -16,20 +17,34 @@ class Login extends Component {
     this.handlePassword = this.handlePassword.bind(this);
   }
 
-
   newTripSubmitHandler = e => {
     e.preventDefault();
-    console.log('submit');
+    const {username, password } = this.state;
+    const body = {};
+    body.email = username;
+    body.password = password;
+    axios.post(`http://localhost:3000/signin`, body)
+      .then(res => {
+        this.props.setAuth(true, res.token, '');
+        console.log(res);
+        console.log(res.data);
+      })
   }
 
   handleUserName = e => {
     e.preventDefault();
-    console.log('handle username');
+    this.setState({
+      username: e.target.value
+    })
+    console.log('handle username', e.target.value);
   }
 
   handlePassword = e => {
     e.preventDefault();
-    console.log('handle password');
+    this.setState({
+      password: e.target.value
+    })
+    console.log('handle password', e.target.value);
   }
 
   render() {
@@ -62,12 +77,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    auth: (
+    setAuth: (
       isAuthenticated, 
       token, 
       authErrorMsg) => 
         dispatch(
-          auth(
+          setAuth(
             isAuthenticated, 
             token, 
             authErrorMsg)),

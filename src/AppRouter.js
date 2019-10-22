@@ -13,15 +13,15 @@ import Login from './Login';
  * in case he is not login modal page will be shown
  */
 const AppRouter = (props) => {
-  const { auth } = props;
+  const { auth, token } = props;
   console.log('-------------------------');
   console.log(auth);
   return (
     <div>
       {
         <Switch>
-          <PrivateRoute exact path="/" component={App} isAuthenticated={auth} />
-          <PrivateRoute path="/*" component={App} isAuthenticated={auth} />
+          <PrivateRoute exact path="/" component={App} isAuthenticated={auth} token={token} />
+          <PrivateRoute path="/*" component={App} isAuthenticated={auth} token={token} />
         </Switch>
       }
     </div>
@@ -33,13 +33,15 @@ const AppRouter = (props) => {
  *
  * if not show login component
  */
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+const PrivateRoute = ({ component: Component, isAuthenticated, token, ...rest }) => (
   <Route
     {...rest}
     render={props =>
       (isAuthenticated
         ? (
-        <Component {...props} />
+        <Component 
+          token = {token}
+          {...props} />
       ) : (
         <Login />
       ))
@@ -68,6 +70,7 @@ PrivateRoute.propTypes = {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth.isAuthenticated,
+    token: state.auth.token,
   };
 };
 export default withRouter(connect(mapStateToProps)(AppRouter));

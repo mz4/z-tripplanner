@@ -9,15 +9,15 @@ export const tripsList = (bool) => {
   }
 }
 
-export const tripsListDispatcher = () => {
+export const tripsListDispatcher = (token) => {
   console.log('GETTRIPS')
   return (dispatch) => {
     const host = getAPIUrl();
-    const url = 'api/v1/trips';
+    const url = 'api/trip';
     return axios
-      .get(host + url)
+      .get(host + url, { headers: {"Authorization" : `Bearer ${token}`} })
       .then(data => {
-        console.log(JSON.stringify(data));
+        console.log('TRIPSLIST!!!!!!>', JSON.stringify(data));
         dispatch(tripsList(data));
       })
       .catch(error => {

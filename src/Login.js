@@ -25,7 +25,7 @@ class Login extends Component {
     body.password = password;
     axios.post(`http://localhost:3000/signin`, body)
       .then(res => {
-        this.props.setAuth(true, res.token, '');
+        this.props.setAuth(true, res.data.token, '');
         console.log(res);
         console.log(res.data);
       })

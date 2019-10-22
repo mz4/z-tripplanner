@@ -9,6 +9,7 @@ import { render } from 'react-dom';
 // import { number, any } from 'prop-types';
 
 interface MyProps {
+  token: '',
   trips: [
     {
       id: number,
@@ -20,7 +21,7 @@ interface MyProps {
       isEditing: boolean,
     }
   ],
-  tripsListLoad: () => void;
+  tripsListLoad: (token) => void;
 };
 
 interface MyTrip {
@@ -80,7 +81,8 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    this.props.tripsListLoad();
+    const { token } = this.props;
+    this.props.tripsListLoad(token);
   }
 
   toggleTripPropertyAt = (property, id) =>
@@ -216,7 +218,7 @@ class App extends React.Component<MyProps, MyState> {
       isConfirmed: false,
       isEditing: false,
     };
-    const { trips } = this.props;
+    const { trips, token } = this.props;
     const { form } = this.state;
     let tripId:number = 0;
     let newId:number = 0;
@@ -232,7 +234,7 @@ class App extends React.Component<MyProps, MyState> {
     trip.dateEnd = form.dateEnd;
     trip.isConfirmed = false;
     trip.isEditing = false;
-    this.props.tripsListLoad();
+    this.props.tripsListLoad(token);
   }
 
   private getTotalTrips = (trips) => trips.length;
@@ -339,7 +341,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    tripsListLoad: () => dispatch(tripsListDispatcher())
+    tripsListLoad: (token) => dispatch(tripsListDispatcher(token))
   }
 };
 

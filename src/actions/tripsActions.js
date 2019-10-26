@@ -2,10 +2,10 @@ import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import getAPIUrl from '../constants/serverAPI';
 
-export const tripsList = (bool) => {
+export const tripsList = (trips) => {
   return {
     type: types.TRIPS,
-    data: bool
+    data: trips
   }
 }
 
@@ -17,8 +17,8 @@ export const tripsListDispatcher = (token) => {
     return axios
       .get(host + url, { headers: {"Authorization" : `Bearer ${token}`} })
       .then(data => {
-        console.log('TRIPSLIST!!!!!!>', JSON.stringify(data));
-        dispatch(tripsList(data));
+        console.log('TRIPSLIST!!!!!!>', JSON.stringify(data.data.docs));
+        dispatch(tripsList(data.data.docs));
       })
       .catch(error => {
         throw error;

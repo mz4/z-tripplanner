@@ -22,7 +22,7 @@ export default function TripReducer(state = [], action) {
     }
 
     case TripActionType.TRIPS: {
-      return state;
+      return { ...state, trips: action.data };
     }
 
     // case PlayerActionTypes.REMOVE_PLAYER: {

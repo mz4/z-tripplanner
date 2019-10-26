@@ -335,7 +335,7 @@ class App extends React.Component<MyProps, MyState> {
 
 const mapStateToProps = (state) => {
   return {
-    trips: state.trips
+    trips: state.trips.trips
   }
 }
 

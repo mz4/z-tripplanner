@@ -7,7 +7,9 @@ import './index.css';
 import AppRouter from './AppRouter';
 
 const initialState = {
-    trips: [],
+    trips: {
+      trips: []
+    },
   }
 
 const store = configureStore(initialState);

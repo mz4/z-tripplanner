@@ -230,8 +230,6 @@ class App extends React.Component<MyProps, MyState> {
       }
     });
 
-    newId = tripId + 1;
-    trip.id = newId;
     trip.name = form.name;
     trip.dateStart = form.dateStart;
     trip.dateEnd = form.dateEnd;
@@ -243,6 +241,7 @@ class App extends React.Component<MyProps, MyState> {
     axios
       .post(
         host + url,
+        trip,
         { headers:
           {
             "Authorization" : `Bearer ${token}`

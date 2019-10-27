@@ -23,7 +23,7 @@ const TripList = props =>
       })
       .map((trip) =>
         <Trip
-          id={trip.id}
+          id={trip._id}
           name={trip.name}
           dateStart={trip.dateStart}
           dateEnd={trip.dateEnd}
@@ -35,8 +35,8 @@ const TripList = props =>
           setDateStart={text => props.setDateStartAt(text, trip.id)}
           setDateEnd={text => props.setDateEndAt(text, trip.id)}
           handleRemove={() => props.removeTripAt(trip.id)}
-          key={trip.key}
-          keyid={trip.key}
+          key={trip._id}
+          keyid={trip._id}
         />
       )
     }

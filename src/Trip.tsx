@@ -50,7 +50,7 @@ const Trip = props =>
   </div>;
 
 Trip.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   dateStart: PropTypes.string.isRequired,
   dateEnd: PropTypes.string.isRequired,

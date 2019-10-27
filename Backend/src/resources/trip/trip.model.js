@@ -22,6 +22,11 @@ const tripSchema = new mongoose.Schema(
       required: 'Please enter isConfirmed',
       trim: true
     },
+    isEditing: {
+      type: Boolean,
+      required: 'Please enter isEditing',
+      trim: false
+    },
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'user',

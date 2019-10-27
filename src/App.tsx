@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import TripList from './TripList';
 import Counter from './Counter';
 import { hot } from 'react-hot-loader';
 import { tripsListDispatcher } from '../src/actions/tripsActions';
-import './css/main.scss';
+import getAPIUrl from './constants/serverAPI';
 import { render } from 'react-dom';
+import './css/main.scss';
 // import { number, any } from 'prop-types';
 
 interface MyProps {
   token: '',
   trips: [
     {
-      id: number,
-      key: number,
+      id: string,
+      key: string,
       name: string,
       dateStart: string,
       dateEnd: string,
@@ -25,8 +27,8 @@ interface MyProps {
 };
 
 interface MyTrip {
-  id: number,
-  key: number,
+  id: string,
+  key: string,
   name: string,
   dateStart: string,
   dateEnd: string,
@@ -67,8 +69,8 @@ class App extends React.Component<MyProps, MyState> {
       },
       count: 0,
       trips: [{
-        id: 0,
-        key: 0,
+        id: "",
+        key: "",
         name: "",
         dateStart: "",
         dateEnd: "",
@@ -101,7 +103,7 @@ class App extends React.Component<MyProps, MyState> {
   toggleConfirmationAt = id =>
     this.toggleTripPropertyAt("isConfirmed", id);
 
-  removeTripAt = (id: number) => {
+  removeTripAt = (id: string) => {
     // const tripsc = this.props.trips.filter(trip => trip.id !== id);
     const pippoc = ["aaaa"];
     this.setState({
@@ -112,7 +114,7 @@ class App extends React.Component<MyProps, MyState> {
   toggleEditingAt = id =>
     this.toggleTripPropertyAt("isEditing", id);
 
-  setNameAt = (name: string, id: number) => {
+  setNameAt = (name: string, id: string) => {
     let trips: MyTrip[];
     this.setState({
       trips: this.props.trips.map((trip, index) => {
@@ -210,8 +212,8 @@ class App extends React.Component<MyProps, MyState> {
   private newTripSubmitHandler = e => {
     e.preventDefault();
     const trip: MyTrip = {
-      id: 0,
-      key: 0,
+      id: '',
+      key: '',
       name: '',
       dateStart: '',
       dateEnd: '',
@@ -220,13 +222,14 @@ class App extends React.Component<MyProps, MyState> {
     };
     const { trips, token } = this.props;
     const { form } = this.state;
-    let tripId:number = 0;
-    let newId:number = 0;
+    let tripId:string = "";
+    let newId:string = "";
     trips.map((trip) => {
       if (trip.id > tripId) {
         tripId = trip.id;
       }
     });
+
     newId = tripId + 1;
     trip.id = newId;
     trip.name = form.name;
@@ -234,7 +237,24 @@ class App extends React.Component<MyProps, MyState> {
     trip.dateEnd = form.dateEnd;
     trip.isConfirmed = false;
     trip.isEditing = false;
-    this.props.tripsListLoad(token);
+
+    const host = getAPIUrl();
+    const url = 'api/trip';
+    axios
+      .post(
+        host + url,
+        { headers:
+          {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+      .then(data => {
+        this.props.tripsListLoad(token);
+      })
+      .catch(error => {
+        throw error;
+      });
+
   }
 
   private getTotalTrips = (trips) => trips.length;

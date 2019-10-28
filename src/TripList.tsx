@@ -29,7 +29,7 @@ const TripList = props =>
           dateEnd={trip.dateEnd}
           isConfirmed={trip.isConfirmed}
           isEditing={trip.isEditing}
-          handleConfirmation={() => props.toggleConfirmationAt(trip._id)}
+          handleConfirmation={() => props.toggleConfirmationAt(trip._id, trip.isConfirmed)}
           handeToggleEditing={() => props.toggleEditingAt(trip._id)}
           setName={text => props.setNameAt(text, trip._id)}
           setDateStart={text => props.setDateStartAt(text, trip._id)}

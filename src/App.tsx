@@ -96,8 +96,29 @@ class App extends React.Component<MyProps, MyState> {
       })
     });
 
-  toggleConfirmationAt = id =>
-    this.toggleTripPropertyAt("isConfirmed", id);
+  toggleConfirmationAt = (id, isConfirmed) => {
+    const isConfirmedToggled = !isConfirmed;
+    const { token } = this.props;
+    const host = getAPIUrl();
+    const url = 'api/trip/' + id;
+    axios
+      .put(
+        host + url,
+        { 
+          isConfirmed: isConfirmedToggled 
+        },
+        { headers:
+          {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+      .then(data => {
+        this.props.tripsListLoad(token);
+      })
+      .catch(error => {
+        throw error;
+      });
+  }
 
   removeTripAt = (id: string) => {
     const { token } = this.props;
@@ -113,7 +134,6 @@ class App extends React.Component<MyProps, MyState> {
         })
       .then(data => {
         this.props.tripsListLoad(token);
-        this.forceUpdate();
       })
       .catch(error => {
         throw error;

@@ -16,6 +16,20 @@ export const setTripNameDispatcher = (trip) => {
   }
 }
 
+export const setTripDateStartDispatcher = (trip) => {
+  return {
+    type: types.TRIPDATESTART,
+    data: trip
+  }
+}
+
+export const setTripDateEndDispatcher = (trip) => {
+  return {
+    type: types.TRIPDATEEND,
+    data: trip
+  }
+}
+
 export const tripsListDispatcher = (token) => {
   return (dispatch) => {
     const host = getAPIUrl();

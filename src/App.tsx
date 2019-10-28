@@ -6,7 +6,10 @@ import Counter from './Counter';
 import { hot } from 'react-hot-loader';
 import { 
   tripsListDispatcher, 
-  setTripNameDispatcher } from '../src/actions/tripsActions';
+  setTripNameDispatcher,
+  setTripDateStartDispatcher,
+  setTripDateEndDispatcher,
+   } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import './css/main.scss';
 import { string } from 'prop-types';
@@ -24,8 +27,10 @@ interface MyProps {
       isEditing: boolean,
     }
   ],
-  tripsListLoad: (token) => void;
-  setTripName: (trip) => void;
+  tripsListLoad: (token) => void,
+  setTripName: (trip) => void,
+  setDateStart: (trip) => void,
+  setDateEnd: (trip) => void,
 };
 
 interface MyTrip {
@@ -141,7 +146,7 @@ class App extends React.Component<MyProps, MyState> {
 
   saveEditingAt = (trip) => {
     const isEditingToggled = false;
-    const { name, dateStart, dateEnd, _id: id, } = trip;
+    const { name, dateStart, dateEnd, _id: id } = trip;
     const { token } = this.props;
     const host = getAPIUrl();
     const url = 'api/trip/' + id;
@@ -200,11 +205,19 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   setDateStartAt = (dateStart, id) => {
-    console.log('setDateStart');
+    const trip = { 
+      id: id, 
+      dateStart: dateStart
+    };
+    this.props.setDateStart(trip);
   }
 
   setDateEndAt = (dateEnd, id) => {
-    console.log('setDateEnd');
+    const trip = { 
+      id: id, 
+      dateEnd: dateEnd
+    };
+    this.props.setDateEnd(trip);
   }
 
   setConfirmed() {
@@ -406,7 +419,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
-    setTripName: (trip) => dispatch(setTripNameDispatcher(trip))
+    setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
+    setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
+    setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))
   });
 
 export default hot(module)(connect(

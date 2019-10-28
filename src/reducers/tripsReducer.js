@@ -1,7 +1,6 @@
 import * as TripActionType from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 
-// import * as PlayerActionTypes from '../actiontypes/player';
 export default function TripReducer(state = [], action) {
 
   switch (action.type) {
@@ -25,17 +24,6 @@ export default function TripReducer(state = [], action) {
       return { ...state, trips: action.data };
     }
 
-    // case PlayerActionTypes.REMOVE_PLAYER: {
-    //   const removePlayerList = [
-    //     ...state.players.slice(0, action.index),
-    //     ...state.players.slice(action.index + 1)
-    //   ];
-    //   return {
-    //     ...state,
-    //     players: removePlayerList
-    //   };
-    // }
-
     case TripActionType.TRIPNAME: {
       const updateTripsList = state.trips.map((trip, index) => {
         if (trip._id === action.data.id) {
@@ -52,11 +40,37 @@ export default function TripReducer(state = [], action) {
       };
     }
 
-    // case PlayerActionTypes.SELECT_PLAYER:
-    //   return {
-    //     ...state,
-    //     selectedPlayerIndex: action.index
-    //   };
+    case TripActionType.TRIPDATESTART: {
+      const updateTripsList = state.trips.map((trip, index) => {
+        if (trip._id === action.data.id) {
+          return {
+            ...trip,
+            dateStart: action.data.dateStart
+          };
+        }
+        return trip;
+      });
+      return {
+        ...state,
+        trips: updateTripsList
+      };
+    }
+
+    case TripActionType.TRIPDATEEND: {
+      const updateTripsList = state.trips.map((trip, index) => {
+        if (trip._id === action.data.id) {
+          return {
+            ...trip,
+            dateEnd: action.data.dateEnd
+          };
+        }
+        return trip;
+      });
+      return {
+        ...state,
+        trips: updateTripsList
+      };
+    }
 
     default:
       return state;

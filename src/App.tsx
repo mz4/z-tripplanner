@@ -6,9 +6,7 @@ import Counter from './Counter';
 import { hot } from 'react-hot-loader';
 import { tripsListDispatcher } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
-import { render } from 'react-dom';
 import './css/main.scss';
-// import { number, any } from 'prop-types';
 
 interface MyProps {
   token: '',
@@ -48,8 +46,7 @@ interface MyState {
     dateEnd: string
   },
   count: number,
-  trips: {}[],
-  pippo: string[]
+  trips: {}[]
 };
 
 class App extends React.Component<MyProps, MyState> {
@@ -76,8 +73,7 @@ class App extends React.Component<MyProps, MyState> {
         dateEnd: "",
         isConfirmed: false,
         isEditing: false,      
-      }],
-      pippo: [""]
+      }]
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
   }
@@ -104,11 +100,24 @@ class App extends React.Component<MyProps, MyState> {
     this.toggleTripPropertyAt("isConfirmed", id);
 
   removeTripAt = (id: string) => {
-    // const tripsc = this.props.trips.filter(trip => trip.id !== id);
-    const pippoc = ["aaaa"];
-    this.setState({
-      pippo: pippoc
-    });
+    const { token } = this.props;
+    const host = getAPIUrl();
+    const url = 'api/trip/' + id;
+    axios
+      .delete(
+        host + url,
+        { headers:
+          {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+      .then(data => {
+        this.props.tripsListLoad(token);
+        this.forceUpdate();
+      })
+      .catch(error => {
+        throw error;
+      });
   }
 
   toggleEditingAt = id =>
@@ -220,15 +229,8 @@ class App extends React.Component<MyProps, MyState> {
       isConfirmed: false,
       isEditing: false,
     };
-    const { trips, token } = this.props;
+    const { token } = this.props;
     const { form } = this.state;
-    let tripId:string = "";
-    let newId:string = "";
-    trips.map((trip) => {
-      if (trip.id > tripId) {
-        tripId = trip.id;
-      }
-    });
 
     trip.name = form.name;
     trip.dateStart = form.dateStart;

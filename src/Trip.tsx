@@ -4,7 +4,7 @@ import TripName from './TripName';
 import TripDate from './TripDate';
 
 const Trip = props =>
-  <div key={props.keyid}>
+  <div key={props.keyid} className="row">
     <div className="col-md-10">
       <div className="trip">
         <div>

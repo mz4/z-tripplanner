@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Trip from './Trip';
 
-const TripList = props =>
-  <div className="row">
+const TripList = props => 
+  <div>
     {
       props.trips
       .filter(trip => {
@@ -21,23 +21,23 @@ const TripList = props =>
           return false
         }
       })
-      .map((trip) =>
-        <Trip
+      .map(trip =>
+        (<Trip
           id={trip._id}
           name={trip.name}
           dateStart={trip.dateStart}
           dateEnd={trip.dateEnd}
           isConfirmed={trip.isConfirmed}
           isEditing={trip.isEditing}
-          handleConfirmation={() => props.toggleConfirmationAt(trip.id)}
-          handeToggleEditing={() => props.toggleEditingAt(trip.id)}
-          setName={text => props.setNameAt(text, trip.id)}
-          setDateStart={text => props.setDateStartAt(text, trip.id)}
-          setDateEnd={text => props.setDateEndAt(text, trip.id)}
-          handleRemove={() => props.removeTripAt(trip.id)}
+          handleConfirmation={() => props.toggleConfirmationAt(trip._id)}
+          handeToggleEditing={() => props.toggleEditingAt(trip._id)}
+          setName={text => props.setNameAt(text, trip._id)}
+          setDateStart={text => props.setDateStartAt(text, trip._id)}
+          setDateEnd={text => props.setDateEndAt(text, trip._id)}
+          handleRemove={() => props.removeTripAt(trip._id)}
           key={trip._id}
           keyid={trip._id}
-        />
+        />)
       )
     }
   </div>;

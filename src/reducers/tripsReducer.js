@@ -36,22 +36,21 @@ export default function TripReducer(state = [], action) {
     //   };
     // }
 
-    // case PlayerActionTypes.UPDATE_PLAYER_SCORE: {
-    //   const updatePlayerList = state.players.map((player, index) => {
-    //     if (index === action.index) {
-    //       return {
-    //         ...player,
-    //         score: player.score + action.score,
-    //         updated: `${month}/${day}/${year}`
-    //       };
-    //     }
-    //     return player;
-    //   });
-    //   return {
-    //     ...state,
-    //     players: updatePlayerList
-    //   };
-    // }
+    case TripActionType.TRIPNAME: {
+      const updateTripsList = state.trips.map((trip, index) => {
+        if (trip._id === action.data.id) {
+          return {
+            ...trip,
+            name: action.data.name
+          };
+        }
+        return trip;
+      });
+      return {
+        ...state,
+        trips: updateTripsList
+      };
+    }
 
     // case PlayerActionTypes.SELECT_PLAYER:
     //   return {

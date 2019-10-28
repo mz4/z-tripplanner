@@ -4,9 +4,12 @@ import axios from 'axios';
 import TripList from './TripList';
 import Counter from './Counter';
 import { hot } from 'react-hot-loader';
-import { tripsListDispatcher } from '../src/actions/tripsActions';
+import { 
+  tripsListDispatcher, 
+  setTripNameDispatcher } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import './css/main.scss';
+import { string } from 'prop-types';
 
 interface MyProps {
   token: '',
@@ -22,6 +25,7 @@ interface MyProps {
     }
   ],
   tripsListLoad: (token) => void;
+  setTripName: (trip) => void;
 };
 
 interface MyTrip {
@@ -46,7 +50,15 @@ interface MyState {
     dateEnd: string
   },
   count: number,
-  trips: {}[]
+  trip: {
+    id: string,
+    key: string,
+    name: string,
+    dateStart: string,
+    dateEnd: string,
+    isConfirmed: boolean,
+    isEditing: boolean,
+  }
 };
 
 class App extends React.Component<MyProps, MyState> {
@@ -65,7 +77,7 @@ class App extends React.Component<MyProps, MyState> {
         dateEnd: ""
       },
       count: 0,
-      trips: [{
+      trip: {
         id: "",
         key: "",
         name: "",
@@ -73,7 +85,7 @@ class App extends React.Component<MyProps, MyState> {
         dateEnd: "",
         isConfirmed: false,
         isEditing: false,      
-      }]
+      }
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
   }
@@ -83,20 +95,7 @@ class App extends React.Component<MyProps, MyState> {
     this.props.tripsListLoad(token);
   }
 
-  toggleTripPropertyAt = (property, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (trip.id === id) {
-          return {
-            ...trip,
-            [property]: !trip[property]
-          };
-        }
-        return trip;
-      })
-    });
-
-  toggleConfirmationAt = (id, isConfirmed) => {
+  toggleConfirmationAt = (id: String, isConfirmed: Boolean) => {
     const isConfirmedToggled = !isConfirmed;
     const { token } = this.props;
     const host = getAPIUrl();
@@ -140,49 +139,73 @@ class App extends React.Component<MyProps, MyState> {
       });
   }
 
-  toggleEditingAt = id =>
-    this.toggleTripPropertyAt("isEditing", id);
-
-  setNameAt = (name: string, id: string) => {
-    let trips: MyTrip[];
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (id === trip.id) {
-          return {
-            ...trip,
-            name
-          };
-        }
-        return trip;
+  saveEditingAt = (trip) => {
+    const isEditingToggled = false;
+    const { name, dateStart, dateEnd, _id: id, } = trip;
+    const { token } = this.props;
+    const host = getAPIUrl();
+    const url = 'api/trip/' + id;
+    axios
+      .put(
+        host + url,
+        { 
+          name: name,
+          dateStart: dateStart,
+          dateEnd: dateEnd,
+          isEditing: isEditingToggled
+        },
+        { headers:
+          {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+      .then(data => {
+        this.props.tripsListLoad(token);
       })
-    });
+      .catch(error => {
+        throw error;
+      });
   }
 
-  setDateStartAt = (dateStart, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (id === trip.id) {
-          return {
-            ...trip,
-            dateStart
-          };
-        }
-        return trip;
+  toggleEditingAt = (id: String, isEditing: Boolean) => {
+    const isEditingToggled = !isEditing;
+    const { token } = this.props;
+    const host = getAPIUrl();
+    const url = 'api/trip/' + id;
+    axios
+      .put(
+        host + url,
+        { 
+          isEditing: isEditingToggled
+        },
+        { headers:
+          {
+            "Authorization" : `Bearer ${token}`
+          }
+        })
+      .then(data => {
+        this.props.tripsListLoad(token);
       })
-    });
+      .catch(error => {
+        throw error;
+      });
+  }
 
-  setDateEndAt = (dateEnd, id) =>
-    this.setState({
-      trips: this.props.trips.map((trip, index) => {
-        if (id === trip.id) {
-          return {
-            ...trip,
-            dateEnd
-          };
-        }
-        return trip;
-      })
-    });
+  setNameAt = (name: string, id: string) => {
+    const trip = { 
+      id: id, 
+      name: name
+    };
+    this.props.setTripName(trip);
+  }
+
+  setDateStartAt = (dateStart, id) => {
+    console.log('setDateStart');
+  }
+
+  setDateEndAt = (dateEnd, id) => {
+    console.log('setDateEnd');
+  }
 
   setConfirmed() {
     this.setState({ 
@@ -357,6 +380,7 @@ class App extends React.Component<MyProps, MyState> {
               trips={this.props.trips}
               toggleConfirmationAt={this.toggleConfirmationAt}
               toggleEditingAt={this.toggleEditingAt}
+              saveEditingAt={this.saveEditingAt}
               setNameAt={this.setNameAt}
               setDateStartAt={this.setDateStartAt}
               setDateEndAt={this.setDateEndAt}
@@ -380,11 +404,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    tripsListLoad: (token) => dispatch(tripsListDispatcher(token))
-  }
-};
+const mapDispatchToProps = dispatch => ({
+    tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
+    setTripName: (trip) => dispatch(setTripNameDispatcher(trip))
+  });
 
 export default hot(module)(connect(
   mapStateToProps,

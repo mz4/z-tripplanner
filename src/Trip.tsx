@@ -38,12 +38,18 @@ const Trip = props =>
             <span className="confirmed">Confirmed</span>
           </label>
         </div>
-        <button onClick={props.handeToggleEditing}>
-          {props.isEditing ? "save" : "edit"}
-        </button>
+        {props.isEditing ? 
+          <button onClick={props.handleEditingSave}>
+            Save
+          </button>
+          : 
+          <button onClick={props.handleToggleEditing}>
+            Edit
+          </button>
+        }
         <button
           onClick={props.handleRemove}>
-          remove
+          Remove
         </button>
       </div>
     </div>
@@ -57,7 +63,8 @@ Trip.propTypes = {
   isConfirmed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   handleConfirmation: PropTypes.func.isRequired,
-  handeToggleEditing: PropTypes.func.isRequired,
+  handleToggleEditing: PropTypes.func.isRequired,
+  handleEditingSave: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired,
   setDateStart: PropTypes.func.isRequired,
   setDateEnd: PropTypes.func.isRequired,

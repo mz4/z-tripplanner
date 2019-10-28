@@ -1,11 +1,18 @@
-import * as types from '../constants/actionTypes';
 import axios from 'axios';
+import * as types from '../constants/actionTypes';
 import getAPIUrl from '../constants/serverAPI';
 
 export const tripsList = (trips) => {
   return {
     type: types.TRIPS,
     data: trips
+  }
+}
+
+export const setTripNameDispatcher = (trip) => {
+  return {
+    type: types.TRIPNAME,
+    data: trip
   }
 }
 

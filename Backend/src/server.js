@@ -9,7 +9,20 @@ import userRouter from './resources/user/user.router'
 import itemRouter from './resources/item/item.router'
 import tripRouter from './resources/trip/trip.router'
 
+const graphqlHTTP = require('express-graphql')
+const schema = require('./schema/schema')
+
 export const app = express()
+
+//This route will be used as an endpoint to interact with Graphql, 
+//All queries will go through this route. 
+app.use('/graphql', graphqlHTTP({
+  //directing express-graphql to use this schema to map out the graph 
+  schema,
+  //directing express-graphql to use graphiql when goto '/graphql' address in the browser
+  //which provides an interface to make GraphQl queries
+  graphiql:true
+}));
 
 app.disable('x-powered-by')
 

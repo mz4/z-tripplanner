@@ -4,6 +4,11 @@ import axios from 'axios';
 import TripList from './TripList';
 import Counter from './Counter';
 import { hot } from 'react-hot-loader';
+
+import { Query } from 'react-apollo'
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag'
+
 import { 
   tripsListDispatcher, 
   setTripNameDispatcher,
@@ -65,6 +70,17 @@ interface MyState {
     isEditing: boolean,
   }
 };
+
+const GET_TRIPS = gql`
+  {
+    trips {
+      id
+      name
+      dateStart
+      dateEnd
+    }
+  }
+`
 
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {
@@ -330,86 +346,98 @@ class App extends React.Component<MyProps, MyState> {
     const setConfirmed = () => this.setConfirmed();
     const setUnConfirmed = () => this.setUnConfirmed();
     const setAll = () => this.setAll();
+
     return (
-      <React.Fragment>
-        <div className="App">
-          <div className="main">
+      <Query query={GET_POKEMON_INFO}>
+        {({ loading, error, data, subscribeToMore }) => {
+          if (loading) return <div>Fetching</div>
+          if (error) return <div>Error</div>
+          
+          console.log(data);
 
-            <header className="header">
-              <div className="header__logo">
-                <h2>Trip Planner!</h2>
-              </div>
-            </header>
+          return (
+            <React.Fragment>
+              <div className="App">
+                <div className="main">
 
-            <form onSubmit={this.newTripSubmitHandler}>
-              <div className="destination">
-                <div className="row">
-                  <div className="col-md-4">
-                    <input
-                      type="text"
-                      value={this.state.form.name}
-                      placeholder="Name" 
-                      onChange={this.handleNameInput}
+                  <header className="header">
+                    <div className="header__logo">
+                      <h2>Trip Planner!</h2>
+                    </div>
+                  </header>
+
+                  <form onSubmit={this.newTripSubmitHandler}>
+                    <div className="destination">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <input
+                            type="text"
+                            value={this.state.form.name}
+                            placeholder="Name" 
+                            onChange={this.handleNameInput}
+                        />
+                        </div>
+                        <div className="col-md-2">
+                          <input
+                            type="text"
+                            value={this.state.form.dateStart}
+                            placeholder="Date Start" 
+                            onChange={this.handleDateStart}
+                        />
+                        </div>
+                        <div className="col-md-2">
+                          <input
+                            type="text"
+                            value={this.state.form.dateEnd}
+                            placeholder="Date End"
+                            onChange={this.handleDateEnd} 
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <button type="submit" name="submit" value="submit">
+                            Submit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <Counter
+                    totalTrips={totalTrips}
+                    numberConfirmed={numberConfirmed}
+                    numberUnconfirmed={numberUnconfirmed}
+                    setConfirmed={setConfirmed} 
+                    setUnConfirmed={setUnConfirmed}
+                    setAll={setAll}
+                    showConfirmed={this.state.filter.showConfirmed}
+                    showUnConfirmed={this.state.filter.showUnConfirmed}
+                    showAll={this.state.filter.showAll}
                   />
-                  </div>
-                  <div className="col-md-2">
-                    <input
-                      type="text"
-                      value={this.state.form.dateStart}
-                      placeholder="Date Start" 
-                      onChange={this.handleDateStart}
+
+                  <TripList
+                    trips={this.props.trips}
+                    toggleConfirmationAt={this.toggleConfirmationAt}
+                    toggleEditingAt={this.toggleEditingAt}
+                    saveEditingAt={this.saveEditingAt}
+                    setNameAt={this.setNameAt}
+                    setDateStartAt={this.setDateStartAt}
+                    setDateEndAt={this.setDateEndAt}
+                    removeTripAt={this.removeTripAt}
+                    name={this.state.form.name}
+                    showConfirmed={this.state.filter.showConfirmed}
+                    showUnConfirmed={this.state.filter.showUnConfirmed}
+                    showAll={this.state.filter.showAll}
                   />
-                  </div>
-                  <div className="col-md-2">
-                    <input
-                      type="text"
-                      value={this.state.form.dateEnd}
-                      placeholder="Date End"
-                      onChange={this.handleDateEnd} 
-                    />
-                  </div>
-                  <div className="col-md-2">
-                    <button type="submit" name="submit" value="submit">
-                      Submit
-                    </button>
-                  </div>
+
                 </div>
               </div>
-            </form>
+            </React.Fragment>
+          );
 
-            <Counter
-              totalTrips={totalTrips}
-              numberConfirmed={numberConfirmed}
-              numberUnconfirmed={numberUnconfirmed}
-              setConfirmed={setConfirmed} 
-              setUnConfirmed={setUnConfirmed}
-              setAll={setAll}
-              showConfirmed={this.state.filter.showConfirmed}
-              showUnConfirmed={this.state.filter.showUnConfirmed}
-              showAll={this.state.filter.showAll}
-            />
-
-            <TripList
-              trips={this.props.trips}
-              toggleConfirmationAt={this.toggleConfirmationAt}
-              toggleEditingAt={this.toggleEditingAt}
-              saveEditingAt={this.saveEditingAt}
-              setNameAt={this.setNameAt}
-              setDateStartAt={this.setDateStartAt}
-              setDateEndAt={this.setDateEndAt}
-              removeTripAt={this.removeTripAt}
-              name={this.state.form.name}
-              showConfirmed={this.state.filter.showConfirmed}
-              showUnConfirmed={this.state.filter.showUnConfirmed}
-              showAll={this.state.filter.showAll}
-            />
-
-          </div>
-        </div>
-      </React.Fragment>
-    );
+        }}
+        </Query>
+    )}
   }
-}
 
 const mapStateToProps = (state) => {
   return {

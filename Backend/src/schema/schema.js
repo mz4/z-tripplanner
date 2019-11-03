@@ -1,5 +1,6 @@
 const graphql = require('graphql');
-import Trip from '../resources/trip/trip.model'
+import { Trip } from '../resources/trip/trip.model'
+import { GraphQLBoolean } from 'graphql';
 
 const { 
     GraphQLObjectType, GraphQLString, 
@@ -12,6 +13,10 @@ const TripType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID  },
         name: { type: GraphQLString }, 
+        dateStart: { type: GraphQLString },
+        dateEnd: { type: GraphQLString },
+        isConfirmed: { type: GraphQLBoolean },
+        isEditing: { type: GraphQLBoolean }
     })
 });
 

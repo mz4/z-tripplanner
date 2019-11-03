@@ -1,23 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import axios from 'axios';
-import TripList from './TripList';
-import Counter from './Counter';
+import gql from 'graphql-tag';
+import React from 'react';
+import { Query } from 'react-apollo';
 import { hot } from 'react-hot-loader';
-
-import { Query } from 'react-apollo'
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag'
-
-import { 
-  tripsListDispatcher, 
-  setTripNameDispatcher,
-  setTripDateStartDispatcher,
-  setTripDateEndDispatcher,
-   } from '../src/actions/tripsActions';
+import { connect } from 'react-redux';
+import { setTripDateEndDispatcher, setTripDateStartDispatcher, setTripNameDispatcher, tripsListDispatcher } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
+import Counter from './Counter';
 import './css/main.scss';
-import { string } from 'prop-types';
+import TripList from './TripList';
+
+
 
 interface MyProps {
   token: '',
@@ -78,6 +71,8 @@ const GET_TRIPS = gql`
       name
       dateStart
       dateEnd
+      isConfirmed
+      isEditing
     }
   }
 `
@@ -339,21 +334,25 @@ class App extends React.Component<MyProps, MyState> {
     );
 
   render() {
-    const { trips } = this.props;
-    const totalTrips = this.getTotalTrips(trips);
-    const numberConfirmed = this.getConfirmedTrips();
-    const numberUnconfirmed = totalTrips - numberConfirmed;
-    const setConfirmed = () => this.setConfirmed();
-    const setUnConfirmed = () => this.setUnConfirmed();
-    const setAll = () => this.setAll();
 
     return (
-      <Query query={GET_POKEMON_INFO}>
-        {({ loading, error, data, subscribeToMore }) => {
+      <Query query={GET_TRIPS}>
+        {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-          
-          console.log(data);
+
+          // const { trips } = this.props;
+          console.log('******************')
+          console.log(JSON.stringify(data.trips))
+          console.log('******************')
+
+          const trips = data.trips;
+          const totalTrips = this.getTotalTrips(trips);
+          const numberConfirmed = this.getConfirmedTrips();
+          const numberUnconfirmed = totalTrips - numberConfirmed;
+          const setConfirmed = () => this.setConfirmed();
+          const setUnConfirmed = () => this.setUnConfirmed();
+          const setAll = () => this.setAll();          
 
           return (
             <React.Fragment>

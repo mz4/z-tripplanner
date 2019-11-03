@@ -13,6 +13,11 @@ const graphqlHTTP = require('express-graphql')
 const schema = require('./schema/schema')
 
 export const app = express()
+app.disable('x-powered-by')
+app.use(cors())
+app.use(json())
+app.use(urlencoded({ extended: true }))
+app.use(morgan('dev'))
 
 //This route will be used as an endpoint to interact with Graphql, 
 //All queries will go through this route. 
@@ -23,13 +28,6 @@ app.use('/graphql', graphqlHTTP({
   //which provides an interface to make GraphQl queries
   graphiql:true
 }));
-
-app.disable('x-powered-by')
-
-app.use(cors())
-app.use(json())
-app.use(urlencoded({ extended: true }))
-app.use(morgan('dev'))
 
 app.post('/signup', signup)
 app.post('/signin', signin)

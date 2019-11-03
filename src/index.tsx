@@ -60,7 +60,7 @@ const store = configureStore(initialState);
 
 const cache = new InMemoryCache();
 const link = createHttpLink({
-  uri: 'https://graphql-pokemon.now.sh/'
+  uri: 'http://localhost:3000/graphql?'
 })
 
 const client = new ApolloClient({

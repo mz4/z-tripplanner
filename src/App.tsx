@@ -258,32 +258,16 @@ class App extends React.Component<MyProps, MyState> {
         showUnConfirmed: true,
         showAll: true,
       }
-    });
+    })
   }
 
-  private handleNameInput = e =>
+  private handleChange = e =>
     this.setState({
       form: {
         ...this.state.form,
-        name: e.target.value
+        [e.target.name]: e.target.value
       }
-    });
-
-  private handleDateStart = e =>
-    this.setState({
-      form: {
-        ...this.state.form,
-        dateStart: e.target.value
-      }
-    });
-
-  private handleDateEnd = e =>
-    this.setState({
-      form: {
-        ...this.state.form,
-        dateEnd: e.target.value
-      }
-    });
+    })
 
   private newTripSubmitHandler = e => {
     e.preventDefault();
@@ -327,8 +311,8 @@ class App extends React.Component<MyProps, MyState> {
 
   private getTotalTrips = (trips) => trips.length;
 
-  getConfirmedTrips = () =>
-    this.props.trips.reduce(
+  getConfirmedTrips = (trips) =>
+    trips.reduce(
       (total, trip) => trip.isConfirmed ? total + 1 : total,
       0
     );
@@ -341,14 +325,13 @@ class App extends React.Component<MyProps, MyState> {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
 
-          // const { trips } = this.props;
           console.log('******************')
           console.log(JSON.stringify(data.trips))
           console.log('******************')
 
           const trips = data.trips;
           const totalTrips = this.getTotalTrips(trips);
-          const numberConfirmed = this.getConfirmedTrips();
+          const numberConfirmed = this.getConfirmedTrips(trips);
           const numberUnconfirmed = totalTrips - numberConfirmed;
           const setConfirmed = () => this.setConfirmed();
           const setUnConfirmed = () => this.setUnConfirmed();
@@ -371,25 +354,28 @@ class App extends React.Component<MyProps, MyState> {
                         <div className="col-md-4">
                           <input
                             type="text"
+                            name="name"
                             value={this.state.form.name}
                             placeholder="Name" 
-                            onChange={this.handleNameInput}
+                            onChange={this.handleChange}
                         />
                         </div>
                         <div className="col-md-2">
                           <input
                             type="text"
+                            name="dateStart"
                             value={this.state.form.dateStart}
                             placeholder="Date Start" 
-                            onChange={this.handleDateStart}
+                            onChange={this.handleChange}
                         />
                         </div>
                         <div className="col-md-2">
                           <input
                             type="text"
+                            name="dateEnd"
                             value={this.state.form.dateEnd}
                             placeholder="Date End"
-                            onChange={this.handleDateEnd} 
+                            onChange={this.handleChange} 
                           />
                         </div>
                         <div className="col-md-2">
@@ -414,7 +400,7 @@ class App extends React.Component<MyProps, MyState> {
                   />
 
                   <TripList
-                    trips={this.props.trips}
+                    trips={trips}
                     toggleConfirmationAt={this.toggleConfirmationAt}
                     toggleEditingAt={this.toggleEditingAt}
                     saveEditingAt={this.saveEditingAt}
@@ -440,7 +426,7 @@ class App extends React.Component<MyProps, MyState> {
 
 const mapStateToProps = (state) => {
   return {
-    trips: state.trips.trips
+    auth: state.auth.isAuthenticated,
   }
 }
 

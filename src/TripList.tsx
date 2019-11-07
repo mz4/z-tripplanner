@@ -23,21 +23,21 @@ const TripList = props =>
       })
       .map(trip =>
         (<Trip
-          id={trip._id}
+          id={trip.id}
           name={trip.name}
           dateStart={trip.dateStart}
           dateEnd={trip.dateEnd}
           isConfirmed={trip.isConfirmed}
           isEditing={trip.isEditing}
-          handleConfirmation={() => props.toggleConfirmationAt(trip._id, trip.isConfirmed)}
-          handleToggleEditing={() => props.toggleEditingAt(trip._id, trip.isEditing)}
+          handleConfirmation={() => props.toggleConfirmationAt(trip.id, trip.isConfirmed)}
+          handleToggleEditing={() => props.toggleEditingAt(trip.id, trip.isEditing)}
           handleEditingSave={() => props.saveEditingAt(trip)}
-          setName={text => props.setNameAt(text, trip._id)}
-          setDateStart={text => props.setDateStartAt(text, trip._id)}
-          setDateEnd={text => props.setDateEndAt(text, trip._id)}
-          handleRemove={() => props.removeTripAt(trip._id)}
-          key={trip._id}
-          keyid={trip._id}
+          setName={text => props.setNameAt(text, trip.id)}
+          setDateStart={text => props.setDateStartAt(text, trip.id)}
+          setDateEnd={text => props.setDateEndAt(text, trip.id)}
+          handleRemove={() => props.removeTripAt(trip.id)}
+          key={trip.id}
+          keyid={trip.id}
         />)
       )
     }

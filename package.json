@@ -46,6 +46,7 @@
   "dependencies": {
     "@atlaskit/button": "^13.3.0",
     "@atlaskit/modal-dialog": "^10.3.0",
+    "@hot-loader/react-dom": "^16.11.0",
     "@types/axios": "^0.14.0",
     "@types/object-assign": "^4.0.30",
     "@types/react-redux": "^7.1.2",

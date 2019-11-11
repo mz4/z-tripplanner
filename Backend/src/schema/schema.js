@@ -32,6 +32,35 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'Add new trip',
+    fields: {
+        addTrip: {
+            type: TripType,
+            args: {
+                name: { type: GraphQLString }, 
+                dateStart: { type: GraphQLString },
+                dateEnd: { type: GraphQLString },
+                isConfirmed: { type: GraphQLBoolean },
+                isEditing: { type: GraphQLBoolean }
+            },
+            resolve(parent, args){
+                let trip = new Trip({
+                    name: args.name, 
+                    dateStart: args.dateStart,
+                    dateEnd: args.dateEnd,
+                    isConfirmed: args.isConfirmed,
+                    isEditing: args.isEditing,
+                    createdBy: "5db474847f4fcf269336d3de"
+                });
+                return trip.save();
+            }
+        }
+    }
+});
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 });

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import React from 'react';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { setTripDateEndDispatcher, setTripDateStartDispatcher, setTripNameDispatcher, tripsListDispatcher } from '../src/actions/tripsActions';
@@ -9,8 +9,6 @@ import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
 import './css/main.scss';
 import TripList from './TripList';
-
-
 
 interface MyProps {
   token: '',
@@ -73,6 +71,25 @@ const GET_TRIPS = gql`
       dateEnd
       isConfirmed
       isEditing
+    }
+  }
+`
+const POST_TRIP = gql`
+  mutation addTrip(
+    $name: String!, 
+    $dateStart: String!, 
+    $dateEnd: String!,
+    $isConfirmed: Boolean, 
+    $isEditing: Boolean) {
+    addTrip(
+      name: $name, 
+      dateStart: $dateStart, 
+      dateEnd: $dateEnd, 
+      isConformed: $isConfirmed, 
+      isEditing: $isEditing
+      ) 
+    {
+      name
     }
   }
 `
@@ -318,7 +335,9 @@ class App extends React.Component<MyProps, MyState> {
     );
 
   render() {
-
+    const { name, dateStart, dateEnd } = this.state.form
+    const isConfirmed = false
+    const isEditing = false
     return (
       <Query query={GET_TRIPS}>
         {({ loading, error, data }) => {
@@ -348,14 +367,14 @@ class App extends React.Component<MyProps, MyState> {
                     </div>
                   </header>
 
-                  <form onSubmit={this.newTripSubmitHandler}>
+                  <form>
                     <div className="destination">
                       <div className="row">
                         <div className="col-md-4">
                           <input
                             type="text"
                             name="name"
-                            value={this.state.form.name}
+                            value={name}
                             placeholder="Name" 
                             onChange={this.handleChange}
                         />
@@ -364,7 +383,7 @@ class App extends React.Component<MyProps, MyState> {
                           <input
                             type="text"
                             name="dateStart"
-                            value={this.state.form.dateStart}
+                            value={dateStart}
                             placeholder="Date Start" 
                             onChange={this.handleChange}
                         />
@@ -373,16 +392,34 @@ class App extends React.Component<MyProps, MyState> {
                           <input
                             type="text"
                             name="dateEnd"
-                            value={this.state.form.dateEnd}
+                            value={dateEnd}
                             placeholder="Date End"
                             onChange={this.handleChange} 
                           />
                         </div>
-                        <div className="col-md-2">
-                          <button type="submit" name="submit" value="submit">
-                            Submit
-                          </button>
-                        </div>
+                        <Mutation
+                          mutation={POST_TRIP}
+                          variables={
+                            { name, dateStart, dateEnd, isConfirmed, isEditing }
+                          }
+                          onCompleted={
+                            () => console.log('Submit Trip!')
+                          }
+                        >
+                          {(
+                          postMutation => 
+                            <div className="col-md-2">
+                              <button 
+                                type="submit" 
+                                name="submit" 
+                                value="submit" 
+                                onClick={postMutation}
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          )}
+                        </Mutation>
                       </div>
                     </div>
                   </form>

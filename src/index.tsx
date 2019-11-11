@@ -25,19 +25,19 @@ const initialState = {
 
 const store = configureStore(initialState);
 
-// const httpLink = createHttpLink({
-//   uri: 'http://localhost:4000',
-// })
+const httpLink = createHttpLink({
+  uri: 'http://localhost:4000',
+})
 
-// const authLink = setContext((_, { headers }) => {
-//   const token = localStorage.getItem(AUTH_TOKEN)
-//   return {
-//     headers: {
-//       ...headers,
-//       authorization: token ? `Bearer ${token}` : '',
-//     },
-//   }
-// })
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(AUTH_TOKEN)
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  }
+})
 
 // const wsLink = new WebSocketLink({
 //   uri: `ws://localhost:4000`,
@@ -64,8 +64,8 @@ const link = createHttpLink({
 })
 
 const client = new ApolloClient({
+  link: link,
   cache,
-  link
 })
 
 render(

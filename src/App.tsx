@@ -344,10 +344,6 @@ class App extends React.Component<MyProps, MyState> {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
 
-          console.log('******************')
-          console.log(JSON.stringify(data.trips))
-          console.log('******************')
-
           const trips = data.trips;
           const totalTrips = this.getTotalTrips(trips);
           const numberConfirmed = this.getConfirmedTrips(trips);
@@ -399,25 +395,23 @@ class App extends React.Component<MyProps, MyState> {
                         </div>
                         <Mutation
                           mutation={POST_TRIP}
-                          variables={
-                            { name, dateStart, dateEnd, isConfirmed, isEditing }
-                          }
+                          variables={{ name, dateStart, dateEnd, isConfirmed, isEditing }}
                           onCompleted={
                             () => console.log('Submit Trip!')
                           }
                         >
                           {(
-                          postMutation => 
-                            <div className="col-md-2">
-                              <button 
-                                type="submit" 
-                                name="submit" 
-                                value="submit" 
-                                onClick={postMutation}
-                              >
-                                Submit
-                              </button>
-                            </div>
+                            postMutation => 
+                              <div className="col-md-2">
+                                <button 
+                                  type="submit" 
+                                  name="submit" 
+                                  value="submit" 
+                                  onClick={postMutation}
+                                >
+                                  Submit
+                                </button>
+                              </div>
                           )}
                         </Mutation>
                       </div>

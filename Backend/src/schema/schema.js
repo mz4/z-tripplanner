@@ -34,7 +34,6 @@ const RootQuery = new GraphQLObjectType({
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
-    description: 'Add new trip',
     fields: {
         addTrip: {
             type: TripType,

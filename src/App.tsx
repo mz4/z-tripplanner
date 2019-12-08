@@ -74,22 +74,27 @@ const GET_TRIPS = gql`
     }
   }
 `
+
 const POST_TRIP = gql`
   mutation addTrip(
-    $name: String!, 
-    $dateStart: String!, 
-    $dateEnd: String!,
-    $isConfirmed: Boolean, 
-    $isEditing: Boolean) {
+      $name: String!, 
+      $dateStart: String!, 
+      $dateEnd: String!,
+      $isConfirmed: Boolean, 
+      $isEditing: Boolean
+    ) {
     addTrip(
-      name: $name, 
-      dateStart: $dateStart, 
-      dateEnd: $dateEnd, 
-      isConformed: $isConfirmed, 
-      isEditing: $isEditing
-      ) 
-    {
-      name
+        name: $name, 
+        dateStart: $dateStart, 
+        dateEnd: $dateEnd, 
+        isConfirmed: $isConfirmed, 
+        isEditing: $isEditing
+      ) {
+        name
+        dateStart
+        dateEnd
+        isConfirmed
+        isEditing
     }
   }
 `
@@ -97,7 +102,6 @@ const POST_TRIP = gql`
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
-
     this.state = {
       filter: {
         showConfirmed: false,
@@ -318,9 +322,11 @@ class App extends React.Component<MyProps, MyState> {
           }
         })
       .then(data => {
+        console.log('------> OK SUCCESS')
         this.props.tripsListLoad(token);
       })
       .catch(error => {
+        console.log('------> ERROR')
         throw error;
       });
 
@@ -395,24 +401,30 @@ class App extends React.Component<MyProps, MyState> {
                         </div>
                         <Mutation
                           mutation={POST_TRIP}
-                          variables={{ name, dateStart, dateEnd, isConfirmed, isEditing }}
+                          variables={{ 
+                            name, 
+                            dateStart, 
+                            dateEnd, 
+                            isConfirmed, 
+                            isEditing 
+                          }}
                           onCompleted={
-                            () => console.log('Submit Trip!')
+                            () => console.log('vvv Submit Trip!')
                           }
                         >
-                          {(
-                            postMutation => 
+                          {
+                            addTrip => 
                               <div className="col-md-2">
                                 <button 
                                   type="submit" 
                                   name="submit" 
                                   value="submit" 
-                                  onClick={postMutation}
+                                  onClick={addTrip}
                                 >
                                   Submit
                                 </button>
                               </div>
-                          )}
+                          }
                         </Mutation>
                       </div>
                     </div>

@@ -33,8 +33,9 @@ const RootQuery = new GraphQLObjectType({
 });
 
 const Mutation = new GraphQLObjectType({
-    name: 'Mutation',
-    fields: {
+    name: 'tripMutation',
+    description: 'insert a new trip',
+    fields: () => ({
         addTrip: {
             type: TripType,
             args: {
@@ -56,7 +57,7 @@ const Mutation = new GraphQLObjectType({
                 return trip.save();
             }
         }
-    }
+    })
 });
 
 module.exports = new GraphQLSchema({

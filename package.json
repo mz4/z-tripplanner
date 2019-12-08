@@ -70,6 +70,7 @@
     "react-table": "^6.10.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "universal-cookie": "^4.0.2"
   }
 }

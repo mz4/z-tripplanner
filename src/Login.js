@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import setAuth from '../src/actions/authActions';
 import LoginForm from './LoginForm';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 // import { deleteCookie, getCookie, setCookie } from '../../common/Constants';
+
+const cookies = new Cookies();
 
 class Login extends Component {
   constructor(props) {
@@ -25,8 +28,9 @@ class Login extends Component {
     body.password = password;
     axios.post(`http://localhost:3000/signin`, body)
       .then(res => {
+        cookies.set('token', res.data.token, { path: '/' });
+        cookies.set('auth', true, { path: '/' });
         this.props.setAuth(true, res.data.token, '');
-        console.log(res);
         console.log(res.data);
       })
   }

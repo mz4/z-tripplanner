@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import App from './App';
 import Login from './Login';
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 /**
  * Router allows to navigate through the app.
  *
@@ -13,8 +15,10 @@ import Login from './Login';
  * in case he is not login modal page will be shown
  */
 const AppRouter = (props) => {
-  const { auth, token } = props;
-  console.log('-------------------------');
+  let { auth, token } = props;
+  token = cookies.get('token');
+  auth = cookies.get('auth');
+  console.log('--ROUTES-----');
   console.log(auth);
   return (
     <div>

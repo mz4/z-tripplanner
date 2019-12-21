@@ -42353,6 +42353,216 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/cookie/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/cookie/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+
+
+/**
+ * Module exports.
+ * @public
+ */
+
+exports.parse = parse;
+exports.serialize = serialize;
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var decode = decodeURIComponent;
+var encode = encodeURIComponent;
+var pairSplitRegExp = /; */;
+
+/**
+ * RegExp to match field-content in RFC 7230 sec 3.2
+ *
+ * field-content = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+ * field-vchar   = VCHAR / obs-text
+ * obs-text      = %x80-FF
+ */
+
+var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
+
+/**
+ * Parse a cookie header.
+ *
+ * Parse the given cookie header string into an object
+ * The object has the various cookies as keys(names) => values
+ *
+ * @param {string} str
+ * @param {object} [options]
+ * @return {object}
+ * @public
+ */
+
+function parse(str, options) {
+  if (typeof str !== 'string') {
+    throw new TypeError('argument str must be a string');
+  }
+
+  var obj = {}
+  var opt = options || {};
+  var pairs = str.split(pairSplitRegExp);
+  var dec = opt.decode || decode;
+
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+    var eq_idx = pair.indexOf('=');
+
+    // skip things that don't look like key=value
+    if (eq_idx < 0) {
+      continue;
+    }
+
+    var key = pair.substr(0, eq_idx).trim()
+    var val = pair.substr(++eq_idx, pair.length).trim();
+
+    // quoted values
+    if ('"' == val[0]) {
+      val = val.slice(1, -1);
+    }
+
+    // only assign once
+    if (undefined == obj[key]) {
+      obj[key] = tryDecode(val, dec);
+    }
+  }
+
+  return obj;
+}
+
+/**
+ * Serialize data into a cookie header.
+ *
+ * Serialize the a name value pair into a cookie string suitable for
+ * http headers. An optional options object specified cookie parameters.
+ *
+ * serialize('foo', 'bar', { httpOnly: true })
+ *   => "foo=bar; httpOnly"
+ *
+ * @param {string} name
+ * @param {string} val
+ * @param {object} [options]
+ * @return {string}
+ * @public
+ */
+
+function serialize(name, val, options) {
+  var opt = options || {};
+  var enc = opt.encode || encode;
+
+  if (typeof enc !== 'function') {
+    throw new TypeError('option encode is invalid');
+  }
+
+  if (!fieldContentRegExp.test(name)) {
+    throw new TypeError('argument name is invalid');
+  }
+
+  var value = enc(val);
+
+  if (value && !fieldContentRegExp.test(value)) {
+    throw new TypeError('argument val is invalid');
+  }
+
+  var str = name + '=' + value;
+
+  if (null != opt.maxAge) {
+    var maxAge = opt.maxAge - 0;
+    if (isNaN(maxAge)) throw new Error('maxAge should be a Number');
+    str += '; Max-Age=' + Math.floor(maxAge);
+  }
+
+  if (opt.domain) {
+    if (!fieldContentRegExp.test(opt.domain)) {
+      throw new TypeError('option domain is invalid');
+    }
+
+    str += '; Domain=' + opt.domain;
+  }
+
+  if (opt.path) {
+    if (!fieldContentRegExp.test(opt.path)) {
+      throw new TypeError('option path is invalid');
+    }
+
+    str += '; Path=' + opt.path;
+  }
+
+  if (opt.expires) {
+    if (typeof opt.expires.toUTCString !== 'function') {
+      throw new TypeError('option expires is invalid');
+    }
+
+    str += '; Expires=' + opt.expires.toUTCString();
+  }
+
+  if (opt.httpOnly) {
+    str += '; HttpOnly';
+  }
+
+  if (opt.secure) {
+    str += '; Secure';
+  }
+
+  if (opt.sameSite) {
+    var sameSite = typeof opt.sameSite === 'string'
+      ? opt.sameSite.toLowerCase() : opt.sameSite;
+
+    switch (sameSite) {
+      case true:
+        str += '; SameSite=Strict';
+        break;
+      case 'lax':
+        str += '; SameSite=Lax';
+        break;
+      case 'strict':
+        str += '; SameSite=Strict';
+        break;
+      case 'none':
+        str += '; SameSite=None';
+        break;
+      default:
+        throw new TypeError('option sameSite is invalid');
+    }
+  }
+
+  return str;
+}
+
+/**
+ * Try decoding a string using a decoding function.
+ *
+ * @param {string} str
+ * @param {function} decode
+ * @private
+ */
+
+function tryDecode(str, decode) {
+  try {
+    return decode(str);
+  } catch (e) {
+    return str;
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/fast-json-stable-stringify/index.js":
 /*!**********************************************************!*\
   !*** ./node_modules/fast-json-stable-stringify/index.js ***!
@@ -56459,6 +56669,198 @@ function __importDefault(mod) {
 
 /***/ }),
 
+/***/ "./node_modules/universal-cookie/es6/Cookies.js":
+/*!******************************************************!*\
+  !*** ./node_modules/universal-cookie/es6/Cookies.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cookie */ "./node_modules/cookie/index.js");
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cookie__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./node_modules/universal-cookie/es6/utils.js");
+
+
+// We can't please Rollup and TypeScript at the same time
+// Only way to make both of them work
+var objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+var Cookies = /** @class */ (function () {
+    function Cookies(cookies) {
+        var _this = this;
+        this.changeListeners = [];
+        this.HAS_DOCUMENT_COOKIE = false;
+        this.cookies = Object(_utils__WEBPACK_IMPORTED_MODULE_1__["parseCookies"])(cookies);
+        new Promise(function () {
+            _this.HAS_DOCUMENT_COOKIE = Object(_utils__WEBPACK_IMPORTED_MODULE_1__["hasDocumentCookie"])();
+        }).catch(function () { });
+    }
+    Cookies.prototype._updateBrowserValues = function () {
+        if (!this.HAS_DOCUMENT_COOKIE) {
+            return;
+        }
+        this.cookies = cookie__WEBPACK_IMPORTED_MODULE_0__["parse"](document.cookie);
+    };
+    Cookies.prototype._emitChange = function (params) {
+        for (var i = 0; i < this.changeListeners.length; ++i) {
+            this.changeListeners[i](params);
+        }
+    };
+    Cookies.prototype.get = function (name, options) {
+        if (options === void 0) { options = {}; }
+        this._updateBrowserValues();
+        return Object(_utils__WEBPACK_IMPORTED_MODULE_1__["readCookie"])(this.cookies[name], options);
+    };
+    Cookies.prototype.getAll = function (options) {
+        if (options === void 0) { options = {}; }
+        this._updateBrowserValues();
+        var result = {};
+        for (var name_1 in this.cookies) {
+            result[name_1] = Object(_utils__WEBPACK_IMPORTED_MODULE_1__["readCookie"])(this.cookies[name_1], options);
+        }
+        return result;
+    };
+    Cookies.prototype.set = function (name, value, options) {
+        var _a;
+        if (typeof value === 'object') {
+            value = JSON.stringify(value);
+        }
+        this.cookies = objectAssign({}, this.cookies, (_a = {}, _a[name] = value, _a));
+        if (this.HAS_DOCUMENT_COOKIE) {
+            document.cookie = cookie__WEBPACK_IMPORTED_MODULE_0__["serialize"](name, value, options);
+        }
+        this._emitChange({ name: name, value: value, options: options });
+    };
+    Cookies.prototype.remove = function (name, options) {
+        var finalOptions = (options = objectAssign({}, options, {
+            expires: new Date(1970, 1, 1, 0, 0, 1),
+            maxAge: 0
+        }));
+        this.cookies = objectAssign({}, this.cookies);
+        delete this.cookies[name];
+        if (this.HAS_DOCUMENT_COOKIE) {
+            document.cookie = cookie__WEBPACK_IMPORTED_MODULE_0__["serialize"](name, '', finalOptions);
+        }
+        this._emitChange({ name: name, value: undefined, options: options });
+    };
+    Cookies.prototype.addChangeListener = function (callback) {
+        this.changeListeners.push(callback);
+    };
+    Cookies.prototype.removeChangeListener = function (callback) {
+        var idx = this.changeListeners.indexOf(callback);
+        if (idx >= 0) {
+            this.changeListeners.splice(idx, 1);
+        }
+    };
+    return Cookies;
+}());
+/* harmony default export */ __webpack_exports__["default"] = (Cookies);
+
+
+/***/ }),
+
+/***/ "./node_modules/universal-cookie/es6/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/universal-cookie/es6/index.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Cookies__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Cookies */ "./node_modules/universal-cookie/es6/Cookies.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (_Cookies__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./node_modules/universal-cookie/es6/utils.js":
+/*!****************************************************!*\
+  !*** ./node_modules/universal-cookie/es6/utils.js ***!
+  \****************************************************/
+/*! exports provided: hasDocumentCookie, cleanCookies, parseCookies, isParsingCookie, readCookie */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasDocumentCookie", function() { return hasDocumentCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cleanCookies", function() { return cleanCookies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "parseCookies", function() { return parseCookies; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isParsingCookie", function() { return isParsingCookie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "readCookie", function() { return readCookie; });
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cookie */ "./node_modules/cookie/index.js");
+/* harmony import */ var cookie__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cookie__WEBPACK_IMPORTED_MODULE_0__);
+
+function hasDocumentCookie() {
+    // JSDOM does not support changing cookies, disable it for tests
+    if (isJsDom()) {
+        return false;
+    }
+    // Can we get/set cookies on document.cookie?
+    return typeof document === 'object' && typeof document.cookie === 'string';
+}
+function isJsDom() {
+    if (typeof navigator !== 'object' ||
+        typeof navigator.userAgent !== 'string') {
+        return false;
+    }
+    return (navigator.userAgent.indexOf('Node.js') >= 0 ||
+        navigator.userAgent.indexOf('jsdom') >= 0);
+}
+function cleanCookies() {
+    document.cookie.split(';').forEach(function (c) {
+        document.cookie = c
+            .replace(/^ +/, '')
+            .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+    });
+}
+function parseCookies(cookies) {
+    if (typeof cookies === 'string') {
+        return cookie__WEBPACK_IMPORTED_MODULE_0__["parse"](cookies);
+    }
+    else if (typeof cookies === 'object' && cookies !== null) {
+        return cookies;
+    }
+    else {
+        return {};
+    }
+}
+function isParsingCookie(value, doNotParse) {
+    if (typeof doNotParse === 'undefined') {
+        // We guess if the cookie start with { or [, it has been serialized
+        doNotParse =
+            !value || (value[0] !== '{' && value[0] !== '[' && value[0] !== '"');
+    }
+    return !doNotParse;
+}
+function readCookie(value, options) {
+    if (options === void 0) { options = {}; }
+    var cleanValue = cleanupCookieValue(value);
+    if (isParsingCookie(cleanValue, options.doNotParse)) {
+        try {
+            return JSON.parse(cleanValue);
+        }
+        catch (e) {
+            // At least we tried
+        }
+    }
+    // Ignore clean value if we failed the deserialization
+    // It is not relevant anymore to trim those values
+    return value;
+}
+function cleanupCookieValue(value) {
+    // express prepend j: before serializing a cookie
+    if (value && value[0] === 'j' && value[1] === ':') {
+        return value.substr(2);
+    }
+    return value;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/value-equal/esm/value-equal.js":
 /*!*****************************************************!*\
   !*** ./node_modules/value-equal/esm/value-equal.js ***!
@@ -57298,7 +57700,7 @@ var __assign = (undefined && undefined.__assign) || function () {
 ;
 ;
 var GET_TRIPS = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  {\n    trips {\n      id\n      name\n      dateStart\n      dateEnd\n      isConfirmed\n      isEditing\n    }\n  }\n"], ["\n  {\n    trips {\n      id\n      name\n      dateStart\n      dateEnd\n      isConfirmed\n      isEditing\n    }\n  }\n"])));
-var POST_TRIP = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation addTrip(\n    $name: String!, \n    $dateStart: String!, \n    $dateEnd: String!,\n    $isConfirmed: String, \n    $isEditing: String) \n    {\n      addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConformed: $isConfirmed, \n        isEditing: $isEditing\n        ) \n    {\n      name\n    }\n  }\n"], ["\n  mutation addTrip(\n    $name: String!, \n    $dateStart: String!, \n    $dateEnd: String!,\n    $isConfirmed: String, \n    $isEditing: String) \n    {\n      addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConformed: $isConfirmed, \n        isEditing: $isEditing\n        ) \n    {\n      name\n    }\n  }\n"])));
+var POST_TRIP = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation addTrip(\n      $name: String!, \n      $dateStart: String!, \n      $dateEnd: String!,\n      $isConfirmed: Boolean, \n      $isEditing: Boolean\n    ) {\n    addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConfirmed: $isConfirmed, \n        isEditing: $isEditing\n      ) {\n        name\n        dateStart\n        dateEnd\n        isConfirmed\n        isEditing\n    }\n  }\n"], ["\n  mutation addTrip(\n      $name: String!, \n      $dateStart: String!, \n      $dateEnd: String!,\n      $isConfirmed: Boolean, \n      $isEditing: Boolean\n    ) {\n    addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConfirmed: $isConfirmed, \n        isEditing: $isEditing\n      ) {\n        name\n        dateStart\n        dateEnd\n        isConfirmed\n        isEditing\n    }\n  }\n"])));
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
@@ -57322,22 +57724,38 @@ var App = /** @class */ (function (_super) {
                 throw error;
             });
         };
-        _this.removeTripAt = function (id) {
-            var token = _this.props.token;
-            var host = Object(_constants_serverAPI__WEBPACK_IMPORTED_MODULE_7__["default"])();
-            var url = 'api/trip/' + id;
-            axios__WEBPACK_IMPORTED_MODULE_0___default.a
-                .delete(host + url, { headers: {
-                    "Authorization": "Bearer " + token
-                }
-            })
-                .then(function (data) {
-                _this.props.tripsListLoad(token);
-            })
-                .catch(function (error) {
-                throw error;
-            });
-        };
+        _this.removeTripAt = function () { console.log('aaa'); };
+        // removeTripAt = (id: string) => {
+        //   console.log('DELETE!');
+        //   return (
+        //     <Mutation
+        //       mutation={DELETE_TRIP}
+        //     >
+        //       {/* {deleteTrip => (
+        //         deleteTrip(
+        //           { variables: { id: id } }
+        //         )) */}
+        //       }
+        //     </Mutation>
+        //   );
+        // const { token } = this.props;
+        // const host = getAPIUrl();
+        // const url = 'api/trip/' + id;
+        // axios
+        //   .delete(
+        //     host + url,
+        //     { headers:
+        //       {
+        //         "Authorization" : `Bearer ${token}`
+        //       }
+        //     })
+        //   .then(data => {
+        //     this.props.tripsListLoad(token);
+        //   })
+        //   .catch(error => {
+        //     throw error;
+        //   });
+        // }
         _this.saveEditingAt = function (trip) {
             var isEditingToggled = false;
             var name = trip.name, dateStart = trip.dateStart, dateEnd = trip.dateEnd, id = trip._id;
@@ -57433,9 +57851,11 @@ var App = /** @class */ (function (_super) {
                 }
             })
                 .then(function (data) {
+                console.log('------> OK SUCCESS');
                 _this.props.tripsListLoad(token);
             })
                 .catch(function (error) {
+                console.log('------> ERROR');
                 throw error;
             });
         };
@@ -57538,7 +57958,7 @@ var App = /** @class */ (function (_super) {
                                             dateEnd: dateEnd,
                                             isConfirmed: isConfirmed,
                                             isEditing: isEditing
-                                        }, onCompleted: function () { return console.log('Submit Trip!'); } }, function (addTrip) {
+                                        } }, function (addTrip) {
                                         return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
                                             react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", { type: "submit", name: "submit", value: "submit", onClick: addTrip }, "Submit"));
                                     })))),
@@ -57583,6 +58003,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App */ "./src/App.tsx");
 /* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Login */ "./src/Login.js");
+/* harmony import */ var universal_cookie__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! universal-cookie */ "./node_modules/universal-cookie/es6/index.js");
 (function () {
   var enterModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.enterModule : undefined;
   enterModule && enterModule(module);
@@ -57604,6 +58025,8 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 
 
 
+
+var cookies = new universal_cookie__WEBPACK_IMPORTED_MODULE_6__["default"]();
 /**
  * Router allows to navigate through the app.
  *
@@ -57615,7 +58038,9 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 var AppRouter = function AppRouter(props) {
   var auth = props.auth,
       token = props.token;
-  console.log('-------------------------');
+  token = cookies.get('token');
+  auth = cookies.get('auth');
+  console.log('--ROUTES-----');
   console.log(auth);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PrivateRoute, {
     exact: true,
@@ -57679,6 +58104,7 @@ var _default = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"
     return;
   }
 
+  reactHotLoader.register(cookies, "cookies", "/home/matteo/code/tripplannerFrontend/src/AppRouter.js");
   reactHotLoader.register(AppRouter, "AppRouter", "/home/matteo/code/tripplannerFrontend/src/AppRouter.js");
   reactHotLoader.register(PrivateRoute, "PrivateRoute", "/home/matteo/code/tripplannerFrontend/src/AppRouter.js");
   reactHotLoader.register(mapStateToProps, "mapStateToProps", "/home/matteo/code/tripplannerFrontend/src/AppRouter.js");
@@ -57755,6 +58181,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LoginForm */ "./src/LoginForm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var universal_cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! universal-cookie */ "./node_modules/universal-cookie/es6/index.js");
 (function () {
   var enterModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.enterModule : undefined;
   enterModule && enterModule(module);
@@ -57786,7 +58213,10 @@ var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoader
 
 
 
+
  // import { deleteCookie, getCookie, setCookie } from '../../common/Constants';
+
+var cookies = new universal_cookie__WEBPACK_IMPORTED_MODULE_5__["default"]();
 
 var Login =
 /*#__PURE__*/
@@ -57809,9 +58239,15 @@ function (_Component) {
       body.email = username;
       body.password = password;
       axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("http://localhost:3000/signin", body).then(function (res) {
+        cookies.set('token', res.data.token, {
+          path: '/'
+        });
+        cookies.set('auth', true, {
+          path: '/'
+        });
+
         _this.props.setAuth(true, res.data.token, '');
 
-        console.log(res);
         console.log(res.data);
       });
     };
@@ -58022,6 +58458,7 @@ var _default = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapSt
     return;
   }
 
+  reactHotLoader.register(cookies, "cookies", "/home/matteo/code/tripplannerFrontend/src/Login.js");
   reactHotLoader.register(Login, "Login", "/home/matteo/code/tripplannerFrontend/src/Login.js");
   reactHotLoader.register(mapStateToProps, "mapStateToProps", "/home/matteo/code/tripplannerFrontend/src/Login.js");
   reactHotLoader.register(mapDispatchToProps, "mapDispatchToProps", "/home/matteo/code/tripplannerFrontend/src/Login.js");
@@ -58147,6 +58584,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _TripName__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TripName */ "./src/TripName.tsx");
 /* harmony import */ var _TripDate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TripDate */ "./src/TripDate.tsx");
+/* harmony import */ var _components_TripDelete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TripDelete */ "./src/components/TripDelete.tsx");
+
 
 
 
@@ -58169,7 +58608,7 @@ var Trip = function (props) {
                     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { onClick: props.handleEditingSave }, "Save")
                     :
                         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { onClick: props.handleToggleEditing }, "Edit"),
-                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { onClick: props.handleRemove }, "Remove"))));
+                react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_TripDelete__WEBPACK_IMPORTED_MODULE_4__["default"], { id: props.id }))));
 };
 Trip.propTypes = {
     id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
@@ -58461,6 +58900,40 @@ var tripsListDispatcher = function tripsListDispatcher(token) {
   leaveModule && leaveModule(module);
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/components/TripDelete.tsx":
+/*!***************************************!*\
+  !*** ./src/components/TripDelete.tsx ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/lib/react-apollo.esm.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "./node_modules/graphql-tag/src/index.js");
+/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
+var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+
+
+var DELETE_TRIP = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  mutation deleteTrip($id: string!) {\n    deleteTrip(id: $id) {\n      id\n    }\n  }\n"], ["\n  mutation deleteTrip($id: string!) {\n    deleteTrip(id: $id) {\n      id\n    }\n  }\n"])));
+var TripDelete = function (props) {
+    var id = props.id;
+    return (react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_0__["Mutation"], { mutation: DELETE_TRIP, variables: {
+            id: id
+        } }, function (deleteTrip) { return (react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", { className: "delete", onClick: deleteTrip }, "Remove")); }));
+};
+/* harmony default export */ __webpack_exports__["default"] = (TripDelete);
+var templateObject_1;
+
 
 /***/ }),
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TripName from './TripName';
 import TripDate from './TripDate';
+import TripDelete from './components/TripDelete';
 
 const Trip = props =>
   <div key={props.keyid} className="row">
@@ -47,10 +48,9 @@ const Trip = props =>
             Edit
           </button>
         }
-        <button
-          onClick={props.handleRemove}>
-          Remove
-        </button>
+        <TripDelete 
+          id={props.id}
+        />
       </div>
     </div>
   </div>;

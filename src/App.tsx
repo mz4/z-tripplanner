@@ -75,6 +75,7 @@ const GET_TRIPS = gql`
   }
 `
 
+// Add Trip
 const POST_TRIP = gql`
   mutation addTrip(
       $name: String!, 
@@ -156,25 +157,38 @@ class App extends React.Component<MyProps, MyState> {
       });
   }
 
-  removeTripAt = (id: string) => {
-    const { token } = this.props;
-    const host = getAPIUrl();
-    const url = 'api/trip/' + id;
-    axios
-      .delete(
-        host + url,
-        { headers:
-          {
-            "Authorization" : `Bearer ${token}`
-          }
-        })
-      .then(data => {
-        this.props.tripsListLoad(token);
-      })
-      .catch(error => {
-        throw error;
-      });
-  }
+  removeTripAt = () => { console.log('aaa') }
+  // removeTripAt = (id: string) => {
+  //   console.log('DELETE!');
+  //   return (
+  //     <Mutation
+  //       mutation={DELETE_TRIP}
+  //     >
+  //       {/* {deleteTrip => (
+  //         deleteTrip(
+  //           { variables: { id: id } }
+  //         )) */}
+  //       }
+  //     </Mutation>
+  //   );
+    // const { token } = this.props;
+    // const host = getAPIUrl();
+    // const url = 'api/trip/' + id;
+    // axios
+    //   .delete(
+    //     host + url,
+    //     { headers:
+    //       {
+    //         "Authorization" : `Bearer ${token}`
+    //       }
+    //     })
+    //   .then(data => {
+    //     this.props.tripsListLoad(token);
+    //   })
+    //   .catch(error => {
+    //     throw error;
+    //   });
+  // }
 
   saveEditingAt = (trip) => {
     const isEditingToggled = false;
@@ -396,7 +410,7 @@ class App extends React.Component<MyProps, MyState> {
                             name="dateEnd"
                             value={dateEnd}
                             placeholder="Date End"
-                            onChange={this.handleChange} 
+                            onChange={this.handleChange}
                           />
                         </div>
                         <Mutation
@@ -408,22 +422,18 @@ class App extends React.Component<MyProps, MyState> {
                             isConfirmed, 
                             isEditing 
                           }}
-                          onCompleted={
-                            () => console.log('vvv Submit Trip!')
-                          }
                         >
-                          {
-                            addTrip => 
-                              <div className="col-md-2">
-                                <button 
-                                  type="submit" 
-                                  name="submit" 
-                                  value="submit" 
-                                  onClick={addTrip}
-                                >
-                                  Submit
-                                </button>
-                              </div>
+                          {addTrip => 
+                            <div className="col-md-2">
+                              <button 
+                                type="submit" 
+                                name="submit" 
+                                value="submit" 
+                                onClick={addTrip}
+                              >
+                                Submit
+                              </button>
+                            </div>
                           }
                         </Mutation>
                       </div>

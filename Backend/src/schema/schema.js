@@ -20,8 +20,8 @@ const TripType = new GraphQLObjectType({
   })
 });
 
-const getTrips = new GraphQLObjectType({
-  name: 'getTrips',
+const queryTrips = new GraphQLObjectType({
+  name: 'query a list of trips',
   fields: {
     trips: {
       type: new GraphQLList(TripType),
@@ -32,9 +32,13 @@ const getTrips = new GraphQLObjectType({
   }
 });
 
-const Mutation = new GraphQLObjectType({
-  name: 'tripMutation',
-  description: 'insert a new trip',
+const subscriptionTrips = new GraphQLObjectType({
+  name: 'subscribe to new trips'
+})
+
+const mutationTrips = new GraphQLObjectType({
+  name: 'mutationTrips',
+  description: 'insert and delete trips',
   fields: {
     addTrip: {
       type: TripType,
@@ -73,6 +77,7 @@ const Mutation = new GraphQLObjectType({
 });
 
 module.exports = new GraphQLSchema({
-  query: getTrips,
-  mutation: Mutation
+  query: queryTrips,
+  mutation: mutationTrips,
+  subscription: subscriptionTrips
 });

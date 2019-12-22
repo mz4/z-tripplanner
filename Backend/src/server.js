@@ -12,6 +12,25 @@ import tripRouter from './resources/trip/trip.router'
 const graphqlHTTP = require('express-graphql')
 const schema = require('./schema/schema')
 
+import pubsub from 'pubsub';
+import { createServer } from 'http';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { execute, subscribe } from 'graphql';
+
+const WS_PORT = 5000;
+
+// Create WebSocket listener server
+const websocketServer = createServer((request, response) => {
+  response.writeHead(404);
+  response.end();
+});
+
+// Bind it to port and start listening
+websocketServer.listen(WS_PORT, () => console.log(
+  `Websocket Server is now running on http://localhost:${WS_PORT}`
+));
+
+
 export const app = express()
 app.disable('x-powered-by')
 app.use(cors())

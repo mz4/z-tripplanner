@@ -62,6 +62,7 @@ interface MyState {
   }
 };
 
+// Get Trips
 const GET_TRIPS = gql`
   {
     trips {
@@ -99,6 +100,13 @@ const POST_TRIP = gql`
     }
   }
 `
+
+// subscription onCommentAdded($repoFullName: String!){
+//   commentAdded(repoFullName: $repoFullName){
+//     id
+//     content
+//   }
+// }
 
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {

@@ -26,7 +26,7 @@ class Login extends Component {
     const body = {};
     body.email = username;
     body.password = password;
-    axios.post(`http://localhost:3000/signin`, body)
+    axios.post(`http://localhost:3030/signin`, body)
       .then(res => {
         cookies.set('token', res.data.token, { path: '/' });
         cookies.set('auth', true, { path: '/' });

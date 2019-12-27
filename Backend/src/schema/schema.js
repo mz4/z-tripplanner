@@ -40,7 +40,7 @@ const subscriptionTrips = new GraphQLObjectType({
   fields: {
     newTrip: {
       type: TripType,
-      subscribe: () => pubsub.asyncIterator('newTripY'),
+      subscribe: () => pubsub.asyncIterator('newTrip'),
       resolve: Trip,
     }
   }

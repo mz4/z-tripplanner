@@ -35,7 +35,6 @@ const TripList = props =>
           setName={text => props.setNameAt(text, trip.id)}
           setDateStart={text => props.setDateStartAt(text, trip.id)}
           setDateEnd={text => props.setDateEndAt(text, trip.id)}
-          handleRemove={() => props.removeTripAt(trip.id)}
           key={trip.id}
           keyid={trip.id}
         />)
@@ -51,7 +50,6 @@ TripList.propTypes = {
   setNameAt: PropTypes.func.isRequired,
   setDateStartAt: PropTypes.func.isRequired,
   setDateEndAt: PropTypes.func.isRequired,
-  removeTripAt: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   showConfirmed: PropTypes.bool.isRequired,
   showUnConfirmed: PropTypes.bool.isRequired,

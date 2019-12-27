@@ -22,7 +22,7 @@ const TripType = new GraphQLObjectType({
 });
 
 const queryTrips = new GraphQLObjectType({
-  name: 'Queries',
+  name: 'query a list of trips',
   fields: {
     trips: {
       type: new GraphQLList(TripType),
@@ -35,19 +35,19 @@ const queryTrips = new GraphQLObjectType({
 
 // resolve: (Trip) => Trip,
 const subscriptionTrips = new GraphQLObjectType({
-  name: 'Subscriptions',
+  name: 'subscriptionTrips',
   description: 'Root Subscription',
   fields: {
     newTrip: {
       type: TripType,
-      subscribe: () => pubsub.asyncIterator('newTripY'),
-      resolve: Trip,
+      resolve: (payload: Trip) => payload,
+      subscribe: () => pubsub.asyncIterator('newTrip')
     }
   }
 })
 
 const mutationTrips = new GraphQLObjectType({
-  name: 'Mutations',
+  name: 'mutationTrips',
   description: 'insert and delete trips',
   fields: {
     addTrip: {
@@ -92,3 +92,31 @@ module.exports = new GraphQLSchema({
   mutation: mutationTrips,
   subscription: subscriptionTrips
 });
+
+
+// app.get(
+//   '/playground',
+//   expressPlayground({
+//     endpoint: '/graphql',
+//     subscriptionsEndpoint: `ws://localhost:${WS_PORT}/subscriptions`,
+//   }),
+// );
+
+
+// app.use('/graphiql', graphiqlExpress({
+//   endpointURL: '/graphql',
+//   subscriptionsEndpoint: `ws://localhost:${WS_PORT}/subscriptions`
+// }));
+
+
+
+// export const start = async () => {
+//   try {
+//     await connect()
+//     app.listen(config.port, () => {
+//       console.log(`REST API on http://localhost:${config.port}/api`)
+//     })
+//   } catch (e) {
+//     console.error(e)
+//   }
+// }

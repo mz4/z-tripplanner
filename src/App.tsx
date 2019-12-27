@@ -1,14 +1,22 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import React from 'react';
-import { Query, Mutation } from 'react-apollo';
+import { 
+  Query, 
+  Mutation, 
+  Subscription } from 'react-apollo';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { setTripDateEndDispatcher, setTripDateStartDispatcher, setTripNameDispatcher, tripsListDispatcher } from '../src/actions/tripsActions';
+import { 
+  setTripDateEndDispatcher, 
+  setTripDateStartDispatcher, 
+  setTripNameDispatcher, 
+  tripsListDispatcher } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
-import './css/main.scss';
 import TripList from './TripList';
+
+import './css/main.scss';
 
 interface MyProps {
   token: '',
@@ -101,13 +109,6 @@ const POST_TRIP = gql`
   }
 `
 
-// subscription onCommentAdded($repoFullName: String!){
-//   commentAdded(repoFullName: $repoFullName){
-//     id
-//     content
-//   }
-// }
-
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
@@ -164,39 +165,6 @@ class App extends React.Component<MyProps, MyState> {
         throw error;
       });
   }
-
-  removeTripAt = () => { console.log('aaa') }
-  // removeTripAt = (id: string) => {
-  //   console.log('DELETE!');
-  //   return (
-  //     <Mutation
-  //       mutation={DELETE_TRIP}
-  //     >
-  //       {/* {deleteTrip => (
-  //         deleteTrip(
-  //           { variables: { id: id } }
-  //         )) */}
-  //       }
-  //     </Mutation>
-  //   );
-    // const { token } = this.props;
-    // const host = getAPIUrl();
-    // const url = 'api/trip/' + id;
-    // axios
-    //   .delete(
-    //     host + url,
-    //     { headers:
-    //       {
-    //         "Authorization" : `Bearer ${token}`
-    //       }
-    //     })
-    //   .then(data => {
-    //     this.props.tripsListLoad(token);
-    //   })
-    //   .catch(error => {
-    //     throw error;
-    //   });
-  // }
 
   saveEditingAt = (trip) => {
     const isEditingToggled = false;
@@ -367,121 +335,148 @@ class App extends React.Component<MyProps, MyState> {
     const isConfirmed = false
     const isEditing = false
     return (
-      <Query query={GET_TRIPS}>
-        {({ loading, error, data }) => {
-          if (loading) return <div>Fetching</div>
-          if (error) return <div>Error</div>
+      <React.Fragment>
+        <Subscription
+          subscription={gql`
+            subscription TripAdded {
+              newTrip {
+                name
+                dateStart
+                dateEnd
+                isConfirmed
+                isEditing
+              }
+            }
+          `}
+        >
+          {({ loading, error, data }) => {
+            if (loading) return null;
+            if (error) return <p>Error! {error.message}</p>;
+            alert('new trip added')
+            return (
+              <>
+                <br />
+                {data && data.TripAdded && <h4>New trip: {data.newTrip.name}</h4>}
+                <br />
+              </>
+            );
+          }}
+        </Subscription>
+        <Query query={GET_TRIPS}>
+          {({ loading, error, data }) => {
+            if (loading) return <div>Fetching...</div>
+            if (error) return <div>Error</div>
 
-          const trips = data.trips;
-          const totalTrips = this.getTotalTrips(trips);
-          const numberConfirmed = this.getConfirmedTrips(trips);
-          const numberUnconfirmed = totalTrips - numberConfirmed;
-          const setConfirmed = () => this.setConfirmed();
-          const setUnConfirmed = () => this.setUnConfirmed();
-          const setAll = () => this.setAll();          
+            const trips = data.trips;
+            const totalTrips = this.getTotalTrips(trips);
+            const numberConfirmed = this.getConfirmedTrips(trips);
+            const numberUnconfirmed = totalTrips - numberConfirmed;
+            const setConfirmed = () => this.setConfirmed();
+            const setUnConfirmed = () => this.setUnConfirmed();
+            const setAll = () => this.setAll();          
 
-          return (
-            <React.Fragment>
-              <div className="App">
-                <div className="main">
+            return (
+              <React.Fragment>
+                <div className="App">
+                  <div className="main">
 
-                  <header className="header">
-                    <div className="header__logo">
-                      <h2>Trip Planner!</h2>
-                    </div>
-                  </header>
-
-                  <form>
-                    <div className="destination">
-                      <div className="row">
-                        <div className="col-md-4">
-                          <input
-                            type="text"
-                            name="name"
-                            value={name}
-                            placeholder="Name" 
-                            onChange={this.handleChange}
-                        />
-                        </div>
-                        <div className="col-md-2">
-                          <input
-                            type="text"
-                            name="dateStart"
-                            value={dateStart}
-                            placeholder="Date Start" 
-                            onChange={this.handleChange}
-                        />
-                        </div>
-                        <div className="col-md-2">
-                          <input
-                            type="text"
-                            name="dateEnd"
-                            value={dateEnd}
-                            placeholder="Date End"
-                            onChange={this.handleChange}
-                          />
-                        </div>
-                        <Mutation
-                          mutation={POST_TRIP}
-                          variables={{ 
-                            name, 
-                            dateStart, 
-                            dateEnd, 
-                            isConfirmed, 
-                            isEditing 
-                          }}
-                        >
-                          {addTrip => 
-                            <div className="col-md-2">
-                              <button 
-                                type="submit" 
-                                name="submit" 
-                                value="submit" 
-                                onClick={addTrip}
-                              >
-                                Submit
-                              </button>
-                            </div>
-                          }
-                        </Mutation>
+                    <header className="header">
+                      <div className="header__logo">
+                        <h2>Trip Planner!</h2>
                       </div>
-                    </div>
-                  </form>
+                    </header>
 
-                  <Counter
-                    totalTrips={totalTrips}
-                    numberConfirmed={numberConfirmed}
-                    numberUnconfirmed={numberUnconfirmed}
-                    setConfirmed={setConfirmed} 
-                    setUnConfirmed={setUnConfirmed}
-                    setAll={setAll}
-                    showConfirmed={this.state.filter.showConfirmed}
-                    showUnConfirmed={this.state.filter.showUnConfirmed}
-                    showAll={this.state.filter.showAll}
-                  />
+                    <form>
+                      <div className="destination">
+                        <div className="row">
+                          <div className="col-md-4">
+                            <input
+                              type="text"
+                              name="name"
+                              value={name}
+                              placeholder="Name" 
+                              onChange={this.handleChange}
+                          />
+                          </div>
+                          <div className="col-md-2">
+                            <input
+                              type="text"
+                              name="dateStart"
+                              value={dateStart}
+                              placeholder="Date Start" 
+                              onChange={this.handleChange}
+                          />
+                          </div>
+                          <div className="col-md-2">
+                            <input
+                              type="text"
+                              name="dateEnd"
+                              value={dateEnd}
+                              placeholder="Date End"
+                              onChange={this.handleChange}
+                            />
+                          </div>
+                          <Mutation
+                            mutation={POST_TRIP}
+                            variables={{ 
+                              name, 
+                              dateStart, 
+                              dateEnd, 
+                              isConfirmed, 
+                              isEditing 
+                            }}
+                          >
+                            {addTrip => 
+                              <div className="col-md-2">
+                                <button 
+                                  type="submit" 
+                                  name="submit" 
+                                  value="submit" 
+                                  onClick={addTrip}
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            }
+                          </Mutation>
+                        </div>
+                      </div>
+                    </form>
 
-                  <TripList
-                    trips={trips}
-                    toggleConfirmationAt={this.toggleConfirmationAt}
-                    toggleEditingAt={this.toggleEditingAt}
-                    saveEditingAt={this.saveEditingAt}
-                    setNameAt={this.setNameAt}
-                    setDateStartAt={this.setDateStartAt}
-                    setDateEndAt={this.setDateEndAt}
-                    removeTripAt={this.removeTripAt}
-                    name={this.state.form.name}
-                    showConfirmed={this.state.filter.showConfirmed}
-                    showUnConfirmed={this.state.filter.showUnConfirmed}
-                    showAll={this.state.filter.showAll}
-                  />
+                    <Counter
+                      totalTrips={totalTrips}
+                      numberConfirmed={numberConfirmed}
+                      numberUnconfirmed={numberUnconfirmed}
+                      setConfirmed={setConfirmed} 
+                      setUnConfirmed={setUnConfirmed}
+                      setAll={setAll}
+                      showConfirmed={this.state.filter.showConfirmed}
+                      showUnConfirmed={this.state.filter.showUnConfirmed}
+                      showAll={this.state.filter.showAll}
+                    />
 
+                    <TripList
+                      trips={trips}
+                      toggleConfirmationAt={this.toggleConfirmationAt}
+                      toggleEditingAt={this.toggleEditingAt}
+                      saveEditingAt={this.saveEditingAt}
+                      setNameAt={this.setNameAt}
+                      setDateStartAt={this.setDateStartAt}
+                      setDateEndAt={this.setDateEndAt}
+                      name={this.state.form.name}
+                      showConfirmed={this.state.filter.showConfirmed}
+                      showUnConfirmed={this.state.filter.showUnConfirmed}
+                      showAll={this.state.filter.showAll}
+                    />
+
+                  </div>
                 </div>
-              </div>
-            </React.Fragment>
-          );
+              </React.Fragment>
+            );
 
-        }}
-        </Query>
+          }}
+          </Query>
+        </React.Fragment>
     )}
   }
 

@@ -68,7 +68,6 @@ Trip.propTypes = {
   setName: PropTypes.func.isRequired,
   setDateStart: PropTypes.func.isRequired,
   setDateEnd: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired,
   key: PropTypes.any,
   keyid: PropTypes.any,
 };

@@ -35621,8 +35621,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultNormalizedCacheFactory", function() { return defaultNormalizedCacheFactory$1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "enhanceErrorWithDocument", function() { return enhanceErrorWithDocument; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_cache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-cache */ "./node_modules/apollo-cache/lib/bundle.esm.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/bundle.esm.js");
+/* harmony import */ var apollo_cache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-cache */ "./node_modules/apollo-cache-inmemory/node_modules/apollo-cache/lib/bundle.esm.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-cache-inmemory/node_modules/apollo-utilities/lib/bundle.esm.js");
 /* harmony import */ var optimism__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! optimism */ "./node_modules/optimism/lib/bundle.esm.js");
 /* harmony import */ var ts_invariant__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ts-invariant */ "./node_modules/ts-invariant/lib/invariant.esm.js");
 
@@ -35819,7 +35819,7 @@ var StoreReader = (function () {
         });
     }
     StoreReader.prototype.readQueryFromStore = function (options) {
-        return this.diffQueryAgainstStore(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options, { returnPartialData: false })).result;
+        return this.diffQueryAgainstStore(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options), { returnPartialData: false })).result;
     };
     StoreReader.prototype.diffQueryAgainstStore = function (_a) {
         var store = _a.store, query = _a.query, variables = _a.variables, previousResult = _a.previousResult, _b = _a.returnPartialData, returnPartialData = _b === void 0 ? true : _b, _c = _a.rootId, rootId = _c === void 0 ? 'ROOT_QUERY' : _c, fragmentMatcherFunction = _a.fragmentMatcherFunction, config = _a.config;
@@ -35930,8 +35930,8 @@ var StoreReader = (function () {
                         execContext: execContext,
                     });
                     if (match === 'heuristic' && fragmentExecResult.missing) {
-                        fragmentExecResult = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, fragmentExecResult, { missing: fragmentExecResult.missing.map(function (info) {
-                                return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, info, { tolerable: true });
+                        fragmentExecResult = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, fragmentExecResult), { missing: fragmentExecResult.missing.map(function (info) {
+                                return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, info), { tolerable: true });
                             }) });
                     }
                     objectsToMerge.push(handleMissing(fragmentExecResult));
@@ -36304,7 +36304,7 @@ var StoreWriter = (function () {
         }
         storeObject = store.get(dataId);
         if (!storeObject || !Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_2__["isEqual"])(storeValue, storeObject[storeFieldName])) {
-            store.set(dataId, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, storeObject, (_b = {}, _b[storeFieldName] = storeValue, _b)));
+            store.set(dataId, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, storeObject), (_b = {}, _b[storeFieldName] = storeValue, _b)));
         }
     };
     StoreWriter.prototype.processArrayValue = function (value, generatedId, selectionSet, context) {
@@ -36360,7 +36360,7 @@ function mergeWithGenerated(generatedKey, realKey, cache) {
         }
     });
     cache.delete(generatedKey);
-    var newRealValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, generated, real);
+    var newRealValue = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, generated), real);
     if (Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_2__["isEqual"])(newRealValue, real)) {
         return madeChanges;
     }
@@ -36414,7 +36414,7 @@ var OptimisticCacheLayer = (function (_super) {
         return _this;
     }
     OptimisticCacheLayer.prototype.toObject = function () {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.parent.toObject(), this.data);
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.parent.toObject()), this.data);
     };
     OptimisticCacheLayer.prototype.get = function (dataId) {
         return hasOwn$1.call(this.data, dataId)
@@ -36432,7 +36432,7 @@ var InMemoryCache = (function (_super) {
         _this.typenameDocumentCache = new Map();
         _this.cacheKeyRoot = new optimism__WEBPACK_IMPORTED_MODULE_3__["KeyTrie"](apollo_utilities__WEBPACK_IMPORTED_MODULE_2__["canUseWeakMap"]);
         _this.silenceBroadcast = false;
-        _this.config = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, defaultConfig, config);
+        _this.config = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, defaultConfig), config);
         if (_this.config.customResolvers) {
              false || ts_invariant__WEBPACK_IMPORTED_MODULE_4__["invariant"].warn('customResolvers have been renamed to cacheRedirects. Please update your config as we will be deprecating customResolvers in the next major version.');
             _this.config.cacheRedirects = _this.config.customResolvers;
@@ -36613,10 +36613,10 @@ var InMemoryCache = (function (_super) {
 
 /***/ }),
 
-/***/ "./node_modules/apollo-cache/lib/bundle.esm.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/apollo-cache/lib/bundle.esm.js ***!
-  \*****************************************************/
+/***/ "./node_modules/apollo-cache-inmemory/node_modules/apollo-cache/lib/bundle.esm.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/apollo-cache-inmemory/node_modules/apollo-cache/lib/bundle.esm.js ***!
+  \****************************************************************************************/
 /*! exports provided: ApolloCache, Cache */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -36624,7 +36624,7 @@ var InMemoryCache = (function (_super) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApolloCache", function() { return ApolloCache; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Cache", function() { return Cache; });
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/bundle.esm.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-cache-inmemory/node_modules/apollo-utilities/lib/bundle.esm.js");
 
 
 function queryFromPojo(obj) {
@@ -36804,6 +36804,998 @@ var Cache;
 
 /***/ }),
 
+/***/ "./node_modules/apollo-cache-inmemory/node_modules/apollo-utilities/lib/bundle.esm.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/apollo-cache-inmemory/node_modules/apollo-utilities/lib/bundle.esm.js ***!
+  \********************************************************************************************/
+/*! exports provided: isEqual, addTypenameToDocument, argumentsObjectFromField, assign, buildQueryFromSelectionSet, canUseWeakMap, checkDocument, cloneDeep, createFragmentMap, getDefaultValues, getDirectiveInfoFromField, getDirectiveNames, getDirectivesFromDocument, getEnv, getFragmentDefinition, getFragmentDefinitions, getFragmentQueryDocument, getInclusionDirectives, getMainDefinition, getMutationDefinition, getOperationDefinition, getOperationDefinitionOrDie, getOperationName, getQueryDefinition, getStoreKeyName, graphQLResultHasError, hasClientExports, hasDirectives, isDevelopment, isEnv, isField, isIdValue, isInlineFragment, isJsonValue, isNumberValue, isProduction, isScalarValue, isTest, maybeDeepFreeze, mergeDeep, mergeDeepArray, removeArgumentsFromDocument, removeClientSetsFromDocument, removeConnectionDirectiveFromDocument, removeDirectivesFromDocument, removeFragmentSpreadFromDocument, resultKeyNameFromField, shouldInclude, storeKeyNameFromField, stripSymbols, toIdValue, tryFunctionOrLogError, valueFromNode, valueToObjectRepresentation, variablesInOperation, warnOnceInDevelopment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addTypenameToDocument", function() { return addTypenameToDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "argumentsObjectFromField", function() { return argumentsObjectFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "assign", function() { return assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildQueryFromSelectionSet", function() { return buildQueryFromSelectionSet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "canUseWeakMap", function() { return canUseWeakMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkDocument", function() { return checkDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cloneDeep", function() { return cloneDeep; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFragmentMap", function() { return createFragmentMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDefaultValues", function() { return getDefaultValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectiveInfoFromField", function() { return getDirectiveInfoFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectiveNames", function() { return getDirectiveNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectivesFromDocument", function() { return getDirectivesFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEnv", function() { return getEnv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinition", function() { return getFragmentDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinitions", function() { return getFragmentDefinitions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentQueryDocument", function() { return getFragmentQueryDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInclusionDirectives", function() { return getInclusionDirectives; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMainDefinition", function() { return getMainDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMutationDefinition", function() { return getMutationDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinition", function() { return getOperationDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinitionOrDie", function() { return getOperationDefinitionOrDie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationName", function() { return getOperationName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getQueryDefinition", function() { return getQueryDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStoreKeyName", function() { return getStoreKeyName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "graphQLResultHasError", function() { return graphQLResultHasError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasClientExports", function() { return hasClientExports; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasDirectives", function() { return hasDirectives; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDevelopment", function() { return isDevelopment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isEnv", function() { return isEnv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isField", function() { return isField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isIdValue", function() { return isIdValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isInlineFragment", function() { return isInlineFragment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isJsonValue", function() { return isJsonValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNumberValue", function() { return isNumberValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isProduction", function() { return isProduction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isScalarValue", function() { return isScalarValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isTest", function() { return isTest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maybeDeepFreeze", function() { return maybeDeepFreeze; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeDeep", function() { return mergeDeep; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeDeepArray", function() { return mergeDeepArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeArgumentsFromDocument", function() { return removeArgumentsFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeClientSetsFromDocument", function() { return removeClientSetsFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeConnectionDirectiveFromDocument", function() { return removeConnectionDirectiveFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeDirectivesFromDocument", function() { return removeDirectivesFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFragmentSpreadFromDocument", function() { return removeFragmentSpreadFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resultKeyNameFromField", function() { return resultKeyNameFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shouldInclude", function() { return shouldInclude; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "storeKeyNameFromField", function() { return storeKeyNameFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stripSymbols", function() { return stripSymbols; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toIdValue", function() { return toIdValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tryFunctionOrLogError", function() { return tryFunctionOrLogError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "valueFromNode", function() { return valueFromNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "valueToObjectRepresentation", function() { return valueToObjectRepresentation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "variablesInOperation", function() { return variablesInOperation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "warnOnceInDevelopment", function() { return warnOnceInDevelopment; });
+/* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! graphql/language/visitor */ "./node_modules/graphql/language/visitor.js");
+/* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var ts_invariant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts-invariant */ "./node_modules/ts-invariant/lib/invariant.esm.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! fast-json-stable-stringify */ "./node_modules/fast-json-stable-stringify/index.js");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wry_equality__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wry/equality */ "./node_modules/@wry/equality/lib/equality.esm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isEqual", function() { return _wry_equality__WEBPACK_IMPORTED_MODULE_4__["equal"]; });
+
+
+
+
+
+
+
+function isScalarValue(value) {
+    return ['StringValue', 'BooleanValue', 'EnumValue'].indexOf(value.kind) > -1;
+}
+function isNumberValue(value) {
+    return ['IntValue', 'FloatValue'].indexOf(value.kind) > -1;
+}
+function isStringValue(value) {
+    return value.kind === 'StringValue';
+}
+function isBooleanValue(value) {
+    return value.kind === 'BooleanValue';
+}
+function isIntValue(value) {
+    return value.kind === 'IntValue';
+}
+function isFloatValue(value) {
+    return value.kind === 'FloatValue';
+}
+function isVariable(value) {
+    return value.kind === 'Variable';
+}
+function isObjectValue(value) {
+    return value.kind === 'ObjectValue';
+}
+function isListValue(value) {
+    return value.kind === 'ListValue';
+}
+function isEnumValue(value) {
+    return value.kind === 'EnumValue';
+}
+function isNullValue(value) {
+    return value.kind === 'NullValue';
+}
+function valueToObjectRepresentation(argObj, name, value, variables) {
+    if (isIntValue(value) || isFloatValue(value)) {
+        argObj[name.value] = Number(value.value);
+    }
+    else if (isBooleanValue(value) || isStringValue(value)) {
+        argObj[name.value] = value.value;
+    }
+    else if (isObjectValue(value)) {
+        var nestedArgObj_1 = {};
+        value.fields.map(function (obj) {
+            return valueToObjectRepresentation(nestedArgObj_1, obj.name, obj.value, variables);
+        });
+        argObj[name.value] = nestedArgObj_1;
+    }
+    else if (isVariable(value)) {
+        var variableValue = (variables || {})[value.name.value];
+        argObj[name.value] = variableValue;
+    }
+    else if (isListValue(value)) {
+        argObj[name.value] = value.values.map(function (listValue) {
+            var nestedArgArrayObj = {};
+            valueToObjectRepresentation(nestedArgArrayObj, name, listValue, variables);
+            return nestedArgArrayObj[name.value];
+        });
+    }
+    else if (isEnumValue(value)) {
+        argObj[name.value] = value.value;
+    }
+    else if (isNullValue(value)) {
+        argObj[name.value] = null;
+    }
+    else {
+        throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("The inline argument \"" + name.value + "\" of kind \"" + value.kind + "\"" +
+            'is not supported. Use variables instead of inline arguments to ' +
+            'overcome this limitation.');
+    }
+}
+function storeKeyNameFromField(field, variables) {
+    var directivesObj = null;
+    if (field.directives) {
+        directivesObj = {};
+        field.directives.forEach(function (directive) {
+            directivesObj[directive.name.value] = {};
+            if (directive.arguments) {
+                directive.arguments.forEach(function (_a) {
+                    var name = _a.name, value = _a.value;
+                    return valueToObjectRepresentation(directivesObj[directive.name.value], name, value, variables);
+                });
+            }
+        });
+    }
+    var argObj = null;
+    if (field.arguments && field.arguments.length) {
+        argObj = {};
+        field.arguments.forEach(function (_a) {
+            var name = _a.name, value = _a.value;
+            return valueToObjectRepresentation(argObj, name, value, variables);
+        });
+    }
+    return getStoreKeyName(field.name.value, argObj, directivesObj);
+}
+var KNOWN_DIRECTIVES = [
+    'connection',
+    'include',
+    'skip',
+    'client',
+    'rest',
+    'export',
+];
+function getStoreKeyName(fieldName, args, directives) {
+    if (directives &&
+        directives['connection'] &&
+        directives['connection']['key']) {
+        if (directives['connection']['filter'] &&
+            directives['connection']['filter'].length > 0) {
+            var filterKeys = directives['connection']['filter']
+                ? directives['connection']['filter']
+                : [];
+            filterKeys.sort();
+            var queryArgs_1 = args;
+            var filteredArgs_1 = {};
+            filterKeys.forEach(function (key) {
+                filteredArgs_1[key] = queryArgs_1[key];
+            });
+            return directives['connection']['key'] + "(" + JSON.stringify(filteredArgs_1) + ")";
+        }
+        else {
+            return directives['connection']['key'];
+        }
+    }
+    var completeFieldName = fieldName;
+    if (args) {
+        var stringifiedArgs = fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3___default()(args);
+        completeFieldName += "(" + stringifiedArgs + ")";
+    }
+    if (directives) {
+        Object.keys(directives).forEach(function (key) {
+            if (KNOWN_DIRECTIVES.indexOf(key) !== -1)
+                return;
+            if (directives[key] && Object.keys(directives[key]).length) {
+                completeFieldName += "@" + key + "(" + JSON.stringify(directives[key]) + ")";
+            }
+            else {
+                completeFieldName += "@" + key;
+            }
+        });
+    }
+    return completeFieldName;
+}
+function argumentsObjectFromField(field, variables) {
+    if (field.arguments && field.arguments.length) {
+        var argObj_1 = {};
+        field.arguments.forEach(function (_a) {
+            var name = _a.name, value = _a.value;
+            return valueToObjectRepresentation(argObj_1, name, value, variables);
+        });
+        return argObj_1;
+    }
+    return null;
+}
+function resultKeyNameFromField(field) {
+    return field.alias ? field.alias.value : field.name.value;
+}
+function isField(selection) {
+    return selection.kind === 'Field';
+}
+function isInlineFragment(selection) {
+    return selection.kind === 'InlineFragment';
+}
+function isIdValue(idObject) {
+    return idObject &&
+        idObject.type === 'id' &&
+        typeof idObject.generated === 'boolean';
+}
+function toIdValue(idConfig, generated) {
+    if (generated === void 0) { generated = false; }
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({ type: 'id', generated: generated }, (typeof idConfig === 'string'
+        ? { id: idConfig, typename: undefined }
+        : idConfig));
+}
+function isJsonValue(jsonObject) {
+    return (jsonObject != null &&
+        typeof jsonObject === 'object' &&
+        jsonObject.type === 'json');
+}
+function defaultValueFromVariable(node) {
+    throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("Variable nodes are not supported by valueFromNode");
+}
+function valueFromNode(node, onVariable) {
+    if (onVariable === void 0) { onVariable = defaultValueFromVariable; }
+    switch (node.kind) {
+        case 'Variable':
+            return onVariable(node);
+        case 'NullValue':
+            return null;
+        case 'IntValue':
+            return parseInt(node.value, 10);
+        case 'FloatValue':
+            return parseFloat(node.value);
+        case 'ListValue':
+            return node.values.map(function (v) { return valueFromNode(v, onVariable); });
+        case 'ObjectValue': {
+            var value = {};
+            for (var _i = 0, _a = node.fields; _i < _a.length; _i++) {
+                var field = _a[_i];
+                value[field.name.value] = valueFromNode(field.value, onVariable);
+            }
+            return value;
+        }
+        default:
+            return node.value;
+    }
+}
+
+function getDirectiveInfoFromField(field, variables) {
+    if (field.directives && field.directives.length) {
+        var directiveObj_1 = {};
+        field.directives.forEach(function (directive) {
+            directiveObj_1[directive.name.value] = argumentsObjectFromField(directive, variables);
+        });
+        return directiveObj_1;
+    }
+    return null;
+}
+function shouldInclude(selection, variables) {
+    if (variables === void 0) { variables = {}; }
+    return getInclusionDirectives(selection.directives).every(function (_a) {
+        var directive = _a.directive, ifArgument = _a.ifArgument;
+        var evaledValue = false;
+        if (ifArgument.value.kind === 'Variable') {
+            evaledValue = variables[ifArgument.value.name.value];
+             false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(evaledValue !== void 0, "Invalid variable referenced in @" + directive.name.value + " directive.");
+        }
+        else {
+            evaledValue = ifArgument.value.value;
+        }
+        return directive.name.value === 'skip' ? !evaledValue : evaledValue;
+    });
+}
+function getDirectiveNames(doc) {
+    var names = [];
+    Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        Directive: function (node) {
+            names.push(node.name.value);
+        },
+    });
+    return names;
+}
+function hasDirectives(names, doc) {
+    return getDirectiveNames(doc).some(function (name) { return names.indexOf(name) > -1; });
+}
+function hasClientExports(document) {
+    return (document &&
+        hasDirectives(['client'], document) &&
+        hasDirectives(['export'], document));
+}
+function isInclusionDirective(_a) {
+    var value = _a.name.value;
+    return value === 'skip' || value === 'include';
+}
+function getInclusionDirectives(directives) {
+    return directives ? directives.filter(isInclusionDirective).map(function (directive) {
+        var directiveArguments = directive.arguments;
+        var directiveName = directive.name.value;
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(directiveArguments && directiveArguments.length === 1, "Incorrect number of arguments for the @" + directiveName + " directive.");
+        var ifArgument = directiveArguments[0];
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(ifArgument.name && ifArgument.name.value === 'if', "Invalid argument for the @" + directiveName + " directive.");
+        var ifValue = ifArgument.value;
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(ifValue &&
+            (ifValue.kind === 'Variable' || ifValue.kind === 'BooleanValue'), "Argument for the @" + directiveName + " directive must be a variable or a boolean value.");
+        return { directive: directive, ifArgument: ifArgument };
+    }) : [];
+}
+
+function getFragmentQueryDocument(document, fragmentName) {
+    var actualFragmentName = fragmentName;
+    var fragments = [];
+    document.definitions.forEach(function (definition) {
+        if (definition.kind === 'OperationDefinition') {
+            throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("Found a " + definition.operation + " operation" + (definition.name ? " named '" + definition.name.value + "'" : '') + ". " +
+                'No operations are allowed when using a fragment as a query. Only fragments are allowed.');
+        }
+        if (definition.kind === 'FragmentDefinition') {
+            fragments.push(definition);
+        }
+    });
+    if (typeof actualFragmentName === 'undefined') {
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(fragments.length === 1, "Found " + fragments.length + " fragments. `fragmentName` must be provided when there is not exactly 1 fragment.");
+        actualFragmentName = fragments[0].name.value;
+    }
+    var query = Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, document), { definitions: Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__spreadArrays"])([
+            {
+                kind: 'OperationDefinition',
+                operation: 'query',
+                selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                        {
+                            kind: 'FragmentSpread',
+                            name: {
+                                kind: 'Name',
+                                value: actualFragmentName,
+                            },
+                        },
+                    ],
+                },
+            }
+        ], document.definitions) });
+    return query;
+}
+
+function assign(target) {
+    var sources = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        sources[_i - 1] = arguments[_i];
+    }
+    sources.forEach(function (source) {
+        if (typeof source === 'undefined' || source === null) {
+            return;
+        }
+        Object.keys(source).forEach(function (key) {
+            target[key] = source[key];
+        });
+    });
+    return target;
+}
+
+function getMutationDefinition(doc) {
+    checkDocument(doc);
+    var mutationDef = doc.definitions.filter(function (definition) {
+        return definition.kind === 'OperationDefinition' &&
+            definition.operation === 'mutation';
+    })[0];
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(mutationDef, 'Must contain a mutation definition.');
+    return mutationDef;
+}
+function checkDocument(doc) {
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(doc && doc.kind === 'Document', "Expecting a parsed GraphQL document. Perhaps you need to wrap the query string in a \"gql\" tag? http://docs.apollostack.com/apollo-client/core.html#gql");
+    var operations = doc.definitions
+        .filter(function (d) { return d.kind !== 'FragmentDefinition'; })
+        .map(function (definition) {
+        if (definition.kind !== 'OperationDefinition') {
+            throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("Schema type definitions not allowed in queries. Found: \"" + definition.kind + "\"");
+        }
+        return definition;
+    });
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(operations.length <= 1, "Ambiguous GraphQL document: contains " + operations.length + " operations");
+    return doc;
+}
+function getOperationDefinition(doc) {
+    checkDocument(doc);
+    return doc.definitions.filter(function (definition) { return definition.kind === 'OperationDefinition'; })[0];
+}
+function getOperationDefinitionOrDie(document) {
+    var def = getOperationDefinition(document);
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(def, "GraphQL document is missing an operation");
+    return def;
+}
+function getOperationName(doc) {
+    return (doc.definitions
+        .filter(function (definition) {
+        return definition.kind === 'OperationDefinition' && definition.name;
+    })
+        .map(function (x) { return x.name.value; })[0] || null);
+}
+function getFragmentDefinitions(doc) {
+    return doc.definitions.filter(function (definition) { return definition.kind === 'FragmentDefinition'; });
+}
+function getQueryDefinition(doc) {
+    var queryDef = getOperationDefinition(doc);
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(queryDef && queryDef.operation === 'query', 'Must contain a query definition.');
+    return queryDef;
+}
+function getFragmentDefinition(doc) {
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(doc.kind === 'Document', "Expecting a parsed GraphQL document. Perhaps you need to wrap the query string in a \"gql\" tag? http://docs.apollostack.com/apollo-client/core.html#gql");
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(doc.definitions.length <= 1, 'Fragment must have exactly one definition.');
+    var fragmentDef = doc.definitions[0];
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(fragmentDef.kind === 'FragmentDefinition', 'Must be a fragment definition.');
+    return fragmentDef;
+}
+function getMainDefinition(queryDoc) {
+    checkDocument(queryDoc);
+    var fragmentDefinition;
+    for (var _i = 0, _a = queryDoc.definitions; _i < _a.length; _i++) {
+        var definition = _a[_i];
+        if (definition.kind === 'OperationDefinition') {
+            var operation = definition.operation;
+            if (operation === 'query' ||
+                operation === 'mutation' ||
+                operation === 'subscription') {
+                return definition;
+            }
+        }
+        if (definition.kind === 'FragmentDefinition' && !fragmentDefinition) {
+            fragmentDefinition = definition;
+        }
+    }
+    if (fragmentDefinition) {
+        return fragmentDefinition;
+    }
+    throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]('Expected a parsed GraphQL query with a query, mutation, subscription, or a fragment.');
+}
+function createFragmentMap(fragments) {
+    if (fragments === void 0) { fragments = []; }
+    var symTable = {};
+    fragments.forEach(function (fragment) {
+        symTable[fragment.name.value] = fragment;
+    });
+    return symTable;
+}
+function getDefaultValues(definition) {
+    if (definition &&
+        definition.variableDefinitions &&
+        definition.variableDefinitions.length) {
+        var defaultValues = definition.variableDefinitions
+            .filter(function (_a) {
+            var defaultValue = _a.defaultValue;
+            return defaultValue;
+        })
+            .map(function (_a) {
+            var variable = _a.variable, defaultValue = _a.defaultValue;
+            var defaultValueObj = {};
+            valueToObjectRepresentation(defaultValueObj, variable.name, defaultValue);
+            return defaultValueObj;
+        });
+        return assign.apply(void 0, Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__spreadArrays"])([{}], defaultValues));
+    }
+    return {};
+}
+function variablesInOperation(operation) {
+    var names = new Set();
+    if (operation.variableDefinitions) {
+        for (var _i = 0, _a = operation.variableDefinitions; _i < _a.length; _i++) {
+            var definition = _a[_i];
+            names.add(definition.variable.name.value);
+        }
+    }
+    return names;
+}
+
+function filterInPlace(array, test, context) {
+    var target = 0;
+    array.forEach(function (elem, i) {
+        if (test.call(this, elem, i, array)) {
+            array[target++] = elem;
+        }
+    }, context);
+    array.length = target;
+    return array;
+}
+
+var TYPENAME_FIELD = {
+    kind: 'Field',
+    name: {
+        kind: 'Name',
+        value: '__typename',
+    },
+};
+function isEmpty(op, fragments) {
+    return op.selectionSet.selections.every(function (selection) {
+        return selection.kind === 'FragmentSpread' &&
+            isEmpty(fragments[selection.name.value], fragments);
+    });
+}
+function nullIfDocIsEmpty(doc) {
+    return isEmpty(getOperationDefinition(doc) || getFragmentDefinition(doc), createFragmentMap(getFragmentDefinitions(doc)))
+        ? null
+        : doc;
+}
+function getDirectiveMatcher(directives) {
+    return function directiveMatcher(directive) {
+        return directives.some(function (dir) {
+            return (dir.name && dir.name === directive.name.value) ||
+                (dir.test && dir.test(directive));
+        });
+    };
+}
+function removeDirectivesFromDocument(directives, doc) {
+    var variablesInUse = Object.create(null);
+    var variablesToRemove = [];
+    var fragmentSpreadsInUse = Object.create(null);
+    var fragmentSpreadsToRemove = [];
+    var modifiedDoc = nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        Variable: {
+            enter: function (node, _key, parent) {
+                if (parent.kind !== 'VariableDefinition') {
+                    variablesInUse[node.name.value] = true;
+                }
+            },
+        },
+        Field: {
+            enter: function (node) {
+                if (directives && node.directives) {
+                    var shouldRemoveField = directives.some(function (directive) { return directive.remove; });
+                    if (shouldRemoveField &&
+                        node.directives &&
+                        node.directives.some(getDirectiveMatcher(directives))) {
+                        if (node.arguments) {
+                            node.arguments.forEach(function (arg) {
+                                if (arg.value.kind === 'Variable') {
+                                    variablesToRemove.push({
+                                        name: arg.value.name.value,
+                                    });
+                                }
+                            });
+                        }
+                        if (node.selectionSet) {
+                            getAllFragmentSpreadsFromSelectionSet(node.selectionSet).forEach(function (frag) {
+                                fragmentSpreadsToRemove.push({
+                                    name: frag.name.value,
+                                });
+                            });
+                        }
+                        return null;
+                    }
+                }
+            },
+        },
+        FragmentSpread: {
+            enter: function (node) {
+                fragmentSpreadsInUse[node.name.value] = true;
+            },
+        },
+        Directive: {
+            enter: function (node) {
+                if (getDirectiveMatcher(directives)(node)) {
+                    return null;
+                }
+            },
+        },
+    }));
+    if (modifiedDoc &&
+        filterInPlace(variablesToRemove, function (v) { return !variablesInUse[v.name]; }).length) {
+        modifiedDoc = removeArgumentsFromDocument(variablesToRemove, modifiedDoc);
+    }
+    if (modifiedDoc &&
+        filterInPlace(fragmentSpreadsToRemove, function (fs) { return !fragmentSpreadsInUse[fs.name]; })
+            .length) {
+        modifiedDoc = removeFragmentSpreadFromDocument(fragmentSpreadsToRemove, modifiedDoc);
+    }
+    return modifiedDoc;
+}
+function addTypenameToDocument(doc) {
+    return Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(checkDocument(doc), {
+        SelectionSet: {
+            enter: function (node, _key, parent) {
+                if (parent &&
+                    parent.kind === 'OperationDefinition') {
+                    return;
+                }
+                var selections = node.selections;
+                if (!selections) {
+                    return;
+                }
+                var skip = selections.some(function (selection) {
+                    return (isField(selection) &&
+                        (selection.name.value === '__typename' ||
+                            selection.name.value.lastIndexOf('__', 0) === 0));
+                });
+                if (skip) {
+                    return;
+                }
+                var field = parent;
+                if (isField(field) &&
+                    field.directives &&
+                    field.directives.some(function (d) { return d.name.value === 'export'; })) {
+                    return;
+                }
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { selections: Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__spreadArrays"])(selections, [TYPENAME_FIELD]) });
+            },
+        },
+    });
+}
+var connectionRemoveConfig = {
+    test: function (directive) {
+        var willRemove = directive.name.value === 'connection';
+        if (willRemove) {
+            if (!directive.arguments ||
+                !directive.arguments.some(function (arg) { return arg.name.value === 'key'; })) {
+                 false || ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"].warn('Removing an @connection directive even though it does not have a key. ' +
+                    'You may want to use the key parameter to specify a store key.');
+            }
+        }
+        return willRemove;
+    },
+};
+function removeConnectionDirectiveFromDocument(doc) {
+    return removeDirectivesFromDocument([connectionRemoveConfig], checkDocument(doc));
+}
+function hasDirectivesInSelectionSet(directives, selectionSet, nestedCheck) {
+    if (nestedCheck === void 0) { nestedCheck = true; }
+    return (selectionSet &&
+        selectionSet.selections &&
+        selectionSet.selections.some(function (selection) {
+            return hasDirectivesInSelection(directives, selection, nestedCheck);
+        }));
+}
+function hasDirectivesInSelection(directives, selection, nestedCheck) {
+    if (nestedCheck === void 0) { nestedCheck = true; }
+    if (!isField(selection)) {
+        return true;
+    }
+    if (!selection.directives) {
+        return false;
+    }
+    return (selection.directives.some(getDirectiveMatcher(directives)) ||
+        (nestedCheck &&
+            hasDirectivesInSelectionSet(directives, selection.selectionSet, nestedCheck)));
+}
+function getDirectivesFromDocument(directives, doc) {
+    checkDocument(doc);
+    var parentPath;
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        SelectionSet: {
+            enter: function (node, _key, _parent, path) {
+                var currentPath = path.join('-');
+                if (!parentPath ||
+                    currentPath === parentPath ||
+                    !currentPath.startsWith(parentPath)) {
+                    if (node.selections) {
+                        var selectionsWithDirectives = node.selections.filter(function (selection) { return hasDirectivesInSelection(directives, selection); });
+                        if (hasDirectivesInSelectionSet(directives, node, false)) {
+                            parentPath = currentPath;
+                        }
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { selections: selectionsWithDirectives });
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            },
+        },
+    }));
+}
+function getArgumentMatcher(config) {
+    return function argumentMatcher(argument) {
+        return config.some(function (aConfig) {
+            return argument.value &&
+                argument.value.kind === 'Variable' &&
+                argument.value.name &&
+                (aConfig.name === argument.value.name.value ||
+                    (aConfig.test && aConfig.test(argument)));
+        });
+    };
+}
+function removeArgumentsFromDocument(config, doc) {
+    var argMatcher = getArgumentMatcher(config);
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        OperationDefinition: {
+            enter: function (node) {
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { variableDefinitions: node.variableDefinitions.filter(function (varDef) {
+                        return !config.some(function (arg) { return arg.name === varDef.variable.name.value; });
+                    }) });
+            },
+        },
+        Field: {
+            enter: function (node) {
+                var shouldRemoveField = config.some(function (argConfig) { return argConfig.remove; });
+                if (shouldRemoveField) {
+                    var argMatchCount_1 = 0;
+                    node.arguments.forEach(function (arg) {
+                        if (argMatcher(arg)) {
+                            argMatchCount_1 += 1;
+                        }
+                    });
+                    if (argMatchCount_1 === 1) {
+                        return null;
+                    }
+                }
+            },
+        },
+        Argument: {
+            enter: function (node) {
+                if (argMatcher(node)) {
+                    return null;
+                }
+            },
+        },
+    }));
+}
+function removeFragmentSpreadFromDocument(config, doc) {
+    function enter(node) {
+        if (config.some(function (def) { return def.name === node.name.value; })) {
+            return null;
+        }
+    }
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        FragmentSpread: { enter: enter },
+        FragmentDefinition: { enter: enter },
+    }));
+}
+function getAllFragmentSpreadsFromSelectionSet(selectionSet) {
+    var allFragments = [];
+    selectionSet.selections.forEach(function (selection) {
+        if ((isField(selection) || isInlineFragment(selection)) &&
+            selection.selectionSet) {
+            getAllFragmentSpreadsFromSelectionSet(selection.selectionSet).forEach(function (frag) { return allFragments.push(frag); });
+        }
+        else if (selection.kind === 'FragmentSpread') {
+            allFragments.push(selection);
+        }
+    });
+    return allFragments;
+}
+function buildQueryFromSelectionSet(document) {
+    var definition = getMainDefinition(document);
+    var definitionOperation = definition.operation;
+    if (definitionOperation === 'query') {
+        return document;
+    }
+    var modifiedDoc = Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(document, {
+        OperationDefinition: {
+            enter: function (node) {
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { operation: 'query' });
+            },
+        },
+    });
+    return modifiedDoc;
+}
+function removeClientSetsFromDocument(document) {
+    checkDocument(document);
+    var modifiedDoc = removeDirectivesFromDocument([
+        {
+            test: function (directive) { return directive.name.value === 'client'; },
+            remove: true,
+        },
+    ], document);
+    if (modifiedDoc) {
+        modifiedDoc = Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(modifiedDoc, {
+            FragmentDefinition: {
+                enter: function (node) {
+                    if (node.selectionSet) {
+                        var isTypenameOnly = node.selectionSet.selections.every(function (selection) {
+                            return isField(selection) && selection.name.value === '__typename';
+                        });
+                        if (isTypenameOnly) {
+                            return null;
+                        }
+                    }
+                },
+            },
+        });
+    }
+    return modifiedDoc;
+}
+
+var canUseWeakMap = typeof WeakMap === 'function' && !(typeof navigator === 'object' &&
+    navigator.product === 'ReactNative');
+
+var toString = Object.prototype.toString;
+function cloneDeep(value) {
+    return cloneDeepHelper(value, new Map());
+}
+function cloneDeepHelper(val, seen) {
+    switch (toString.call(val)) {
+        case "[object Array]": {
+            if (seen.has(val))
+                return seen.get(val);
+            var copy_1 = val.slice(0);
+            seen.set(val, copy_1);
+            copy_1.forEach(function (child, i) {
+                copy_1[i] = cloneDeepHelper(child, seen);
+            });
+            return copy_1;
+        }
+        case "[object Object]": {
+            if (seen.has(val))
+                return seen.get(val);
+            var copy_2 = Object.create(Object.getPrototypeOf(val));
+            seen.set(val, copy_2);
+            Object.keys(val).forEach(function (key) {
+                copy_2[key] = cloneDeepHelper(val[key], seen);
+            });
+            return copy_2;
+        }
+        default:
+            return val;
+    }
+}
+
+function getEnv() {
+    if (typeof process !== 'undefined' && "development") {
+        return "development";
+    }
+    return 'development';
+}
+function isEnv(env) {
+    return getEnv() === env;
+}
+function isProduction() {
+    return isEnv('production') === true;
+}
+function isDevelopment() {
+    return isEnv('development') === true;
+}
+function isTest() {
+    return isEnv('test') === true;
+}
+
+function tryFunctionOrLogError(f) {
+    try {
+        return f();
+    }
+    catch (e) {
+        if (console.error) {
+            console.error(e);
+        }
+    }
+}
+function graphQLResultHasError(result) {
+    return result.errors && result.errors.length;
+}
+
+function deepFreeze(o) {
+    Object.freeze(o);
+    Object.getOwnPropertyNames(o).forEach(function (prop) {
+        if (o[prop] !== null &&
+            (typeof o[prop] === 'object' || typeof o[prop] === 'function') &&
+            !Object.isFrozen(o[prop])) {
+            deepFreeze(o[prop]);
+        }
+    });
+    return o;
+}
+function maybeDeepFreeze(obj) {
+    if (isDevelopment() || isTest()) {
+        var symbolIsPolyfilled = typeof Symbol === 'function' && typeof Symbol('') === 'string';
+        if (!symbolIsPolyfilled) {
+            return deepFreeze(obj);
+        }
+    }
+    return obj;
+}
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+function mergeDeep() {
+    var sources = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        sources[_i] = arguments[_i];
+    }
+    return mergeDeepArray(sources);
+}
+function mergeDeepArray(sources) {
+    var target = sources[0] || {};
+    var count = sources.length;
+    if (count > 1) {
+        var pastCopies = [];
+        target = shallowCopyForMerge(target, pastCopies);
+        for (var i = 1; i < count; ++i) {
+            target = mergeHelper(target, sources[i], pastCopies);
+        }
+    }
+    return target;
+}
+function isObject(obj) {
+    return obj !== null && typeof obj === 'object';
+}
+function mergeHelper(target, source, pastCopies) {
+    if (isObject(source) && isObject(target)) {
+        if (Object.isExtensible && !Object.isExtensible(target)) {
+            target = shallowCopyForMerge(target, pastCopies);
+        }
+        Object.keys(source).forEach(function (sourceKey) {
+            var sourceValue = source[sourceKey];
+            if (hasOwnProperty.call(target, sourceKey)) {
+                var targetValue = target[sourceKey];
+                if (sourceValue !== targetValue) {
+                    target[sourceKey] = mergeHelper(shallowCopyForMerge(targetValue, pastCopies), sourceValue, pastCopies);
+                }
+            }
+            else {
+                target[sourceKey] = sourceValue;
+            }
+        });
+        return target;
+    }
+    return source;
+}
+function shallowCopyForMerge(value, pastCopies) {
+    if (value !== null &&
+        typeof value === 'object' &&
+        pastCopies.indexOf(value) < 0) {
+        if (Array.isArray(value)) {
+            value = value.slice(0);
+        }
+        else {
+            value = Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({ __proto__: Object.getPrototypeOf(value) }, value);
+        }
+        pastCopies.push(value);
+    }
+    return value;
+}
+
+var haveWarned = Object.create({});
+function warnOnceInDevelopment(msg, type) {
+    if (type === void 0) { type = 'warn'; }
+    if (!isProduction() && !haveWarned[msg]) {
+        if (!isTest()) {
+            haveWarned[msg] = true;
+        }
+        if (type === 'error') {
+            console.error(msg);
+        }
+        else {
+            console.warn(msg);
+        }
+    }
+}
+
+function stripSymbols(data) {
+    return JSON.parse(JSON.stringify(data));
+}
+
+
+//# sourceMappingURL=bundle.esm.js.map
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "./node_modules/apollo-client/bundle.esm.js":
 /*!**************************************************!*\
   !*** ./node_modules/apollo-client/bundle.esm.js ***!
@@ -36820,7 +37812,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ObservableQuery", function() { return ObservableQuery; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isApolloError", function() { return isApolloError; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/bundle.esm.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/bundle.esm.js");
 /* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/bundle.esm.js");
 /* harmony import */ var symbol_observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! symbol-observable */ "./node_modules/symbol-observable/es/index.js");
 /* harmony import */ var ts_invariant__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ts-invariant */ "./node_modules/ts-invariant/lib/invariant.esm.js");
@@ -36991,7 +37983,7 @@ var ObservableQuery = (function (_super) {
                 };
             }
             if (queryStoreValue.variables) {
-                this.options.variables = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options.variables, queryStoreValue.variables);
+                this.options.variables = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options.variables), queryStoreValue.variables);
                 this.variables = this.options.variables;
             }
             result = {
@@ -37013,9 +38005,9 @@ var ObservableQuery = (function (_super) {
             };
         }
         if (!partial) {
-            this.updateLastResult(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, result, { stale: false }));
+            this.updateLastResult(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, result), { stale: false }));
         }
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, result, { partial: partial });
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, result), { partial: partial });
     };
     ObservableQuery.prototype.isDifferentFromLastResult = function (newResult) {
         var snapshot = this.lastResultSnapshot;
@@ -37054,17 +38046,17 @@ var ObservableQuery = (function (_super) {
             fetchPolicy = 'network-only';
         }
         if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(this.variables, variables)) {
-            this.variables = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.variables, variables);
+            this.variables = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.variables), variables);
         }
         if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(this.options.variables, this.variables)) {
-            this.options.variables = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options.variables, this.variables);
+            this.options.variables = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options.variables), this.variables);
         }
-        return this.queryManager.fetchQuery(this.queryId, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options, { fetchPolicy: fetchPolicy }), FetchType.refetch);
+        return this.queryManager.fetchQuery(this.queryId, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options), { fetchPolicy: fetchPolicy }), FetchType.refetch);
     };
     ObservableQuery.prototype.fetchMore = function (fetchMoreOptions) {
         var _this = this;
          false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_4__["invariant"])(fetchMoreOptions.updateQuery, 'updateQuery option is required. This function defines how to update the query data with the new results.');
-        var combinedOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, (fetchMoreOptions.query ? fetchMoreOptions : Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options, fetchMoreOptions, { variables: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.variables, fetchMoreOptions.variables) })), { fetchPolicy: 'network-only' });
+        var combinedOptions = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, (fetchMoreOptions.query ? fetchMoreOptions : Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options), fetchMoreOptions), { variables: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.variables), fetchMoreOptions.variables) }))), { fetchPolicy: 'network-only' });
         var qid = this.queryManager.generateQueryId();
         return this.queryManager
             .fetchQuery(qid, combinedOptions, FetchType.normal, this.queryId)
@@ -37119,7 +38111,7 @@ var ObservableQuery = (function (_super) {
     };
     ObservableQuery.prototype.setOptions = function (opts) {
         var oldFetchPolicy = this.options.fetchPolicy;
-        this.options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options, opts);
+        this.options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.options), opts);
         if (opts.pollInterval) {
             this.startPolling(opts.pollInterval);
         }
@@ -37210,7 +38202,7 @@ var ObservableQuery = (function (_super) {
             queryManager.startPollingQuery(this.options, queryId);
         }
         var onError = function (error) {
-            _this.updateLastResult(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, _this.lastResult, { errors: error.graphQLErrors, networkStatus: NetworkStatus.error, loading: false }));
+            _this.updateLastResult(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, _this.lastResult), { errors: error.graphQLErrors, networkStatus: NetworkStatus.error, loading: false }));
             iterateObserversSafely(_this.observers, 'error', _this.lastError = error);
         };
         queryManager.observeQuery(queryId, this.options, {
@@ -37452,7 +38444,7 @@ var LocalState = (function () {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_c) {
                 if (document) {
-                    return [2, this.resolveDocument(document, remoteResult.data, context, variables, this.fragmentMatcher, onlyRunForcedResolvers).then(function (localResult) { return (Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, remoteResult, { data: localResult.result })); })];
+                    return [2, this.resolveDocument(document, remoteResult.data, context, variables, this.fragmentMatcher, onlyRunForcedResolvers).then(function (localResult) { return (Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, remoteResult), { data: localResult.result })); })];
                 }
                 return [2, remoteResult];
             });
@@ -37482,7 +38474,7 @@ var LocalState = (function () {
     LocalState.prototype.prepareContext = function (context) {
         if (context === void 0) { context = {}; }
         var cache = this.cache;
-        var newContext = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context, { cache: cache, getCacheKey: function (obj) {
+        var newContext = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context), { cache: cache, getCacheKey: function (obj) {
                 if (cache.config) {
                     return cache.config.dataIdFromObject(obj);
                 }
@@ -37499,7 +38491,7 @@ var LocalState = (function () {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function () {
             return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"])(this, function (_a) {
                 if (document) {
-                    return [2, this.resolveDocument(document, this.buildRootValueFromCache(document, variables) || {}, this.prepareContext(context), variables).then(function (data) { return (Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, variables, data.exportedVariables)); })];
+                    return [2, this.resolveDocument(document, this.buildRootValueFromCache(document, variables) || {}, this.prepareContext(context), variables).then(function (data) { return (Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, variables), data.exportedVariables)); })];
                 }
                 return [2, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, variables)];
             });
@@ -37552,7 +38544,7 @@ var LocalState = (function () {
                 _a = this, cache = _a.cache, client = _a.client;
                 execContext = {
                     fragmentMap: fragmentMap,
-                    context: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context, { cache: cache,
+                    context: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context), { cache: cache,
                         client: client }),
                     variables: variables,
                     fragmentMatcher: fragmentMatcher,
@@ -37632,7 +38624,7 @@ var LocalState = (function () {
                     if (resolverMap) {
                         resolve = resolverMap[aliasUsed ? fieldName : aliasedFieldName];
                         if (resolve) {
-                            resultPromise = Promise.resolve(resolve(rootValue, Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["argumentsObjectFromField"])(field, variables), execContext.context, { field: field }));
+                            resultPromise = Promise.resolve(resolve(rootValue, Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["argumentsObjectFromField"])(field, variables), execContext.context, { field: field, fragmentMap: execContext.fragmentMap }));
                         }
                     }
                 }
@@ -37780,7 +38772,7 @@ var QueryManager = (function () {
                 switch (_f.label) {
                     case 0:
                          false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_4__["invariant"])(mutation, 'mutation option is required. You must specify your GraphQL document in the mutation option.');
-                         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_4__["invariant"])(!fetchPolicy || fetchPolicy === 'no-cache', "fetchPolicy for mutations currently only supports the 'no-cache' policy");
+                         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_4__["invariant"])(!fetchPolicy || fetchPolicy === 'no-cache', "Mutations only support a 'no-cache' fetchPolicy. If you don't want to disable the cache, remove your fetchPolicy setting to proceed with the default mutation behavior.");
                         mutationId = this.generateQueryId();
                         mutation = this.transform(mutation).document;
                         this.setQuery(mutationId, function () { return ({ document: mutation }); });
@@ -37824,7 +38816,7 @@ var QueryManager = (function () {
                         return [2, new Promise(function (resolve, reject) {
                                 var storeResult;
                                 var error;
-                                self.getObservableFromLink(mutation, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context, { optimisticResponse: optimisticResponse }), variables, false).subscribe({
+                                self.getObservableFromLink(mutation, Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context), { optimisticResponse: optimisticResponse }), variables, false).subscribe({
                                     next: function (result) {
                                         if (Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["graphQLResultHasError"])(result) && errorPolicy === 'none') {
                                             error = new ApolloError({
@@ -37930,7 +38922,7 @@ var QueryManager = (function () {
                         variables = _e.sent();
                         _e.label = 2;
                     case 2:
-                        options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options, { variables: variables });
+                        options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options), { variables: variables });
                         isNetworkOnly = fetchPolicy === 'network-only' || fetchPolicy === 'no-cache';
                         needToFetch = isNetworkOnly;
                         if (!isNetworkOnly) {
@@ -38153,7 +39145,7 @@ var QueryManager = (function () {
         return transformCache.get(document);
     };
     QueryManager.prototype.getVariables = function (document, variables) {
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.transform(document).defaultVars, variables);
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.transform(document).defaultVars), variables);
     };
     QueryManager.prototype.watchQuery = function (options, shouldSubscribe) {
         if (shouldSubscribe === void 0) { shouldSubscribe = true; }
@@ -38402,7 +39394,7 @@ var QueryManager = (function () {
                 query: serverQuery,
                 variables: variables,
                 operationName: Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["getOperationName"])(serverQuery) || void 0,
-                context: this.prepareContext(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context, { forceFetch: !deduplication })),
+                context: this.prepareContext(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, context), { forceFetch: !deduplication })),
             };
             context = operation.context;
             if (deduplication) {
@@ -38528,7 +39520,7 @@ var QueryManager = (function () {
     };
     QueryManager.prototype.setQuery = function (queryId, updater) {
         var prev = this.getQuery(queryId);
-        var newInfo = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, prev, updater(prev));
+        var newInfo = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, prev), updater(prev));
         this.queries.set(queryId, newInfo);
     };
     QueryManager.prototype.invalidate = function (queryId, invalidated) {
@@ -38540,7 +39532,7 @@ var QueryManager = (function () {
     QueryManager.prototype.prepareContext = function (context) {
         if (context === void 0) { context = {}; }
         var newContext = this.localState.prepareContext(context);
-        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, newContext, { clientAwareness: this.clientAwareness });
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, newContext), { clientAwareness: this.clientAwareness });
     };
     QueryManager.prototype.checkInFlight = function (queryId) {
         var query = this.queryStore.get(queryId);
@@ -38558,7 +39550,7 @@ var QueryManager = (function () {
                 this.pollingInfoByQueryId.set(queryId, (info = {}));
             }
             info.interval = pollInterval;
-            info.options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options, { fetchPolicy: 'network-only' });
+            info.options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options), { fetchPolicy: 'network-only' });
             var maybeFetch_1 = function () {
                 var info = _this.pollingInfoByQueryId.get(queryId);
                 if (info) {
@@ -38718,7 +39710,7 @@ var DataStore = (function () {
     return DataStore;
 }());
 
-var version = "2.6.4";
+var version = "2.6.8";
 
 var hasSuggestedDevtools = false;
 var ApolloClient = (function () {
@@ -38813,31 +39805,31 @@ var ApolloClient = (function () {
     };
     ApolloClient.prototype.watchQuery = function (options) {
         if (this.defaultOptions.watchQuery) {
-            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.defaultOptions.watchQuery, options);
+            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.defaultOptions.watchQuery), options);
         }
         if (this.disableNetworkFetches &&
             (options.fetchPolicy === 'network-only' ||
                 options.fetchPolicy === 'cache-and-network')) {
-            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options, { fetchPolicy: 'cache-first' });
+            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options), { fetchPolicy: 'cache-first' });
         }
         return this.queryManager.watchQuery(options);
     };
     ApolloClient.prototype.query = function (options) {
         if (this.defaultOptions.query) {
-            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.defaultOptions.query, options);
+            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.defaultOptions.query), options);
         }
          false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_4__["invariant"])(options.fetchPolicy !== 'cache-and-network', 'The cache-and-network fetchPolicy does not work with client.query, because ' +
             'client.query can only return a single result. Please use client.watchQuery ' +
             'to receive multiple results from the cache and the network, or consider ' +
             'using a different fetchPolicy, such as cache-first or network-only.');
         if (this.disableNetworkFetches && options.fetchPolicy === 'network-only') {
-            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options, { fetchPolicy: 'cache-first' });
+            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, options), { fetchPolicy: 'cache-first' });
         }
         return this.queryManager.query(options);
     };
     ApolloClient.prototype.mutate = function (options) {
         if (this.defaultOptions.mutate) {
-            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.defaultOptions.mutate, options);
+            options = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, this.defaultOptions.mutate), options);
         }
         return this.queryManager.mutate(options);
     };
@@ -38936,149 +39928,995 @@ var ApolloClient = (function () {
 
 /***/ }),
 
-/***/ "./node_modules/apollo-link-context/lib/bundle.esm.js":
-/*!************************************************************!*\
-  !*** ./node_modules/apollo-link-context/lib/bundle.esm.js ***!
-  \************************************************************/
-/*! exports provided: setContext */
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/bundle.esm.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/bundle.esm.js ***!
+  \************************************************************************************/
+/*! exports provided: isEqual, addTypenameToDocument, argumentsObjectFromField, assign, buildQueryFromSelectionSet, canUseWeakMap, checkDocument, cloneDeep, createFragmentMap, getDefaultValues, getDirectiveInfoFromField, getDirectiveNames, getDirectivesFromDocument, getEnv, getFragmentDefinition, getFragmentDefinitions, getFragmentQueryDocument, getInclusionDirectives, getMainDefinition, getMutationDefinition, getOperationDefinition, getOperationDefinitionOrDie, getOperationName, getQueryDefinition, getStoreKeyName, graphQLResultHasError, hasClientExports, hasDirectives, isDevelopment, isEnv, isField, isIdValue, isInlineFragment, isJsonValue, isNumberValue, isProduction, isScalarValue, isTest, maybeDeepFreeze, mergeDeep, mergeDeepArray, removeArgumentsFromDocument, removeClientSetsFromDocument, removeConnectionDirectiveFromDocument, removeDirectivesFromDocument, removeFragmentSpreadFromDocument, resultKeyNameFromField, shouldInclude, storeKeyNameFromField, stripSymbols, toIdValue, tryFunctionOrLogError, valueFromNode, valueToObjectRepresentation, variablesInOperation, warnOnceInDevelopment */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setContext", function() { return setContext; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/bundle.esm.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addTypenameToDocument", function() { return addTypenameToDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "argumentsObjectFromField", function() { return argumentsObjectFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "assign", function() { return assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "buildQueryFromSelectionSet", function() { return buildQueryFromSelectionSet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "canUseWeakMap", function() { return canUseWeakMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkDocument", function() { return checkDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cloneDeep", function() { return cloneDeep; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFragmentMap", function() { return createFragmentMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDefaultValues", function() { return getDefaultValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectiveInfoFromField", function() { return getDirectiveInfoFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectiveNames", function() { return getDirectiveNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectivesFromDocument", function() { return getDirectivesFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEnv", function() { return getEnv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinition", function() { return getFragmentDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinitions", function() { return getFragmentDefinitions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentQueryDocument", function() { return getFragmentQueryDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInclusionDirectives", function() { return getInclusionDirectives; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMainDefinition", function() { return getMainDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMutationDefinition", function() { return getMutationDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinition", function() { return getOperationDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinitionOrDie", function() { return getOperationDefinitionOrDie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationName", function() { return getOperationName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getQueryDefinition", function() { return getQueryDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStoreKeyName", function() { return getStoreKeyName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "graphQLResultHasError", function() { return graphQLResultHasError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasClientExports", function() { return hasClientExports; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasDirectives", function() { return hasDirectives; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDevelopment", function() { return isDevelopment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isEnv", function() { return isEnv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isField", function() { return isField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isIdValue", function() { return isIdValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isInlineFragment", function() { return isInlineFragment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isJsonValue", function() { return isJsonValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNumberValue", function() { return isNumberValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isProduction", function() { return isProduction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isScalarValue", function() { return isScalarValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isTest", function() { return isTest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maybeDeepFreeze", function() { return maybeDeepFreeze; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeDeep", function() { return mergeDeep; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeDeepArray", function() { return mergeDeepArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeArgumentsFromDocument", function() { return removeArgumentsFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeClientSetsFromDocument", function() { return removeClientSetsFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeConnectionDirectiveFromDocument", function() { return removeConnectionDirectiveFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeDirectivesFromDocument", function() { return removeDirectivesFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFragmentSpreadFromDocument", function() { return removeFragmentSpreadFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resultKeyNameFromField", function() { return resultKeyNameFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shouldInclude", function() { return shouldInclude; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "storeKeyNameFromField", function() { return storeKeyNameFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stripSymbols", function() { return stripSymbols; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toIdValue", function() { return toIdValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tryFunctionOrLogError", function() { return tryFunctionOrLogError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "valueFromNode", function() { return valueFromNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "valueToObjectRepresentation", function() { return valueToObjectRepresentation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "variablesInOperation", function() { return variablesInOperation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "warnOnceInDevelopment", function() { return warnOnceInDevelopment; });
+/* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! graphql/language/visitor */ "./node_modules/graphql/language/visitor.js");
+/* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var ts_invariant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ts-invariant */ "./node_modules/ts-invariant/lib/invariant.esm.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! fast-json-stable-stringify */ "./node_modules/fast-json-stable-stringify/index.js");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wry_equality__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wry/equality */ "./node_modules/@wry/equality/lib/equality.esm.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isEqual", function() { return _wry_equality__WEBPACK_IMPORTED_MODULE_4__["equal"]; });
 
 
 
-function setContext(setter) {
-    return new apollo_link__WEBPACK_IMPORTED_MODULE_1__["ApolloLink"](function (operation, forward) {
-        var request = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__rest"])(operation, []);
-        return new apollo_link__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
-            var handle;
-            Promise.resolve(request)
-                .then(function (req) { return setter(req, operation.getContext()); })
-                .then(operation.setContext)
-                .then(function () {
-                handle = forward(operation).subscribe({
-                    next: observer.next.bind(observer),
-                    error: observer.error.bind(observer),
-                    complete: observer.complete.bind(observer),
-                });
-            })
-                .catch(observer.error.bind(observer));
-            return function () {
-                if (handle)
-                    handle.unsubscribe();
-            };
-        });
-    });
+
+
+
+
+function isScalarValue(value) {
+    return ['StringValue', 'BooleanValue', 'EnumValue'].indexOf(value.kind) > -1;
 }
-
-
-//# sourceMappingURL=bundle.esm.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/apollo-link-error/lib/bundle.esm.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/apollo-link-error/lib/bundle.esm.js ***!
-  \**********************************************************/
-/*! exports provided: ErrorLink, onError */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorLink", function() { return ErrorLink; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onError", function() { return onError; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/bundle.esm.js");
-
-
-
-function onError(errorHandler) {
-    return new apollo_link__WEBPACK_IMPORTED_MODULE_1__["ApolloLink"](function (operation, forward) {
-        return new apollo_link__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
-            var sub;
-            var retriedSub;
-            var retriedResult;
-            try {
-                sub = forward(operation).subscribe({
-                    next: function (result) {
-                        if (result.errors) {
-                            retriedResult = errorHandler({
-                                graphQLErrors: result.errors,
-                                response: result,
-                                operation: operation,
-                                forward: forward,
-                            });
-                            if (retriedResult) {
-                                retriedSub = retriedResult.subscribe({
-                                    next: observer.next.bind(observer),
-                                    error: observer.error.bind(observer),
-                                    complete: observer.complete.bind(observer),
-                                });
-                                return;
-                            }
-                        }
-                        observer.next(result);
-                    },
-                    error: function (networkError) {
-                        retriedResult = errorHandler({
-                            operation: operation,
-                            networkError: networkError,
-                            graphQLErrors: networkError &&
-                                networkError.result &&
-                                networkError.result.errors,
-                            forward: forward,
-                        });
-                        if (retriedResult) {
-                            retriedSub = retriedResult.subscribe({
-                                next: observer.next.bind(observer),
-                                error: observer.error.bind(observer),
-                                complete: observer.complete.bind(observer),
-                            });
-                            return;
-                        }
-                        observer.error(networkError);
-                    },
-                    complete: function () {
-                        if (!retriedResult) {
-                            observer.complete.bind(observer)();
-                        }
-                    },
-                });
-            }
-            catch (e) {
-                errorHandler({ networkError: e, operation: operation, forward: forward });
-                observer.error(e);
-            }
-            return function () {
-                if (sub)
-                    sub.unsubscribe();
-                if (retriedSub)
-                    sub.unsubscribe();
-            };
-        });
-    });
+function isNumberValue(value) {
+    return ['IntValue', 'FloatValue'].indexOf(value.kind) > -1;
 }
-var ErrorLink = (function (_super) {
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(ErrorLink, _super);
-    function ErrorLink(errorHandler) {
-        var _this = _super.call(this) || this;
-        _this.link = onError(errorHandler);
-        return _this;
+function isStringValue(value) {
+    return value.kind === 'StringValue';
+}
+function isBooleanValue(value) {
+    return value.kind === 'BooleanValue';
+}
+function isIntValue(value) {
+    return value.kind === 'IntValue';
+}
+function isFloatValue(value) {
+    return value.kind === 'FloatValue';
+}
+function isVariable(value) {
+    return value.kind === 'Variable';
+}
+function isObjectValue(value) {
+    return value.kind === 'ObjectValue';
+}
+function isListValue(value) {
+    return value.kind === 'ListValue';
+}
+function isEnumValue(value) {
+    return value.kind === 'EnumValue';
+}
+function isNullValue(value) {
+    return value.kind === 'NullValue';
+}
+function valueToObjectRepresentation(argObj, name, value, variables) {
+    if (isIntValue(value) || isFloatValue(value)) {
+        argObj[name.value] = Number(value.value);
     }
-    ErrorLink.prototype.request = function (operation, forward) {
-        return this.link.request(operation, forward);
+    else if (isBooleanValue(value) || isStringValue(value)) {
+        argObj[name.value] = value.value;
+    }
+    else if (isObjectValue(value)) {
+        var nestedArgObj_1 = {};
+        value.fields.map(function (obj) {
+            return valueToObjectRepresentation(nestedArgObj_1, obj.name, obj.value, variables);
+        });
+        argObj[name.value] = nestedArgObj_1;
+    }
+    else if (isVariable(value)) {
+        var variableValue = (variables || {})[value.name.value];
+        argObj[name.value] = variableValue;
+    }
+    else if (isListValue(value)) {
+        argObj[name.value] = value.values.map(function (listValue) {
+            var nestedArgArrayObj = {};
+            valueToObjectRepresentation(nestedArgArrayObj, name, listValue, variables);
+            return nestedArgArrayObj[name.value];
+        });
+    }
+    else if (isEnumValue(value)) {
+        argObj[name.value] = value.value;
+    }
+    else if (isNullValue(value)) {
+        argObj[name.value] = null;
+    }
+    else {
+        throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("The inline argument \"" + name.value + "\" of kind \"" + value.kind + "\"" +
+            'is not supported. Use variables instead of inline arguments to ' +
+            'overcome this limitation.');
+    }
+}
+function storeKeyNameFromField(field, variables) {
+    var directivesObj = null;
+    if (field.directives) {
+        directivesObj = {};
+        field.directives.forEach(function (directive) {
+            directivesObj[directive.name.value] = {};
+            if (directive.arguments) {
+                directive.arguments.forEach(function (_a) {
+                    var name = _a.name, value = _a.value;
+                    return valueToObjectRepresentation(directivesObj[directive.name.value], name, value, variables);
+                });
+            }
+        });
+    }
+    var argObj = null;
+    if (field.arguments && field.arguments.length) {
+        argObj = {};
+        field.arguments.forEach(function (_a) {
+            var name = _a.name, value = _a.value;
+            return valueToObjectRepresentation(argObj, name, value, variables);
+        });
+    }
+    return getStoreKeyName(field.name.value, argObj, directivesObj);
+}
+var KNOWN_DIRECTIVES = [
+    'connection',
+    'include',
+    'skip',
+    'client',
+    'rest',
+    'export',
+];
+function getStoreKeyName(fieldName, args, directives) {
+    if (directives &&
+        directives['connection'] &&
+        directives['connection']['key']) {
+        if (directives['connection']['filter'] &&
+            directives['connection']['filter'].length > 0) {
+            var filterKeys = directives['connection']['filter']
+                ? directives['connection']['filter']
+                : [];
+            filterKeys.sort();
+            var queryArgs_1 = args;
+            var filteredArgs_1 = {};
+            filterKeys.forEach(function (key) {
+                filteredArgs_1[key] = queryArgs_1[key];
+            });
+            return directives['connection']['key'] + "(" + JSON.stringify(filteredArgs_1) + ")";
+        }
+        else {
+            return directives['connection']['key'];
+        }
+    }
+    var completeFieldName = fieldName;
+    if (args) {
+        var stringifiedArgs = fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3___default()(args);
+        completeFieldName += "(" + stringifiedArgs + ")";
+    }
+    if (directives) {
+        Object.keys(directives).forEach(function (key) {
+            if (KNOWN_DIRECTIVES.indexOf(key) !== -1)
+                return;
+            if (directives[key] && Object.keys(directives[key]).length) {
+                completeFieldName += "@" + key + "(" + JSON.stringify(directives[key]) + ")";
+            }
+            else {
+                completeFieldName += "@" + key;
+            }
+        });
+    }
+    return completeFieldName;
+}
+function argumentsObjectFromField(field, variables) {
+    if (field.arguments && field.arguments.length) {
+        var argObj_1 = {};
+        field.arguments.forEach(function (_a) {
+            var name = _a.name, value = _a.value;
+            return valueToObjectRepresentation(argObj_1, name, value, variables);
+        });
+        return argObj_1;
+    }
+    return null;
+}
+function resultKeyNameFromField(field) {
+    return field.alias ? field.alias.value : field.name.value;
+}
+function isField(selection) {
+    return selection.kind === 'Field';
+}
+function isInlineFragment(selection) {
+    return selection.kind === 'InlineFragment';
+}
+function isIdValue(idObject) {
+    return idObject &&
+        idObject.type === 'id' &&
+        typeof idObject.generated === 'boolean';
+}
+function toIdValue(idConfig, generated) {
+    if (generated === void 0) { generated = false; }
+    return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({ type: 'id', generated: generated }, (typeof idConfig === 'string'
+        ? { id: idConfig, typename: undefined }
+        : idConfig));
+}
+function isJsonValue(jsonObject) {
+    return (jsonObject != null &&
+        typeof jsonObject === 'object' &&
+        jsonObject.type === 'json');
+}
+function defaultValueFromVariable(node) {
+    throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("Variable nodes are not supported by valueFromNode");
+}
+function valueFromNode(node, onVariable) {
+    if (onVariable === void 0) { onVariable = defaultValueFromVariable; }
+    switch (node.kind) {
+        case 'Variable':
+            return onVariable(node);
+        case 'NullValue':
+            return null;
+        case 'IntValue':
+            return parseInt(node.value, 10);
+        case 'FloatValue':
+            return parseFloat(node.value);
+        case 'ListValue':
+            return node.values.map(function (v) { return valueFromNode(v, onVariable); });
+        case 'ObjectValue': {
+            var value = {};
+            for (var _i = 0, _a = node.fields; _i < _a.length; _i++) {
+                var field = _a[_i];
+                value[field.name.value] = valueFromNode(field.value, onVariable);
+            }
+            return value;
+        }
+        default:
+            return node.value;
+    }
+}
+
+function getDirectiveInfoFromField(field, variables) {
+    if (field.directives && field.directives.length) {
+        var directiveObj_1 = {};
+        field.directives.forEach(function (directive) {
+            directiveObj_1[directive.name.value] = argumentsObjectFromField(directive, variables);
+        });
+        return directiveObj_1;
+    }
+    return null;
+}
+function shouldInclude(selection, variables) {
+    if (variables === void 0) { variables = {}; }
+    return getInclusionDirectives(selection.directives).every(function (_a) {
+        var directive = _a.directive, ifArgument = _a.ifArgument;
+        var evaledValue = false;
+        if (ifArgument.value.kind === 'Variable') {
+            evaledValue = variables[ifArgument.value.name.value];
+             false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(evaledValue !== void 0, "Invalid variable referenced in @" + directive.name.value + " directive.");
+        }
+        else {
+            evaledValue = ifArgument.value.value;
+        }
+        return directive.name.value === 'skip' ? !evaledValue : evaledValue;
+    });
+}
+function getDirectiveNames(doc) {
+    var names = [];
+    Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        Directive: function (node) {
+            names.push(node.name.value);
+        },
+    });
+    return names;
+}
+function hasDirectives(names, doc) {
+    return getDirectiveNames(doc).some(function (name) { return names.indexOf(name) > -1; });
+}
+function hasClientExports(document) {
+    return (document &&
+        hasDirectives(['client'], document) &&
+        hasDirectives(['export'], document));
+}
+function isInclusionDirective(_a) {
+    var value = _a.name.value;
+    return value === 'skip' || value === 'include';
+}
+function getInclusionDirectives(directives) {
+    return directives ? directives.filter(isInclusionDirective).map(function (directive) {
+        var directiveArguments = directive.arguments;
+        var directiveName = directive.name.value;
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(directiveArguments && directiveArguments.length === 1, "Incorrect number of arguments for the @" + directiveName + " directive.");
+        var ifArgument = directiveArguments[0];
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(ifArgument.name && ifArgument.name.value === 'if', "Invalid argument for the @" + directiveName + " directive.");
+        var ifValue = ifArgument.value;
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(ifValue &&
+            (ifValue.kind === 'Variable' || ifValue.kind === 'BooleanValue'), "Argument for the @" + directiveName + " directive must be a variable or a boolean value.");
+        return { directive: directive, ifArgument: ifArgument };
+    }) : [];
+}
+
+function getFragmentQueryDocument(document, fragmentName) {
+    var actualFragmentName = fragmentName;
+    var fragments = [];
+    document.definitions.forEach(function (definition) {
+        if (definition.kind === 'OperationDefinition') {
+            throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("Found a " + definition.operation + " operation" + (definition.name ? " named '" + definition.name.value + "'" : '') + ". " +
+                'No operations are allowed when using a fragment as a query. Only fragments are allowed.');
+        }
+        if (definition.kind === 'FragmentDefinition') {
+            fragments.push(definition);
+        }
+    });
+    if (typeof actualFragmentName === 'undefined') {
+         false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(fragments.length === 1, "Found " + fragments.length + " fragments. `fragmentName` must be provided when there is not exactly 1 fragment.");
+        actualFragmentName = fragments[0].name.value;
+    }
+    var query = Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, document), { definitions: Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__spreadArrays"])([
+            {
+                kind: 'OperationDefinition',
+                operation: 'query',
+                selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                        {
+                            kind: 'FragmentSpread',
+                            name: {
+                                kind: 'Name',
+                                value: actualFragmentName,
+                            },
+                        },
+                    ],
+                },
+            }
+        ], document.definitions) });
+    return query;
+}
+
+function assign(target) {
+    var sources = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        sources[_i - 1] = arguments[_i];
+    }
+    sources.forEach(function (source) {
+        if (typeof source === 'undefined' || source === null) {
+            return;
+        }
+        Object.keys(source).forEach(function (key) {
+            target[key] = source[key];
+        });
+    });
+    return target;
+}
+
+function getMutationDefinition(doc) {
+    checkDocument(doc);
+    var mutationDef = doc.definitions.filter(function (definition) {
+        return definition.kind === 'OperationDefinition' &&
+            definition.operation === 'mutation';
+    })[0];
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(mutationDef, 'Must contain a mutation definition.');
+    return mutationDef;
+}
+function checkDocument(doc) {
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(doc && doc.kind === 'Document', "Expecting a parsed GraphQL document. Perhaps you need to wrap the query string in a \"gql\" tag? http://docs.apollostack.com/apollo-client/core.html#gql");
+    var operations = doc.definitions
+        .filter(function (d) { return d.kind !== 'FragmentDefinition'; })
+        .map(function (definition) {
+        if (definition.kind !== 'OperationDefinition') {
+            throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]("Schema type definitions not allowed in queries. Found: \"" + definition.kind + "\"");
+        }
+        return definition;
+    });
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(operations.length <= 1, "Ambiguous GraphQL document: contains " + operations.length + " operations");
+    return doc;
+}
+function getOperationDefinition(doc) {
+    checkDocument(doc);
+    return doc.definitions.filter(function (definition) { return definition.kind === 'OperationDefinition'; })[0];
+}
+function getOperationDefinitionOrDie(document) {
+    var def = getOperationDefinition(document);
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(def, "GraphQL document is missing an operation");
+    return def;
+}
+function getOperationName(doc) {
+    return (doc.definitions
+        .filter(function (definition) {
+        return definition.kind === 'OperationDefinition' && definition.name;
+    })
+        .map(function (x) { return x.name.value; })[0] || null);
+}
+function getFragmentDefinitions(doc) {
+    return doc.definitions.filter(function (definition) { return definition.kind === 'FragmentDefinition'; });
+}
+function getQueryDefinition(doc) {
+    var queryDef = getOperationDefinition(doc);
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(queryDef && queryDef.operation === 'query', 'Must contain a query definition.');
+    return queryDef;
+}
+function getFragmentDefinition(doc) {
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(doc.kind === 'Document', "Expecting a parsed GraphQL document. Perhaps you need to wrap the query string in a \"gql\" tag? http://docs.apollostack.com/apollo-client/core.html#gql");
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(doc.definitions.length <= 1, 'Fragment must have exactly one definition.');
+    var fragmentDef = doc.definitions[0];
+     false ? undefined : Object(ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"])(fragmentDef.kind === 'FragmentDefinition', 'Must be a fragment definition.');
+    return fragmentDef;
+}
+function getMainDefinition(queryDoc) {
+    checkDocument(queryDoc);
+    var fragmentDefinition;
+    for (var _i = 0, _a = queryDoc.definitions; _i < _a.length; _i++) {
+        var definition = _a[_i];
+        if (definition.kind === 'OperationDefinition') {
+            var operation = definition.operation;
+            if (operation === 'query' ||
+                operation === 'mutation' ||
+                operation === 'subscription') {
+                return definition;
+            }
+        }
+        if (definition.kind === 'FragmentDefinition' && !fragmentDefinition) {
+            fragmentDefinition = definition;
+        }
+    }
+    if (fragmentDefinition) {
+        return fragmentDefinition;
+    }
+    throw  false ? undefined : new ts_invariant__WEBPACK_IMPORTED_MODULE_1__["InvariantError"]('Expected a parsed GraphQL query with a query, mutation, subscription, or a fragment.');
+}
+function createFragmentMap(fragments) {
+    if (fragments === void 0) { fragments = []; }
+    var symTable = {};
+    fragments.forEach(function (fragment) {
+        symTable[fragment.name.value] = fragment;
+    });
+    return symTable;
+}
+function getDefaultValues(definition) {
+    if (definition &&
+        definition.variableDefinitions &&
+        definition.variableDefinitions.length) {
+        var defaultValues = definition.variableDefinitions
+            .filter(function (_a) {
+            var defaultValue = _a.defaultValue;
+            return defaultValue;
+        })
+            .map(function (_a) {
+            var variable = _a.variable, defaultValue = _a.defaultValue;
+            var defaultValueObj = {};
+            valueToObjectRepresentation(defaultValueObj, variable.name, defaultValue);
+            return defaultValueObj;
+        });
+        return assign.apply(void 0, Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__spreadArrays"])([{}], defaultValues));
+    }
+    return {};
+}
+function variablesInOperation(operation) {
+    var names = new Set();
+    if (operation.variableDefinitions) {
+        for (var _i = 0, _a = operation.variableDefinitions; _i < _a.length; _i++) {
+            var definition = _a[_i];
+            names.add(definition.variable.name.value);
+        }
+    }
+    return names;
+}
+
+function filterInPlace(array, test, context) {
+    var target = 0;
+    array.forEach(function (elem, i) {
+        if (test.call(this, elem, i, array)) {
+            array[target++] = elem;
+        }
+    }, context);
+    array.length = target;
+    return array;
+}
+
+var TYPENAME_FIELD = {
+    kind: 'Field',
+    name: {
+        kind: 'Name',
+        value: '__typename',
+    },
+};
+function isEmpty(op, fragments) {
+    return op.selectionSet.selections.every(function (selection) {
+        return selection.kind === 'FragmentSpread' &&
+            isEmpty(fragments[selection.name.value], fragments);
+    });
+}
+function nullIfDocIsEmpty(doc) {
+    return isEmpty(getOperationDefinition(doc) || getFragmentDefinition(doc), createFragmentMap(getFragmentDefinitions(doc)))
+        ? null
+        : doc;
+}
+function getDirectiveMatcher(directives) {
+    return function directiveMatcher(directive) {
+        return directives.some(function (dir) {
+            return (dir.name && dir.name === directive.name.value) ||
+                (dir.test && dir.test(directive));
+        });
     };
-    return ErrorLink;
-}(apollo_link__WEBPACK_IMPORTED_MODULE_1__["ApolloLink"]));
+}
+function removeDirectivesFromDocument(directives, doc) {
+    var variablesInUse = Object.create(null);
+    var variablesToRemove = [];
+    var fragmentSpreadsInUse = Object.create(null);
+    var fragmentSpreadsToRemove = [];
+    var modifiedDoc = nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        Variable: {
+            enter: function (node, _key, parent) {
+                if (parent.kind !== 'VariableDefinition') {
+                    variablesInUse[node.name.value] = true;
+                }
+            },
+        },
+        Field: {
+            enter: function (node) {
+                if (directives && node.directives) {
+                    var shouldRemoveField = directives.some(function (directive) { return directive.remove; });
+                    if (shouldRemoveField &&
+                        node.directives &&
+                        node.directives.some(getDirectiveMatcher(directives))) {
+                        if (node.arguments) {
+                            node.arguments.forEach(function (arg) {
+                                if (arg.value.kind === 'Variable') {
+                                    variablesToRemove.push({
+                                        name: arg.value.name.value,
+                                    });
+                                }
+                            });
+                        }
+                        if (node.selectionSet) {
+                            getAllFragmentSpreadsFromSelectionSet(node.selectionSet).forEach(function (frag) {
+                                fragmentSpreadsToRemove.push({
+                                    name: frag.name.value,
+                                });
+                            });
+                        }
+                        return null;
+                    }
+                }
+            },
+        },
+        FragmentSpread: {
+            enter: function (node) {
+                fragmentSpreadsInUse[node.name.value] = true;
+            },
+        },
+        Directive: {
+            enter: function (node) {
+                if (getDirectiveMatcher(directives)(node)) {
+                    return null;
+                }
+            },
+        },
+    }));
+    if (modifiedDoc &&
+        filterInPlace(variablesToRemove, function (v) { return !variablesInUse[v.name]; }).length) {
+        modifiedDoc = removeArgumentsFromDocument(variablesToRemove, modifiedDoc);
+    }
+    if (modifiedDoc &&
+        filterInPlace(fragmentSpreadsToRemove, function (fs) { return !fragmentSpreadsInUse[fs.name]; })
+            .length) {
+        modifiedDoc = removeFragmentSpreadFromDocument(fragmentSpreadsToRemove, modifiedDoc);
+    }
+    return modifiedDoc;
+}
+function addTypenameToDocument(doc) {
+    return Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(checkDocument(doc), {
+        SelectionSet: {
+            enter: function (node, _key, parent) {
+                if (parent &&
+                    parent.kind === 'OperationDefinition') {
+                    return;
+                }
+                var selections = node.selections;
+                if (!selections) {
+                    return;
+                }
+                var skip = selections.some(function (selection) {
+                    return (isField(selection) &&
+                        (selection.name.value === '__typename' ||
+                            selection.name.value.lastIndexOf('__', 0) === 0));
+                });
+                if (skip) {
+                    return;
+                }
+                var field = parent;
+                if (isField(field) &&
+                    field.directives &&
+                    field.directives.some(function (d) { return d.name.value === 'export'; })) {
+                    return;
+                }
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { selections: Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__spreadArrays"])(selections, [TYPENAME_FIELD]) });
+            },
+        },
+    });
+}
+var connectionRemoveConfig = {
+    test: function (directive) {
+        var willRemove = directive.name.value === 'connection';
+        if (willRemove) {
+            if (!directive.arguments ||
+                !directive.arguments.some(function (arg) { return arg.name.value === 'key'; })) {
+                 false || ts_invariant__WEBPACK_IMPORTED_MODULE_1__["invariant"].warn('Removing an @connection directive even though it does not have a key. ' +
+                    'You may want to use the key parameter to specify a store key.');
+            }
+        }
+        return willRemove;
+    },
+};
+function removeConnectionDirectiveFromDocument(doc) {
+    return removeDirectivesFromDocument([connectionRemoveConfig], checkDocument(doc));
+}
+function hasDirectivesInSelectionSet(directives, selectionSet, nestedCheck) {
+    if (nestedCheck === void 0) { nestedCheck = true; }
+    return (selectionSet &&
+        selectionSet.selections &&
+        selectionSet.selections.some(function (selection) {
+            return hasDirectivesInSelection(directives, selection, nestedCheck);
+        }));
+}
+function hasDirectivesInSelection(directives, selection, nestedCheck) {
+    if (nestedCheck === void 0) { nestedCheck = true; }
+    if (!isField(selection)) {
+        return true;
+    }
+    if (!selection.directives) {
+        return false;
+    }
+    return (selection.directives.some(getDirectiveMatcher(directives)) ||
+        (nestedCheck &&
+            hasDirectivesInSelectionSet(directives, selection.selectionSet, nestedCheck)));
+}
+function getDirectivesFromDocument(directives, doc) {
+    checkDocument(doc);
+    var parentPath;
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        SelectionSet: {
+            enter: function (node, _key, _parent, path) {
+                var currentPath = path.join('-');
+                if (!parentPath ||
+                    currentPath === parentPath ||
+                    !currentPath.startsWith(parentPath)) {
+                    if (node.selections) {
+                        var selectionsWithDirectives = node.selections.filter(function (selection) { return hasDirectivesInSelection(directives, selection); });
+                        if (hasDirectivesInSelectionSet(directives, node, false)) {
+                            parentPath = currentPath;
+                        }
+                        return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { selections: selectionsWithDirectives });
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            },
+        },
+    }));
+}
+function getArgumentMatcher(config) {
+    return function argumentMatcher(argument) {
+        return config.some(function (aConfig) {
+            return argument.value &&
+                argument.value.kind === 'Variable' &&
+                argument.value.name &&
+                (aConfig.name === argument.value.name.value ||
+                    (aConfig.test && aConfig.test(argument)));
+        });
+    };
+}
+function removeArgumentsFromDocument(config, doc) {
+    var argMatcher = getArgumentMatcher(config);
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        OperationDefinition: {
+            enter: function (node) {
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { variableDefinitions: node.variableDefinitions.filter(function (varDef) {
+                        return !config.some(function (arg) { return arg.name === varDef.variable.name.value; });
+                    }) });
+            },
+        },
+        Field: {
+            enter: function (node) {
+                var shouldRemoveField = config.some(function (argConfig) { return argConfig.remove; });
+                if (shouldRemoveField) {
+                    var argMatchCount_1 = 0;
+                    node.arguments.forEach(function (arg) {
+                        if (argMatcher(arg)) {
+                            argMatchCount_1 += 1;
+                        }
+                    });
+                    if (argMatchCount_1 === 1) {
+                        return null;
+                    }
+                }
+            },
+        },
+        Argument: {
+            enter: function (node) {
+                if (argMatcher(node)) {
+                    return null;
+                }
+            },
+        },
+    }));
+}
+function removeFragmentSpreadFromDocument(config, doc) {
+    function enter(node) {
+        if (config.some(function (def) { return def.name === node.name.value; })) {
+            return null;
+        }
+    }
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        FragmentSpread: { enter: enter },
+        FragmentDefinition: { enter: enter },
+    }));
+}
+function getAllFragmentSpreadsFromSelectionSet(selectionSet) {
+    var allFragments = [];
+    selectionSet.selections.forEach(function (selection) {
+        if ((isField(selection) || isInlineFragment(selection)) &&
+            selection.selectionSet) {
+            getAllFragmentSpreadsFromSelectionSet(selection.selectionSet).forEach(function (frag) { return allFragments.push(frag); });
+        }
+        else if (selection.kind === 'FragmentSpread') {
+            allFragments.push(selection);
+        }
+    });
+    return allFragments;
+}
+function buildQueryFromSelectionSet(document) {
+    var definition = getMainDefinition(document);
+    var definitionOperation = definition.operation;
+    if (definitionOperation === 'query') {
+        return document;
+    }
+    var modifiedDoc = Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(document, {
+        OperationDefinition: {
+            enter: function (node) {
+                return Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])(Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({}, node), { operation: 'query' });
+            },
+        },
+    });
+    return modifiedDoc;
+}
+function removeClientSetsFromDocument(document) {
+    checkDocument(document);
+    var modifiedDoc = removeDirectivesFromDocument([
+        {
+            test: function (directive) { return directive.name.value === 'client'; },
+            remove: true,
+        },
+    ], document);
+    if (modifiedDoc) {
+        modifiedDoc = Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(modifiedDoc, {
+            FragmentDefinition: {
+                enter: function (node) {
+                    if (node.selectionSet) {
+                        var isTypenameOnly = node.selectionSet.selections.every(function (selection) {
+                            return isField(selection) && selection.name.value === '__typename';
+                        });
+                        if (isTypenameOnly) {
+                            return null;
+                        }
+                    }
+                },
+            },
+        });
+    }
+    return modifiedDoc;
+}
+
+var canUseWeakMap = typeof WeakMap === 'function' && !(typeof navigator === 'object' &&
+    navigator.product === 'ReactNative');
+
+var toString = Object.prototype.toString;
+function cloneDeep(value) {
+    return cloneDeepHelper(value, new Map());
+}
+function cloneDeepHelper(val, seen) {
+    switch (toString.call(val)) {
+        case "[object Array]": {
+            if (seen.has(val))
+                return seen.get(val);
+            var copy_1 = val.slice(0);
+            seen.set(val, copy_1);
+            copy_1.forEach(function (child, i) {
+                copy_1[i] = cloneDeepHelper(child, seen);
+            });
+            return copy_1;
+        }
+        case "[object Object]": {
+            if (seen.has(val))
+                return seen.get(val);
+            var copy_2 = Object.create(Object.getPrototypeOf(val));
+            seen.set(val, copy_2);
+            Object.keys(val).forEach(function (key) {
+                copy_2[key] = cloneDeepHelper(val[key], seen);
+            });
+            return copy_2;
+        }
+        default:
+            return val;
+    }
+}
+
+function getEnv() {
+    if (typeof process !== 'undefined' && "development") {
+        return "development";
+    }
+    return 'development';
+}
+function isEnv(env) {
+    return getEnv() === env;
+}
+function isProduction() {
+    return isEnv('production') === true;
+}
+function isDevelopment() {
+    return isEnv('development') === true;
+}
+function isTest() {
+    return isEnv('test') === true;
+}
+
+function tryFunctionOrLogError(f) {
+    try {
+        return f();
+    }
+    catch (e) {
+        if (console.error) {
+            console.error(e);
+        }
+    }
+}
+function graphQLResultHasError(result) {
+    return result.errors && result.errors.length;
+}
+
+function deepFreeze(o) {
+    Object.freeze(o);
+    Object.getOwnPropertyNames(o).forEach(function (prop) {
+        if (o[prop] !== null &&
+            (typeof o[prop] === 'object' || typeof o[prop] === 'function') &&
+            !Object.isFrozen(o[prop])) {
+            deepFreeze(o[prop]);
+        }
+    });
+    return o;
+}
+function maybeDeepFreeze(obj) {
+    if (isDevelopment() || isTest()) {
+        var symbolIsPolyfilled = typeof Symbol === 'function' && typeof Symbol('') === 'string';
+        if (!symbolIsPolyfilled) {
+            return deepFreeze(obj);
+        }
+    }
+    return obj;
+}
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+function mergeDeep() {
+    var sources = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        sources[_i] = arguments[_i];
+    }
+    return mergeDeepArray(sources);
+}
+function mergeDeepArray(sources) {
+    var target = sources[0] || {};
+    var count = sources.length;
+    if (count > 1) {
+        var pastCopies = [];
+        target = shallowCopyForMerge(target, pastCopies);
+        for (var i = 1; i < count; ++i) {
+            target = mergeHelper(target, sources[i], pastCopies);
+        }
+    }
+    return target;
+}
+function isObject(obj) {
+    return obj !== null && typeof obj === 'object';
+}
+function mergeHelper(target, source, pastCopies) {
+    if (isObject(source) && isObject(target)) {
+        if (Object.isExtensible && !Object.isExtensible(target)) {
+            target = shallowCopyForMerge(target, pastCopies);
+        }
+        Object.keys(source).forEach(function (sourceKey) {
+            var sourceValue = source[sourceKey];
+            if (hasOwnProperty.call(target, sourceKey)) {
+                var targetValue = target[sourceKey];
+                if (sourceValue !== targetValue) {
+                    target[sourceKey] = mergeHelper(shallowCopyForMerge(targetValue, pastCopies), sourceValue, pastCopies);
+                }
+            }
+            else {
+                target[sourceKey] = sourceValue;
+            }
+        });
+        return target;
+    }
+    return source;
+}
+function shallowCopyForMerge(value, pastCopies) {
+    if (value !== null &&
+        typeof value === 'object' &&
+        pastCopies.indexOf(value) < 0) {
+        if (Array.isArray(value)) {
+            value = value.slice(0);
+        }
+        else {
+            value = Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__assign"])({ __proto__: Object.getPrototypeOf(value) }, value);
+        }
+        pastCopies.push(value);
+    }
+    return value;
+}
+
+var haveWarned = Object.create({});
+function warnOnceInDevelopment(msg, type) {
+    if (type === void 0) { type = 'warn'; }
+    if (!isProduction() && !haveWarned[msg]) {
+        if (!isTest()) {
+            haveWarned[msg] = true;
+        }
+        if (type === 'error') {
+            console.error(msg);
+        }
+        else {
+            console.warn(msg);
+        }
+    }
+}
+
+function stripSymbols(data) {
+    return JSON.parse(JSON.stringify(data));
+}
 
 
 //# sourceMappingURL=bundle.esm.js.map
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -58852,9 +60690,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_actions_tripsActions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../src/actions/tripsActions */ "./src/actions/tripsActions.js");
 /* harmony import */ var _constants_serverAPI__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./constants/serverAPI */ "./src/constants/serverAPI.js");
 /* harmony import */ var _Counter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Counter */ "./src/Counter.tsx");
-/* harmony import */ var _css_main_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./css/main.scss */ "./src/css/main.scss");
-/* harmony import */ var _css_main_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_css_main_scss__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _TripList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./TripList */ "./src/TripList.tsx");
+/* harmony import */ var _TripList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./TripList */ "./src/TripList.tsx");
+/* harmony import */ var _css_main_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./css/main.scss */ "./src/css/main.scss");
+/* harmony import */ var _css_main_scss__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_css_main_scss__WEBPACK_IMPORTED_MODULE_10__);
 var __makeTemplateObject = (undefined && undefined.__makeTemplateObject) || function (cooked, raw) {
     if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
     return cooked;
@@ -58897,24 +60735,12 @@ var __assign = (undefined && undefined.__assign) || function () {
 ;
 ;
 ;
+// Get Trips
 var GET_TRIPS = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  {\n    trips {\n      id\n      name\n      dateStart\n      dateEnd\n      isConfirmed\n      isEditing\n    }\n  }\n"], ["\n  {\n    trips {\n      id\n      name\n      dateStart\n      dateEnd\n      isConfirmed\n      isEditing\n    }\n  }\n"
     // Add Trip
 ])));
 // Add Trip
-var POST_TRIP = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation addTrip(\n      $name: String!, \n      $dateStart: String!, \n      $dateEnd: String!,\n      $isConfirmed: Boolean, \n      $isEditing: Boolean\n    ) {\n    addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConfirmed: $isConfirmed, \n        isEditing: $isEditing\n      ) {\n        name\n        dateStart\n        dateEnd\n        isConfirmed\n        isEditing\n    }\n  }\n"], ["\n  mutation addTrip(\n      $name: String!, \n      $dateStart: String!, \n      $dateEnd: String!,\n      $isConfirmed: Boolean, \n      $isEditing: Boolean\n    ) {\n    addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConfirmed: $isConfirmed, \n        isEditing: $isEditing\n      ) {\n        name\n        dateStart\n        dateEnd\n        isConfirmed\n        isEditing\n    }\n  }\n"
-    // subscription onCommentAdded($repoFullName: String!){
-    //   commentAdded(repoFullName: $repoFullName){
-    //     id
-    //     content
-    //   }
-    // }
-])));
-// subscription onCommentAdded($repoFullName: String!){
-//   commentAdded(repoFullName: $repoFullName){
-//     id
-//     content
-//   }
-// }
+var POST_TRIP = graphql_tag__WEBPACK_IMPORTED_MODULE_1___default()(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  mutation addTrip(\n      $name: String!, \n      $dateStart: String!, \n      $dateEnd: String!,\n      $isConfirmed: Boolean, \n      $isEditing: Boolean\n    ) {\n    addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConfirmed: $isConfirmed, \n        isEditing: $isEditing\n      ) {\n        name\n        dateStart\n        dateEnd\n        isConfirmed\n        isEditing\n    }\n  }\n"], ["\n  mutation addTrip(\n      $name: String!, \n      $dateStart: String!, \n      $dateEnd: String!,\n      $isConfirmed: Boolean, \n      $isEditing: Boolean\n    ) {\n    addTrip(\n        name: $name, \n        dateStart: $dateStart, \n        dateEnd: $dateEnd, \n        isConfirmed: $isConfirmed, \n        isEditing: $isEditing\n      ) {\n        name\n        dateStart\n        dateEnd\n        isConfirmed\n        isEditing\n    }\n  }\n"])));
 var App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
@@ -59138,47 +60964,48 @@ var App = /** @class */ (function (_super) {
         var _a = this.state.form, name = _a.name, dateStart = _a.dateStart, dateEnd = _a.dateEnd;
         var isConfirmed = false;
         var isEditing = false;
-        return (react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_3__["Query"], { query: GET_TRIPS }, function (_a) {
-            var loading = _a.loading, error = _a.error, data = _a.data;
-            if (loading)
-                return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", null, "Fetching");
-            if (error)
-                return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", null, "Error");
-            var trips = data.trips;
-            var totalTrips = _this.getTotalTrips(trips);
-            var numberConfirmed = _this.getConfirmedTrips(trips);
-            var numberUnconfirmed = totalTrips - numberConfirmed;
-            var setConfirmed = function () { return _this.setConfirmed(); };
-            var setUnConfirmed = function () { return _this.setUnConfirmed(); };
-            var setAll = function () { return _this.setAll(); };
-            return (react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null,
-                react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "App" },
-                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "main" },
-                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("header", { className: "header" },
-                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "header__logo" },
-                                react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h2", null, "Trip Planner!"))),
-                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("form", null,
-                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "destination" },
-                                react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "row" },
-                                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-4" },
-                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", { type: "text", name: "name", value: name, placeholder: "Name", onChange: _this.handleChange })),
-                                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
-                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", { type: "text", name: "dateStart", value: dateStart, placeholder: "Date Start", onChange: _this.handleChange })),
-                                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
-                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", { type: "text", name: "dateEnd", value: dateEnd, placeholder: "Date End", onChange: _this.handleChange })),
-                                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_3__["Mutation"], { mutation: POST_TRIP, variables: {
-                                            name: name,
-                                            dateStart: dateStart,
-                                            dateEnd: dateEnd,
-                                            isConfirmed: isConfirmed,
-                                            isEditing: isEditing
-                                        } }, function (addTrip) {
-                                        return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
-                                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", { type: "submit", name: "submit", value: "submit", onClick: addTrip }, "Submit"));
-                                    })))),
-                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Counter__WEBPACK_IMPORTED_MODULE_8__["default"], { totalTrips: totalTrips, numberConfirmed: numberConfirmed, numberUnconfirmed: numberUnconfirmed, setConfirmed: setConfirmed, setUnConfirmed: setUnConfirmed, setAll: setAll, showConfirmed: _this.state.filter.showConfirmed, showUnConfirmed: _this.state.filter.showUnConfirmed, showAll: _this.state.filter.showAll }),
-                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_TripList__WEBPACK_IMPORTED_MODULE_10__["default"], { trips: trips, toggleConfirmationAt: _this.toggleConfirmationAt, toggleEditingAt: _this.toggleEditingAt, saveEditingAt: _this.saveEditingAt, setNameAt: _this.setNameAt, setDateStartAt: _this.setDateStartAt, setDateEndAt: _this.setDateEndAt, removeTripAt: _this.removeTripAt, name: _this.state.form.name, showConfirmed: _this.state.filter.showConfirmed, showUnConfirmed: _this.state.filter.showUnConfirmed, showAll: _this.state.filter.showAll })))));
-        }));
+        return (react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null,
+            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_3__["Query"], { query: GET_TRIPS }, function (_a) {
+                var loading = _a.loading, error = _a.error, data = _a.data;
+                if (loading)
+                    return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", null, "Fetching...");
+                if (error)
+                    return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", null, "Error");
+                var trips = data.trips;
+                var totalTrips = _this.getTotalTrips(trips);
+                var numberConfirmed = _this.getConfirmedTrips(trips);
+                var numberUnconfirmed = totalTrips - numberConfirmed;
+                var setConfirmed = function () { return _this.setConfirmed(); };
+                var setUnConfirmed = function () { return _this.setUnConfirmed(); };
+                var setAll = function () { return _this.setAll(); };
+                return (react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null,
+                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "App" },
+                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "main" },
+                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("header", { className: "header" },
+                                react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "header__logo" },
+                                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h2", null, "Trip Planner!"))),
+                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("form", null,
+                                react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "destination" },
+                                    react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "row" },
+                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-4" },
+                                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", { type: "text", name: "name", value: name, placeholder: "Name", onChange: _this.handleChange })),
+                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
+                                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", { type: "text", name: "dateStart", value: dateStart, placeholder: "Date Start", onChange: _this.handleChange })),
+                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
+                                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("input", { type: "text", name: "dateEnd", value: dateEnd, placeholder: "Date End", onChange: _this.handleChange })),
+                                        react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_3__["Mutation"], { mutation: POST_TRIP, variables: {
+                                                name: name,
+                                                dateStart: dateStart,
+                                                dateEnd: dateEnd,
+                                                isConfirmed: isConfirmed,
+                                                isEditing: isEditing
+                                            } }, function (addTrip) {
+                                            return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", { className: "col-md-2" },
+                                                react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("button", { type: "submit", name: "submit", value: "submit", onClick: addTrip }, "Submit"));
+                                        })))),
+                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Counter__WEBPACK_IMPORTED_MODULE_8__["default"], { totalTrips: totalTrips, numberConfirmed: numberConfirmed, numberUnconfirmed: numberUnconfirmed, setConfirmed: setConfirmed, setUnConfirmed: setUnConfirmed, setAll: setAll, showConfirmed: _this.state.filter.showConfirmed, showUnConfirmed: _this.state.filter.showUnConfirmed, showAll: _this.state.filter.showAll }),
+                            react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_TripList__WEBPACK_IMPORTED_MODULE_9__["default"], { trips: trips, toggleConfirmationAt: _this.toggleConfirmationAt, toggleEditingAt: _this.toggleEditingAt, saveEditingAt: _this.saveEditingAt, setNameAt: _this.setNameAt, setDateStartAt: _this.setDateStartAt, setDateEndAt: _this.setDateEndAt, removeTripAt: _this.removeTripAt, name: _this.state.form.name, showConfirmed: _this.state.filter.showConfirmed, showUnConfirmed: _this.state.filter.showUnConfirmed, showAll: _this.state.filter.showAll })))));
+            })));
     };
     return App;
 }(react__WEBPACK_IMPORTED_MODULE_2___default.a.Component));
@@ -60152,51 +61979,6 @@ var templateObject_1;
 
 /***/ }),
 
-/***/ "./src/constants.jsx":
-/*!***************************!*\
-  !*** ./src/constants.jsx ***!
-  \***************************/
-/*! exports provided: AUTH_TOKEN, LINKS_PER_PAGE */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AUTH_TOKEN", function() { return AUTH_TOKEN; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LINKS_PER_PAGE", function() { return LINKS_PER_PAGE; });
-(function () {
-  var enterModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.enterModule : undefined;
-  enterModule && enterModule(module);
-})();
-
-var __signature__ = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal["default"].signature : function (a) {
-  return a;
-};
-
-var AUTH_TOKEN = 'auth-token';
-var LINKS_PER_PAGE = 5;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(AUTH_TOKEN, "AUTH_TOKEN", "/home/matteo/code/tripplannerFrontend/src/constants.jsx");
-  reactHotLoader.register(LINKS_PER_PAGE, "LINKS_PER_PAGE", "/home/matteo/code/tripplannerFrontend/src/constants.jsx");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
-
-/***/ }),
-
 /***/ "./src/constants/actionTypes.js":
 /*!**************************************!*\
   !*** ./src/constants/actionTypes.js ***!
@@ -60347,30 +62129,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/lib/react-apollo.esm.js");
 /* harmony import */ var apollo_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! apollo-client */ "./node_modules/apollo-client/bundle.esm.js");
-/* harmony import */ var apollo_link_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! apollo-link-http */ "./node_modules/apollo-link-http/lib/bundle.esm.js");
-/* harmony import */ var apollo_cache_inmemory__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! apollo-cache-inmemory */ "./node_modules/apollo-cache-inmemory/lib/bundle.esm.js");
-/* harmony import */ var apollo_link_context__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! apollo-link-context */ "./node_modules/apollo-link-context/lib/bundle.esm.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./constants */ "./src/constants.jsx");
-/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/bundle.esm.js");
-/* harmony import */ var apollo_link_ws__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! apollo-link-ws */ "./node_modules/apollo-link-ws/lib/bundle.esm.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/bundle.esm.js");
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./index.css */ "./src/index.css");
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _AppRouter__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./AppRouter */ "./src/AppRouter.js");
-/* harmony import */ var apollo_link_error__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! apollo-link-error */ "./node_modules/apollo-link-error/lib/bundle.esm.js");
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-
+/* harmony import */ var apollo_cache_inmemory__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! apollo-cache-inmemory */ "./node_modules/apollo-cache-inmemory/lib/bundle.esm.js");
+/* harmony import */ var apollo_link_ws__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! apollo-link-ws */ "./node_modules/apollo-link-ws/lib/bundle.esm.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/bundle.esm.js");
+/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/bundle.esm.js");
+/* harmony import */ var apollo_link_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! apollo-link-http */ "./node_modules/apollo-link-http/lib/bundle.esm.js");
+/* harmony import */ var _AppRouter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AppRouter */ "./src/AppRouter.js");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./index.css */ "./src/index.css");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_13__);
 
 
 
@@ -60391,53 +62157,108 @@ var initialState = {
     },
 };
 var store = Object(_store_configureStore__WEBPACK_IMPORTED_MODULE_3__["default"])(initialState);
-var httpLink = Object(apollo_link_http__WEBPACK_IMPORTED_MODULE_7__["createHttpLink"])({
-    uri: 'http://localhost:4000',
+var httpLink = new apollo_link_http__WEBPACK_IMPORTED_MODULE_11__["HttpLink"]({
+    uri: 'http://localhost:3000/graphql',
 });
-var authLink = Object(apollo_link_context__WEBPACK_IMPORTED_MODULE_9__["setContext"])(function (_, _a) {
-    var headers = _a.headers;
-    var token = localStorage.getItem(_constants__WEBPACK_IMPORTED_MODULE_10__["AUTH_TOKEN"]);
-    return {
-        headers: __assign(__assign({}, headers), { authorization: token ? "Bearer " + token : '' }),
-    };
+// const token = localStorage.getItem(AUTH_TOKEN);
+// const wsLink = new WebSocketLink({
+//   uri: `ws://localhost:8080/subscriptions`,
+//   options: {
+//     reconnect: true,
+//     connectionParams: {
+//       headers: {
+//         Authorization: `Bearer ${token}`
+//       }
+//    }    
+//   },
+// });
+var wsLink = new apollo_link_ws__WEBPACK_IMPORTED_MODULE_8__["WebSocketLink"]({
+    uri: 'ws://localhost:3000/subscriptions',
 });
-var wsLink = new apollo_link_ws__WEBPACK_IMPORTED_MODULE_12__["WebSocketLink"]({
-    uri: "ws://localhost:5000",
-    options: {
-        reconnect: true,
-    },
-});
-// connectionParams: {
-//   authToken: localStorage.getItem(AUTH_TOKEN),
-// },
-var link = Object(apollo_link__WEBPACK_IMPORTED_MODULE_11__["split"])(function (_a) {
+var link = Object(apollo_link__WEBPACK_IMPORTED_MODULE_10__["split"])(function (_a) {
     var query = _a.query;
-    var definition = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_13__["getMainDefinition"])(query);
-    return (definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription');
-}, wsLink, authLink.concat(httpLink));
-
-var linkerr = Object(apollo_link_error__WEBPACK_IMPORTED_MODULE_16__["onError"])(function (_a) {
-    var graphQLErrors = _a.graphQLErrors, networkError = _a.networkError;
-    if (graphQLErrors)
-        graphQLErrors.map(function (_a) {
-            var message = _a.message, locations = _a.locations, path = _a.path;
-            return console.log("[GraphQL error]: Message: " + message + ", Location: " + locations + ", Path: " + path);
-        });
-    if (networkError)
-        console.log("[Network error]: " + networkError);
-});
-var cache = new apollo_cache_inmemory__WEBPACK_IMPORTED_MODULE_8__["InMemoryCache"]();
-// const link = createHttpLink({ uri: 'http://localhost:3000/graphql?' })
-// link: ApolloLink.from([linkerr, createHttpLink({ uri: 'http://localhost:3000/graphql?' })]),
+    var definition = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_9__["getMainDefinition"])(query);
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+}, wsLink, httpLink);
 var client = new apollo_client__WEBPACK_IMPORTED_MODULE_6__["ApolloClient"]({
     link: link,
-    cache: cache,
+    cache: new apollo_cache_inmemory__WEBPACK_IMPORTED_MODULE_7__["InMemoryCache"](),
 });
 Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], { store: store },
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null,
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_5__["ApolloProvider"], { client: client },
-            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppRouter__WEBPACK_IMPORTED_MODULE_15__["default"], null)))), document.getElementById("app"));
+            react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppRouter__WEBPACK_IMPORTED_MODULE_12__["default"], null)))), document.getElementById("app"));
+// const link = new SubscriptionClient('ws://localhost:8080/subscriptions', {
+//   reconnect: true,
+//   connectionParams: () => {
+//     var token = localStorage.getItem(AUTH_TOKEN);
+//     if(token) {
+//       return { authToken: token };
+//     }
+//     return { };
+//   }
+// });
+// const cache = new InMemoryCache();
+// const client = new ApolloClient({
+//   cache: cache,
+//   link: link as any,
+// })
+// const protocol = (location.protocol != 'https:') ? 'ws://': 'wss://';
+// const port = location.port ? ':'+location.port: '';
+/// const httpLink = createUploadLink({
+//   uri: location.protocol + '//' + location.hostname + port + '/graphql',
+//   credentials: 'same-origin',
+// })
+// const wsLink = new WebSocketLink(subClient);
+// const AuthLink = (operation, next) => {
+//   const token = localStorage.getItem(AUTH_TOKEN);
+//   if(token) {
+//     operation.setContext(context => ({
+//       ...context,
+//       headers: {
+//         ...context.headers,
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }));
+//   }
+//   return next(operation);
+// };
+// const link = split(
+//   ({ query }) => {
+//     const definition = getMainDefinition(query);
+//     return (
+//       definition.kind === 'OperationDefinition' &&
+//       definition.operation === 'subscription'
+//     );
+//   },
+//   wsLink,
+//   httpLink,
+// )
+// const cache = new InMemoryCache();
+// const client = new ApolloClient({
+//   link,
+//   cache,
+// })
+// const client = new ApolloClient({
+//   link: ApolloLink.from([
+//     onError(({ graphQLErrors, networkError }) => {
+//       if (graphQLErrors) {
+//         graphQLErrors.map(({ message, locations, path, extensions }) => {
+//           if(extensions && extensions.code === 'UNAUTHENTICATED') {
+//             localStorage.removeItem(AUTH_TOKEN);
+//             client.resetStore();
+//           }
+//           console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+//         });
+//         if (networkError) {
+//           console.log(`[Network error]: ${networkError}`);
+//         }
+//       }
+//     }),
+//     link
+//   ]),
+//   cache: new InMemoryCache()
+// });
 
 
 /***/ }),

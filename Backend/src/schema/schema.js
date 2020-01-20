@@ -42,6 +42,11 @@ const subscriptionTrips = new GraphQLObjectType({
       type: TripType,
       subscribe: () => pubsub.asyncIterator('newTrip'),
       resolve: Trip,
+    },
+    deleteTrip: {
+      type: TripType,
+      subscribe: () => pubsub.asyncIterator('deleteTrip'),
+      resolve: Trip,
     }
   }
 })
@@ -68,6 +73,7 @@ const mutationTrips = new GraphQLObjectType({
           isEditing: args.isEditing,
           createdBy: "5db474847f4fcf269336d3de"
         });
+        console.log('newTrip!!!!')
         pubsub.publish('newTrip', trip);
         return trip.save();
       }
@@ -81,6 +87,7 @@ const mutationTrips = new GraphQLObjectType({
       },
       resolve(parent, args) {
         let TripId = Trip.findByIdAndRemove(args.id).exec();
+        pubsub.publish('deleteTrip', { 'id': TripId });
         return TripId;
       }
     }

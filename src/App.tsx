@@ -1,17 +1,19 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import React from 'react';
-import { 
-  Query, 
-  Mutation, 
-  Subscription } from 'react-apollo';
+import {
+  Query,
+  Mutation,
+  Subscription
+} from 'react-apollo';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
-import { 
-  setTripDateEndDispatcher, 
-  setTripDateStartDispatcher, 
-  setTripNameDispatcher, 
-  tripsListDispatcher } from '../src/actions/tripsActions';
+import {
+  setTripDateEndDispatcher,
+  setTripDateStartDispatcher,
+  setTripNameDispatcher,
+  tripsListDispatcher
+} from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
 import TripList from './TripList';
@@ -122,6 +124,14 @@ const NEW_TRIPS_SUBSCRIPTION = gql`
   }
 `
 
+const DELETE_TRIP_SUBSCRIPTION = gql`
+  subscription deleteTrip {
+    deleteTrip {
+      id
+    }
+  }
+`;
+
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {
     super(props);
@@ -144,10 +154,14 @@ class App extends React.Component<MyProps, MyState> {
         dateStart: "",
         dateEnd: "",
         isConfirmed: false,
-        isEditing: false,      
+        isEditing: false,
       }
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+
   }
 
   componentDidMount() {
@@ -163,12 +177,13 @@ class App extends React.Component<MyProps, MyState> {
     axios
       .put(
         host + url,
-        { 
-          isConfirmed: isConfirmedToggled 
+        {
+          isConfirmed: isConfirmedToggled
         },
-        { headers:
+        {
+          headers:
           {
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
           }
         })
       .then(data => {
@@ -188,15 +203,16 @@ class App extends React.Component<MyProps, MyState> {
     axios
       .put(
         host + url,
-        { 
+        {
           name: name,
           dateStart: dateStart,
           dateEnd: dateEnd,
           isEditing: isEditingToggled
         },
-        { headers:
+        {
+          headers:
           {
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
           }
         })
       .then(data => {
@@ -215,12 +231,13 @@ class App extends React.Component<MyProps, MyState> {
     axios
       .put(
         host + url,
-        { 
+        {
           isEditing: isEditingToggled
         },
-        { headers:
+        {
+          headers:
           {
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
           }
         })
       .then(data => {
@@ -232,31 +249,31 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   setNameAt = (name: string, id: string) => {
-    const trip = { 
-      id: id, 
+    const trip = {
+      id: id,
       name: name
     };
     this.props.setTripName(trip);
   }
 
   setDateStartAt = (dateStart, id) => {
-    const trip = { 
-      id: id, 
+    const trip = {
+      id: id,
       dateStart: dateStart
     };
     this.props.setDateStart(trip);
   }
 
   setDateEndAt = (dateEnd, id) => {
-    const trip = { 
-      id: id, 
+    const trip = {
+      id: id,
       dateEnd: dateEnd
     };
     this.props.setDateEnd(trip);
   }
 
   setConfirmed() {
-    this.setState({ 
+    this.setState({
       filter: {
         showConfirmed: true,
         showUnConfirmed: false,
@@ -319,9 +336,10 @@ class App extends React.Component<MyProps, MyState> {
       .post(
         host + url,
         trip,
-        { headers:
+        {
+          headers:
           {
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
           }
         })
       .then(data => {
@@ -341,22 +359,40 @@ class App extends React.Component<MyProps, MyState> {
       0
     );
 
-    _subscribeToNewTrips = subscribeToMore => {
-      subscribeToMore({
-        document: NEW_TRIPS_SUBSCRIPTION,
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev
-          const newTrip = subscriptionData.data.newTrip
-          console.log(JSON.stringify(prev));
-          const exists = prev.trips.find( trip => trip.id === newTrip.id);
-          if (exists) return prev;
-    
-          return Object.assign({}, prev, {
-            trips: [newTrip, ...prev.trips],
-          })
-        }
-      })
-    }
+  _subscribeToNewTrips = subscribeToMore => {
+    console.log('ciunciuniaaaaaa')
+    subscribeToMore({
+      document: NEW_TRIPS_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev
+        const newTrip = subscriptionData.data.newTrip
+        // console.log(JSON.stringify(prev));
+        const exists = prev.trips.find(trip => trip.id === newTrip.id);
+        if (exists) return prev;
+
+        return Object.assign({}, prev, {
+          trips: [newTrip, ...prev.trips],
+        })
+      }
+    })
+  }
+
+  _subscribeToDeletedTrips = subscribeToMore => {
+    console.log('aaaa')
+    subscribeToMore({
+      document: DELETE_TRIP_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        console.log(subscriptionData)
+        if (!subscriptionData.data) return prev
+        const deleteTrip = subscriptionData.data.deleteTrip
+        console.log(JSON.stringify(prev));
+        const exists = prev.trips.find( trip => trip.id === deleteTrip.id);
+        if (!exists) return prev;
+
+        return trips = prev.trips.filter(trip => trip.id != deleteTrip.id )
+      }
+    })
+  }
 
   render() {
     const { name, dateStart, dateEnd } = this.state.form
@@ -370,6 +406,7 @@ class App extends React.Component<MyProps, MyState> {
             if (error) return <div>Error</div>
 
             this._subscribeToNewTrips(subscribeToMore)
+            this._subscribeToDeletedTrips(subscribeToMore)
 
             const trips = data.trips;
             const totalTrips = this.getTotalTrips(trips);
@@ -377,7 +414,7 @@ class App extends React.Component<MyProps, MyState> {
             const numberUnconfirmed = totalTrips - numberConfirmed;
             const setConfirmed = () => this.setConfirmed();
             const setUnConfirmed = () => this.setUnConfirmed();
-            const setAll = () => this.setAll();          
+            const setAll = () => this.setAll();
 
             return (
               <React.Fragment>
@@ -391,19 +428,19 @@ class App extends React.Component<MyProps, MyState> {
                     </header>
                     <Mutation
                       mutation={POST_TRIP}
-                      variables={{ 
-                        name, 
-                        dateStart, 
-                        dateEnd, 
-                        isConfirmed, 
-                        isEditing 
+                      variables={{
+                        name,
+                        dateStart,
+                        dateEnd,
+                        isConfirmed,
+                        isEditing
                       }}
                     >
                       {addTrip => (
                         <form onSubmit={e => {
-                            e.preventDefault();
-                            addTrip();
-                          }}
+                          e.preventDefault();
+                          addTrip();
+                        }}
                         >
                           <div className="destination">
                             <div className="row">
@@ -412,18 +449,18 @@ class App extends React.Component<MyProps, MyState> {
                                   type="text"
                                   name="name"
                                   value={name}
-                                  placeholder="Name" 
+                                  placeholder="Name"
                                   onChange={this.handleChange}
-                              />
+                                />
                               </div>
                               <div className="col-md-2">
                                 <input
                                   type="text"
                                   name="dateStart"
                                   value={dateStart}
-                                  placeholder="Date Start" 
+                                  placeholder="Date Start"
                                   onChange={this.handleChange}
-                              />
+                                />
                               </div>
                               <div className="col-md-2">
                                 <input
@@ -434,9 +471,9 @@ class App extends React.Component<MyProps, MyState> {
                                   onChange={this.handleChange}
                                 />
                               </div>
-                                  <div className="col-md-2">
-                                    <button type="submit">Submit</button>
-                                  </div>
+                              <div className="col-md-2">
+                                <button type="submit">Submit</button>
+                              </div>
                             </div>
                           </div>
                         </form>
@@ -446,7 +483,7 @@ class App extends React.Component<MyProps, MyState> {
                       totalTrips={totalTrips}
                       numberConfirmed={numberConfirmed}
                       numberUnconfirmed={numberUnconfirmed}
-                      setConfirmed={setConfirmed} 
+                      setConfirmed={setConfirmed}
                       setUnConfirmed={setUnConfirmed}
                       setAll={setAll}
                       showConfirmed={this.state.filter.showConfirmed}
@@ -474,10 +511,11 @@ class App extends React.Component<MyProps, MyState> {
             );
 
           }}
-          </Query>
-        </React.Fragment>
-    )}
+        </Query>
+      </React.Fragment>
+    )
   }
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -486,11 +524,11 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
-    setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
-    setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
-    setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))
-  });
+  tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
+  setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
+  setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
+  setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))
+});
 
 export default hot(module)(connect(
   mapStateToProps,

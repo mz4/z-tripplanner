@@ -86,8 +86,13 @@ const mutationTrips = new GraphQLObjectType({
         }
       },
       resolve(parent, args) {
-        let TripId = Trip.findByIdAndRemove(args.id).exec();
-        pubsub.publish('deleteTrip', { 'id': TripId });
+        console.log(JSON.stringify(args.id))
+        const id = args.id
+        Trip.findOne( { _id:id }, function(err,obj) { 
+          pubsub.publish('deleteTrip', obj);
+        } ).exec();
+        // console.log(JSON.stringify(Tripa))
+        let TripId = Trip.findByIdAndRemove(id).exec();
         return TripId;
       }
     }

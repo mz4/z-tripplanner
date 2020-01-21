@@ -128,6 +128,11 @@ const DELETE_TRIP_SUBSCRIPTION = gql`
   subscription deleteTrip {
     deleteTrip {
       id
+      name
+      dateStart
+      dateEnd
+      isConfirmed
+      isEditing
     }
   }
 `;
@@ -378,18 +383,19 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   _subscribeToDeletedTrips = subscribeToMore => {
-    console.log('aaaa')
     subscribeToMore({
       document: DELETE_TRIP_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
-        console.log(subscriptionData)
         if (!subscriptionData.data) return prev
         const deleteTrip = subscriptionData.data.deleteTrip
-        console.log(JSON.stringify(prev));
-        const exists = prev.trips.find( trip => trip.id === deleteTrip.id);
-        if (!exists) return prev;
-
-        return trips = prev.trips.filter(trip => trip.id != deleteTrip.id )
+        console.log(JSON.stringify(deleteTrip));
+        // const prevtrips = prev.trips;
+        // const trips = prevtrips.filter(function( obj ) {
+        //   return obj.id !== deleteTrip.id
+        // })
+        // console.log(JSON.stringify(deleteTrip));
+        // console.log(JSON.stringify(trips));
+        return
       }
     })
   }

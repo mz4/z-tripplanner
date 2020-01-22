@@ -365,7 +365,6 @@ class App extends React.Component<MyProps, MyState> {
     );
 
   _subscribeToNewTrips = subscribeToMore => {
-    console.log('ciunciuniaaaaaa')
     subscribeToMore({
       document: NEW_TRIPS_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
@@ -388,14 +387,14 @@ class App extends React.Component<MyProps, MyState> {
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev
         const deleteTrip = subscriptionData.data.deleteTrip
-        console.log(JSON.stringify(deleteTrip));
-        // const prevtrips = prev.trips;
-        // const trips = prevtrips.filter(function( obj ) {
-        //   return obj.id !== deleteTrip.id
-        // })
-        // console.log(JSON.stringify(deleteTrip));
-        // console.log(JSON.stringify(trips));
-        return
+        const prevtrips = prev.trips;
+        const newtrips = prevtrips.filter(function( obj ) {
+          return obj.id !== deleteTrip.id
+        })
+        const alltrips = {
+          trips: newtrips
+        };
+        return alltrips;
       }
     })
   }

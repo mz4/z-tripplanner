@@ -33,7 +33,7 @@ interface MyProps {
       isEditing: boolean,
     }
   ],
-  tripsListLoad: (token) => void,
+  // tripsListLoad: (token) => void,
   setTripName: (trip) => void,
   setDateStart: (trip) => void,
   setDateEnd: (trip) => void,
@@ -165,14 +165,10 @@ class App extends React.Component<MyProps, MyState> {
     this.getTotalTrips = this.getTotalTrips.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-
-  }
-
-  componentDidMount() {
-    const { token } = this.props;
-    this.props.tripsListLoad(token);
-  }
+  // componentDidMount() {
+  //   const { token } = this.props;
+    // this.props.tripsListLoad(token);
+  // }
 
   toggleConfirmationAt = (id: String, isConfirmed: Boolean) => {
     const isConfirmedToggled = !isConfirmed;
@@ -191,9 +187,9 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      .then(data => {
-        this.props.tripsListLoad(token);
-      })
+      // .then(data => {
+      //   this.props.tripsListLoad(token);
+      // })
       .catch(error => {
         throw error;
       });
@@ -220,9 +216,9 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      .then(data => {
-        this.props.tripsListLoad(token);
-      })
+      // .then(data => {
+      //   this.props.tripsListLoad(token);
+      // })
       .catch(error => {
         throw error;
       });
@@ -245,9 +241,9 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      .then(data => {
-        this.props.tripsListLoad(token);
-      })
+      // .then(data => {
+      //   this.props.tripsListLoad(token);
+      // })
       .catch(error => {
         throw error;
       });
@@ -347,9 +343,9 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      .then(data => {
-        this.props.tripsListLoad(token);
-      })
+      // .then(data => {
+      //   this.props.tripsListLoad(token);
+      // })
       .catch(error => {
         throw error;
       });
@@ -529,7 +525,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
+  // tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
   setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
   setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
   setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))

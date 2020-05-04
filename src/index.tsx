@@ -26,12 +26,12 @@ const initialState = {
 const store = configureStore(initialState);
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3030/graphql',
+  uri: 'https://mz4-tripplannerbackend.glitch.me/graphql',
 });
 
 const token = localStorage.getItem(AUTH_TOKEN);
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:3030/subscriptions',
+  uri: 'wss://mz4-tripplannerbackend.glitch.me/subscriptions',
   options: {
     reconnect: true,
     connectionParams: {

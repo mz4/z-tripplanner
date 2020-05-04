@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "webpack",
+    "start": "webpack --mode development",
     "dev": "webpack-dev-server --mode development --open --hot",
     "build": "webpack --mode production",
     "deploy": "webpack --mode production && aws s3 cp build/ s3://supersimpletripplanner --recursive"
@@ -40,7 +40,7 @@
     "ts-loader": "^6.2.0",
     "typescript": "^3.6.3",
     "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.6",
+    "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {

@@ -17,7 +17,5 @@
       "dom"
     ]
   },
-  "include": [
-    "./src/"
-  ]
+  "include": []
 }

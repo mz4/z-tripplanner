@@ -17,5 +17,7 @@
       "dom"
     ]
   },
-  "include": []
+  "exclude": [
+    "./src/", "./node_modules/", "./build/"
+  ]
 }

@@ -13,9 +13,13 @@ import { split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http'
 
 import AppRouter from './AppRouter'
-import { AUTH_TOKEN } from './constants'
+// import { AUTH_TOKEN } from './constants';
+export const AUTH_TOKEN = 'auth-token'
 
 import './index.css'
+
+  // uri: 'https://mz4-tripplannerbackend.glitch.me/graphql',
+  // uri: 'ws://mz4-tripplannerbackend.glitch.me/graphql',
 
 const initialState = {
     trips: {
@@ -26,12 +30,12 @@ const initialState = {
 const store = configureStore(initialState);
 
 const httpLink = new HttpLink({
-  uri: 'https://mz4-tripplannerbackend.glitch.me/graphql',
+  uri: 'http://localhost:3030/graphql',
 });
 
 const token = localStorage.getItem(AUTH_TOKEN);
 const wsLink = new WebSocketLink({
-  uri: 'wss://mz4-tripplannerbackend.glitch.me/subscriptions',
+  uri: 'ws://localhost:3030/subscriptions',
   options: {
     reconnect: true,
     connectionParams: {

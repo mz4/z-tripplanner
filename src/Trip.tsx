@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import TripName from './TripName';
 import TripDate from './TripDate';
 import TripDelete from './components/TripDelete';
+import TripConfirm from './components/TripConfirm';
 
 const Trip = props =>
   <div key={props.keyid} className="row">
@@ -30,15 +31,10 @@ const Trip = props =>
             {props.dateEnd}
           </TripDate>
         </div>
-        <div className="checkboxes">
-          <label>
-            <input
-              type="checkbox"
-              checked={props.isConfirmed}
-              onChange={props.handleConfirmation} />
-            <span className="confirmed">Confirmed</span>
-          </label>
-        </div>
+        <TripConfirm
+          id={props.id}
+          isConfirmed={props.isConfirmed}
+        />
         {props.isEditing ? 
           <button onClick={props.handleEditingSave}>
             Save

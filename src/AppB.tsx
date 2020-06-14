@@ -1,6 +1,7 @@
 import axios from 'axios';
 import gql from 'graphql-tag';
 import React from 'react';
+// import { useMutation } from '@apollo/react-hooks';
 import {
   Query,
   Mutation,
@@ -50,16 +51,6 @@ interface MyProps {
   setTripName: (trip) => void,
   setDateStart: (trip) => void,
   setDateEnd: (trip) => void,
-};
-
-interface MyTrip {
-  id: string,
-  key: string,
-  name: string,
-  dateStart: string,
-  dateEnd: string,
-  isConfirmed: boolean,
-  isEditing: boolean,
 };
 
 interface MyState {
@@ -123,6 +114,16 @@ const POST_TRIP = gql`
     }
   }
 `
+
+// // Toggle Trip
+// const TOGGLE_TRIP = gql`
+//   mutation toggleTrip($id: String!, $isConfirmed: Boolean) {
+//     toggleTrip(id: $id, isConfirmed: $isConfirmed) {
+//       id
+//     }
+//   }
+// `
+
 // Trip subscriptions
 const NEW_TRIPS_SUBSCRIPTION = gql`
   subscription TripAdded {
@@ -140,19 +141,6 @@ const NEW_TRIPS_SUBSCRIPTION = gql`
 const DELETE_TRIP_SUBSCRIPTION = gql`
   subscription deleteTrip {
     deleteTrip {
-      id
-      name
-      dateStart
-      dateEnd
-      isConfirmed
-      isEditing
-    }
-  }
-`;
-
-const TOGGLE_TRIP_SUBSCRIPTION = gql`
-  subscription toggleTrip {
-    toggleTrip {
       id
       name
       dateStart
@@ -191,34 +179,10 @@ class App extends React.Component<MyProps, MyState> {
     this.getTotalTrips = this.getTotalTrips.bind(this);
   }
 
-  // componentDidMount() {
-  //   const { token } = this.props;
-    // this.props.tripsListLoad(token);
-  // }
-
   toggleConfirmationAt = (id: String, isConfirmed: Boolean) => {
-    const isConfirmedToggled = !isConfirmed;
-    const { token } = this.props;
-    const host = getAPIUrl();
-    const url = 'api/trip/' + id;
-    axios
-      .put(
-        host + url,
-        {
-          isConfirmed: isConfirmedToggled
-        },
-        {
-          headers:
-          {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-      // .then(data => {
-      //   this.props.tripsListLoad(token);
-      // })
-      .catch(error => {
-        throw error;
-      });
+    console.log('nn')
+    // const [toggleTrip] = useMutation(TOGGLE_TRIP)
+    // toggleTrip({ variables: { id: id, isConfirmed: isConfirmed } });
   }
 
   saveEditingAt = (trip) => {
@@ -242,9 +206,6 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      // .then(data => {
-      //   this.props.tripsListLoad(token);
-      // })
       .catch(error => {
         throw error;
       });
@@ -268,9 +229,6 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      // .then(data => {
-      //   this.props.tripsListLoad(token);
-      // })
       .catch(error => {
         throw error;
       });
@@ -338,44 +296,6 @@ class App extends React.Component<MyProps, MyState> {
       }
     })
 
-  private newTripSubmitHandler = e => {
-    e.preventDefault();
-    const trip: MyTrip = {
-      id: '',
-      key: '',
-      name: '',
-      dateStart: '',
-      dateEnd: '',
-      isConfirmed: false,
-      isEditing: false,
-    };
-    const { token } = this.props;
-    const { form } = this.state;
-
-    trip.name = form.name;
-    trip.dateStart = form.dateStart;
-    trip.dateEnd = form.dateEnd;
-    trip.isConfirmed = false;
-    trip.isEditing = false;
-
-    const host = getAPIUrl();
-    const url = 'api/trip';
-    axios
-      .post(
-        host + url,
-        trip,
-        {
-          headers:
-          {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-      .catch(error => {
-        throw error;
-      });
-
-  }
-
   private getTotalTrips = (trips) => trips.length;
 
   getConfirmedTrips = (trips) =>
@@ -419,21 +339,8 @@ class App extends React.Component<MyProps, MyState> {
     })
   }
 
-  _subscribeToToggledTrips = subscribeToMore => {
-    subscribeToMore({
-      document: TOGGLE_TRIP_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const toggleTrip = subscriptionData.data
-        const prevtrips = prev.trips;
-        console.log(toggleTrip)
-        return
-      }
-    })
-  }
-
   render() {
-    const { name, dateStart, dateEnd } = this.state.form
+    const { name, dateStart, dateEnd } = this.state.form;
     const isConfirmed = false
     const isEditing = false
     return (
@@ -445,7 +352,6 @@ class App extends React.Component<MyProps, MyState> {
 
             this._subscribeToNewTrips(subscribeToMore)
             this._subscribeToDeletedTrips(subscribeToMore)
-            this._subscribeToToggledTrips(subscribeToMore)
 
             const trips = data?.trips || [];
             const totalTrips = this.getTotalTrips(trips);
@@ -563,7 +469,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
   setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
   setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
   setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))

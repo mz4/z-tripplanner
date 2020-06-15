@@ -2,21 +2,19 @@ import axios from 'axios';
 import gql from 'graphql-tag';
 import React from 'react';
 import {
-  Query,
-  Mutation,
-  Subscription
+  Query
 } from 'react-apollo';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import {
   setTripDateEndDispatcher,
   setTripDateStartDispatcher,
-  setTripNameDispatcher,
-  tripsListDispatcher
+  setTripNameDispatcher
 } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
 import TripList from './TripList';
+import TripForm from './components/Trip/TripForm';
 
 import './css/main.scss';
 
@@ -98,7 +96,6 @@ const GET_TRIPS = gql`
     }
   }
 `
-
 // Add Trip
 const POST_TRIP = gql`
   mutation addTrip(
@@ -123,6 +120,7 @@ const POST_TRIP = gql`
     }
   }
 `
+
 // Trip subscriptions
 const NEW_TRIPS_SUBSCRIPTION = gql`
   subscription TripAdded {
@@ -191,36 +189,6 @@ class App extends React.Component<MyProps, MyState> {
     this.getTotalTrips = this.getTotalTrips.bind(this);
   }
 
-  // componentDidMount() {
-  //   const { token } = this.props;
-    // this.props.tripsListLoad(token);
-  // }
-
-  toggleConfirmationAt = (id: String, isConfirmed: Boolean) => {
-    const isConfirmedToggled = !isConfirmed;
-    const { token } = this.props;
-    const host = getAPIUrl();
-    const url = 'api/trip/' + id;
-    axios
-      .put(
-        host + url,
-        {
-          isConfirmed: isConfirmedToggled
-        },
-        {
-          headers:
-          {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-      // .then(data => {
-      //   this.props.tripsListLoad(token);
-      // })
-      .catch(error => {
-        throw error;
-      });
-  }
-
   saveEditingAt = (trip) => {
     const isEditingToggled = false;
     const { name, dateStart, dateEnd, _id: id } = trip;
@@ -242,9 +210,6 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      // .then(data => {
-      //   this.props.tripsListLoad(token);
-      // })
       .catch(error => {
         throw error;
       });
@@ -268,9 +233,6 @@ class App extends React.Component<MyProps, MyState> {
             "Authorization": `Bearer ${token}`
           }
         })
-      // .then(data => {
-      //   this.props.tripsListLoad(token);
-      // })
       .catch(error => {
         throw error;
       });
@@ -330,51 +292,13 @@ class App extends React.Component<MyProps, MyState> {
     })
   }
 
-  private handleChange = e =>
+  handleChange = e =>
     this.setState({
       form: {
         ...this.state.form,
         [e.target.name]: e.target.value
       }
     })
-
-  private newTripSubmitHandler = e => {
-    e.preventDefault();
-    const trip: MyTrip = {
-      id: '',
-      key: '',
-      name: '',
-      dateStart: '',
-      dateEnd: '',
-      isConfirmed: false,
-      isEditing: false,
-    };
-    const { token } = this.props;
-    const { form } = this.state;
-
-    trip.name = form.name;
-    trip.dateStart = form.dateStart;
-    trip.dateEnd = form.dateEnd;
-    trip.isConfirmed = false;
-    trip.isEditing = false;
-
-    const host = getAPIUrl();
-    const url = 'api/trip';
-    axios
-      .post(
-        host + url,
-        trip,
-        {
-          headers:
-          {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-      .catch(error => {
-        throw error;
-      });
-
-  }
 
   private getTotalTrips = (trips) => trips.length;
 
@@ -390,7 +314,7 @@ class App extends React.Component<MyProps, MyState> {
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev
         const newTrip = subscriptionData.data.newTrip
-        // console.log(JSON.stringify(prev));
+
         const exists = prev.trips.find(trip => trip.id === newTrip.id);
         if (exists) return prev;
 
@@ -434,13 +358,13 @@ class App extends React.Component<MyProps, MyState> {
 
   render() {
     const { name, dateStart, dateEnd } = this.state.form
-    const isConfirmed = false
-    const isEditing = false
     return (
       <React.Fragment>
         <Query<Data> query={GET_TRIPS}>
           {({ loading, error, data, subscribeToMore }) => {
+
             if (loading) return <div>Fetching...</div>
+
             if (error) return <div>Error</div>
 
             this._subscribeToNewTrips(subscribeToMore)
@@ -465,59 +389,14 @@ class App extends React.Component<MyProps, MyState> {
                         <h2>Trip Planner!</h2>
                       </div>
                     </header>
-                    <Mutation
-                      mutation={POST_TRIP}
-                      variables={{
-                        name,
-                        dateStart,
-                        dateEnd,
-                        isConfirmed,
-                        isEditing
-                      }}
-                    >
-                      {addTrip => (
-                        <form onSubmit={e => {
-                          e.preventDefault();
-                          addTrip();
-                        }}
-                        >
-                          <div className="destination">
-                            <div className="row">
-                              <div className="col-md-4">
-                                <input
-                                  type="text"
-                                  name="name"
-                                  value={name}
-                                  placeholder="Name"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                              <div className="col-md-2">
-                                <input
-                                  type="text"
-                                  name="dateStart"
-                                  value={dateStart}
-                                  placeholder="Date Start"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                              <div className="col-md-2">
-                                <input
-                                  type="text"
-                                  name="dateEnd"
-                                  value={dateEnd}
-                                  placeholder="Date End"
-                                  onChange={this.handleChange}
-                                />
-                              </div>
-                              <div className="col-md-2">
-                                <button type="submit">Submit</button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      )}
-                    </Mutation>
+
+                    <TripForm
+                      name={name}
+                      dateStart={dateStart}
+                      dateEnd={dateEnd}
+                      handleChange={this.handleChange}
+                    />
+
                     <Counter
                       totalTrips={totalTrips}
                       numberConfirmed={numberConfirmed}
@@ -532,7 +411,6 @@ class App extends React.Component<MyProps, MyState> {
 
                     <TripList
                       trips={trips}
-                      toggleConfirmationAt={this.toggleConfirmationAt}
                       toggleEditingAt={this.toggleEditingAt}
                       saveEditingAt={this.saveEditingAt}
                       setNameAt={this.setNameAt}
@@ -563,7 +441,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
   setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
   setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
   setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))

@@ -14,7 +14,7 @@ import {
   setTripDateStartDispatcher,
   setTripNameDispatcher,
   tripsListDispatcher
-} from '../src/actions/tripsActions';
+} from './actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
 import TripList from './TripList';

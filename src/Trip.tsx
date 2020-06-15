@@ -58,7 +58,6 @@ Trip.propTypes = {
   dateEnd: PropTypes.string.isRequired,
   isConfirmed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  handleConfirmation: PropTypes.func.isRequired,
   handleToggleEditing: PropTypes.func.isRequired,
   handleEditingSave: PropTypes.func.isRequired,
   setName: PropTypes.func.isRequired,

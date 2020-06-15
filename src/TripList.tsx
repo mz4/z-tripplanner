@@ -29,7 +29,6 @@ const TripList = props =>
           dateEnd={trip.dateEnd}
           isConfirmed={trip.isConfirmed}
           isEditing={trip.isEditing}
-          handleConfirmation={() => props.toggleConfirmationAt(trip.id, trip.isConfirmed)}
           handleToggleEditing={() => props.toggleEditingAt(trip.id, trip.isEditing)}
           handleEditingSave={() => props.saveEditingAt(trip)}
           setName={text => props.setNameAt(text, trip.id)}
@@ -44,7 +43,6 @@ const TripList = props =>
 
 TripList.propTypes = {
   trips: PropTypes.array.isRequired,
-  toggleConfirmationAt: PropTypes.func.isRequired,
   toggleEditingAt: PropTypes.func.isRequired,
   saveEditingAt: PropTypes.func.isRequired,
   setNameAt: PropTypes.func.isRequired,

@@ -63,11 +63,12 @@ form button {
 }
 
 .trip {
-  padding: 1em;
   background: #fff;
-  border-radius: .2em;
   border: solid 1px rgba(88, 183, 205, .15);
   border-bottom: solid 2px rgba(88, 183, 205, .15);
+  border-radius: .2em;
+  margin-bottom: 1em;
+  padding: 1em;
   position: relative;
 }
 

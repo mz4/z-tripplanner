@@ -35,15 +35,6 @@ const Trip = props =>
           id={props.id}
           isConfirmed={props.isConfirmed}
         />
-        {props.isEditing ? 
-          <button onClick={props.handleEditingSave}>
-            Save
-          </button>
-          : 
-          <button onClick={props.handleToggleEditing}>
-            Edit
-          </button>
-        }
         <TripDelete 
           id={props.id}
         />
@@ -58,11 +49,6 @@ Trip.propTypes = {
   dateEnd: PropTypes.string.isRequired,
   isConfirmed: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
-  handleToggleEditing: PropTypes.func.isRequired,
-  handleEditingSave: PropTypes.func.isRequired,
-  setName: PropTypes.func.isRequired,
-  setDateStart: PropTypes.func.isRequired,
-  setDateEnd: PropTypes.func.isRequired,
   key: PropTypes.any,
   keyid: PropTypes.any,
 };

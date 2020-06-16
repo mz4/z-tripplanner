@@ -10,6 +10,7 @@ export const tripsList = (trips) => {
 }
 
 export const setTripNameDispatcher = (trip) => {
+  console.log(JSON.stringify(trip));
   return {
     type: types.TRIPNAME,
     data: trip

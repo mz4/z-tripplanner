@@ -26,6 +26,7 @@ export default function TripReducer(state = [], action) {
 
     case TripActionType.TRIPNAME: {
       const updateTripsList = state.trips.map((trip, index) => {
+        console.log(trip._id, ' - ', action.data.id, ' - ', action.data.name)
         if (trip._id === action.data.id) {
           return {
             ...trip,

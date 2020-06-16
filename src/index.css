@@ -195,8 +195,6 @@ td:last-child {
     width: 95%;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin: auto;
-    margin-top: 2.5em;
   }
   form button {
     padding: 12px 0;
@@ -265,7 +263,7 @@ td:last-child {
     font-size: 1.95em;
   }
   form {
-    margin: 4.15em auto 0;
+    margin: 1em auto 0;
     z-index: 3000;
     position: relative;
   }
@@ -288,7 +286,7 @@ td:last-child {
     padding-left: 5px;
   }
   .main > div {
-    margin-top: 2em;
+    margin-top: 1em;
   }
   .trip {
     display: -ms-flexbox;
@@ -333,22 +331,6 @@ td:last-child {
   border-radius: 3px;
   border: 1px solid #d5d5d5;
 }
-
-/* .card-head {
-  position: relative;
-  height: 252px;
-  background: #fa782e;
-  /* Old browsers */
-  /* background: -moz-linear-gradient(-45deg, #fa782e 8%, #c82930 83%); */
-  /* FF3.6-15 */
-  /* background: -webkit-linear-gradient(-45deg, #fa782e 8%, #c82930 83%); */
-  /* Chrome10-25,Safari5.1-6 */
-  /* background: linear-gradient(135deg, #fa782e 8%, #c82930 83%); */
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  /* filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fa782e', endColorstr='#c82930', GradientType=1); */
-  /* IE6-9 fallback on horizontal gradient */
-  /* border-radius: 25px 25px 0 0; */
-/*}*/
 
 .card-logo {
   width: 55px;

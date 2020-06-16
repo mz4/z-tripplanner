@@ -1,5 +1,4 @@
 import axios from 'axios';
-import gql from 'graphql-tag';
 import React from 'react';
 import {
   Query
@@ -9,12 +8,14 @@ import { connect } from 'react-redux';
 import {
   setTripDateEndDispatcher,
   setTripDateStartDispatcher,
-  setTripNameDispatcher
+  setTripNameDispatcher,
+  tripsListDispatcher
 } from '../src/actions/tripsActions';
 import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
 import TripList from './TripList';
 import TripForm from './components/Trip/TripForm';
+import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from './queries/Queries';
 
 import './css/main.scss';
 
@@ -45,19 +46,10 @@ interface MyProps {
       isEditing: boolean,
     }
   ],
+  tripsListLoad: (token) => void,
   setTripName: (trip) => void,
   setDateStart: (trip) => void,
   setDateEnd: (trip) => void,
-};
-
-interface MyTrip {
-  id: string,
-  key: string,
-  name: string,
-  dateStart: string,
-  dateEnd: string,
-  isConfirmed: boolean,
-  isEditing: boolean,
 };
 
 interface MyState {
@@ -82,84 +74,6 @@ interface MyState {
     isEditing: boolean,
   }
 };
-
-// Get Trips
-const GET_TRIPS = gql`
-  {
-    trips {
-      id
-      name
-      dateStart
-      dateEnd
-      isConfirmed
-      isEditing
-    }
-  }
-`
-// Add Trip
-const POST_TRIP = gql`
-  mutation addTrip(
-      $name: String!, 
-      $dateStart: String!, 
-      $dateEnd: String!,
-      $isConfirmed: Boolean, 
-      $isEditing: Boolean
-    ) {
-    addTrip(
-        name: $name, 
-        dateStart: $dateStart, 
-        dateEnd: $dateEnd, 
-        isConfirmed: $isConfirmed, 
-        isEditing: $isEditing
-      ) {
-        name
-        dateStart
-        dateEnd
-        isConfirmed
-        isEditing
-    }
-  }
-`
-
-// Trip subscriptions
-const NEW_TRIPS_SUBSCRIPTION = gql`
-  subscription TripAdded {
-    newTrip {
-      id
-      name
-      dateStart
-      dateEnd
-      isConfirmed
-      isEditing
-    }
-  }
-`
-
-const DELETE_TRIP_SUBSCRIPTION = gql`
-  subscription deleteTrip {
-    deleteTrip {
-      id
-      name
-      dateStart
-      dateEnd
-      isConfirmed
-      isEditing
-    }
-  }
-`;
-
-const TOGGLE_TRIP_SUBSCRIPTION = gql`
-  subscription toggleTrip {
-    toggleTrip {
-      id
-      name
-      dateStart
-      dateEnd
-      isConfirmed
-      isEditing
-    }
-  }
-`;
 
 class App extends React.Component<MyProps, MyState> {
   constructor(props) {
@@ -187,79 +101,6 @@ class App extends React.Component<MyProps, MyState> {
       }
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
-  }
-
-  saveEditingAt = (trip) => {
-    const isEditingToggled = false;
-    const { name, dateStart, dateEnd, _id: id } = trip;
-    const { token } = this.props;
-    const host = getAPIUrl();
-    const url = 'api/trip/' + id;
-    axios
-      .put(
-        host + url,
-        {
-          name: name,
-          dateStart: dateStart,
-          dateEnd: dateEnd,
-          isEditing: isEditingToggled
-        },
-        {
-          headers:
-          {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-      .catch(error => {
-        throw error;
-      });
-  }
-
-  toggleEditingAt = (id: String, isEditing: Boolean) => {
-    console.log('toggle editing')
-    const isEditingToggled = !isEditing;
-    const { token } = this.props;
-    const host = getAPIUrl();
-    const url = 'api/trip/' + id;
-    axios
-      .put(
-        host + url,
-        {
-          isEditing: isEditingToggled
-        },
-        {
-          headers:
-          {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-      .catch(error => {
-        throw error;
-      });
-  }
-
-  setNameAt = (name: string, id: string) => {
-    const trip = {
-      id: id,
-      name: name
-    };
-    this.props.setTripName(trip);
-  }
-
-  setDateStartAt = (dateStart, id) => {
-    const trip = {
-      id: id,
-      dateStart: dateStart
-    };
-    this.props.setDateStart(trip);
-  }
-
-  setDateEndAt = (dateEnd, id) => {
-    const trip = {
-      id: id,
-      dateEnd: dateEnd
-    };
-    this.props.setDateEnd(trip);
   }
 
   setConfirmed() {
@@ -411,11 +252,6 @@ class App extends React.Component<MyProps, MyState> {
 
                     <TripList
                       trips={trips}
-                      toggleEditingAt={this.toggleEditingAt}
-                      saveEditingAt={this.saveEditingAt}
-                      setNameAt={this.setNameAt}
-                      setDateStartAt={this.setDateStartAt}
-                      setDateEndAt={this.setDateEndAt}
                       name={this.state.form.name}
                       showConfirmed={this.state.filter.showConfirmed}
                       showUnConfirmed={this.state.filter.showUnConfirmed}
@@ -441,6 +277,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
   setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
   setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
   setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))

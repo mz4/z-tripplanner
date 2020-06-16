@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -33,7 +33,7 @@ const TripForm = (props) => {
   const isConfirmed = false;
   const isEditing = false;
   return (
-    <div>
+    <>
       <Mutation
         mutation={POST_TRIP}
         variables={{
@@ -87,7 +87,7 @@ const TripForm = (props) => {
           </form>
         )}
       </Mutation>
-    </div>
+    </>
   )
 }
 

@@ -139,11 +139,6 @@ li button:last-child {
   background: rgba(88, 183, 205, .5);
 }
 
-div > input:last-child {
-  font-size: 1em;
-  margin-left: 6px;
-}
-
 div > label {
   color: #767676;
 }

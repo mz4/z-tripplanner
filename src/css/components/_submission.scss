@@ -1,5 +1,6 @@
 .destination {
   border: 1px solid $color-border;
+  height: 6em;
   padding: 1rem;
   text-align: center;
   background-blend-mode: multiply;
@@ -7,10 +8,19 @@
 }
 
 .destination input {
+  float: left;
   padding: 12px;
   font-size: 1.15em;
   border: 1px solid #d5d5d5;
-  width: 100%;
+  width: 80%;
+}
+
+.destination .error {
+  color: #A50000;
+  padding: 2px;
+  font-size: 1em;
+  width: 80%;
+  text-align: left;
 }
 
 .destination button {
@@ -28,3 +38,4 @@
   cursor: pointer;
   background-color: rgb(95, 219, 99);
 }
+

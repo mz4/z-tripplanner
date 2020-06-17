@@ -210,7 +210,6 @@ class App extends React.Component<MyProps, MyState> {
                       name={name}
                       dateStart={dateStart}
                       dateEnd={dateEnd}
-                      handleChange={this.handleChange}
                     />
 
                     <Counter

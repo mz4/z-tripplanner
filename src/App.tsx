@@ -54,9 +54,7 @@ interface MyProps {
 
 interface MyState {
   filter: {
-    showConfirmed: boolean,
-    showUnConfirmed: boolean,
-    showAll: boolean
+    confirmed: string,
   },
   form: {
     name: string,
@@ -80,9 +78,7 @@ class App extends React.Component<MyProps, MyState> {
     super(props);
     this.state = {
       filter: {
-        showConfirmed: false,
-        showUnConfirmed: false,
-        showAll: true
+        confirmed: ''
       },
       form: {
         name: "",
@@ -101,36 +97,17 @@ class App extends React.Component<MyProps, MyState> {
       }
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
+    this.setConfirmed = this.setConfirmed.bind(this);
   }
 
-  setConfirmed() {
+  setConfirmed(status) {
+    console.log('setconfirmed----------', status);
     this.setState({
       filter: {
-        showConfirmed: true,
-        showUnConfirmed: false,
-        showAll: false,
+        ...this.state.filter,
+        confirmed: status,
       }
     });
-  }
-
-  setUnConfirmed() {
-    this.setState({
-      filter: {
-        showConfirmed: false,
-        showUnConfirmed: true,
-        showAll: false,
-      }
-    });
-  }
-
-  setAll() {
-    this.setState({
-      filter: {
-        showConfirmed: true,
-        showUnConfirmed: true,
-        showAll: true,
-      }
-    })
   }
 
   handleChange = e =>
@@ -216,9 +193,7 @@ class App extends React.Component<MyProps, MyState> {
             const totalTrips = this.getTotalTrips(trips);
             const numberConfirmed = this.getConfirmedTrips(trips);
             const numberUnconfirmed = totalTrips - numberConfirmed;
-            const setConfirmed = () => this.setConfirmed();
-            const setUnConfirmed = () => this.setUnConfirmed();
-            const setAll = () => this.setAll();
+            // const setConfirmed = () => this.setConfirmed(status);
 
             return (
               <React.Fragment>
@@ -242,20 +217,14 @@ class App extends React.Component<MyProps, MyState> {
                       totalTrips={totalTrips}
                       numberConfirmed={numberConfirmed}
                       numberUnconfirmed={numberUnconfirmed}
-                      setConfirmed={setConfirmed}
-                      setUnConfirmed={setUnConfirmed}
-                      setAll={setAll}
-                      showConfirmed={this.state.filter.showConfirmed}
-                      showUnConfirmed={this.state.filter.showUnConfirmed}
-                      showAll={this.state.filter.showAll}
+                      setConfirmed={this.setConfirmed}
+                      confirmed={this.state.filter.confirmed}
                     />
 
                     <TripList
                       trips={trips}
                       name={this.state.form.name}
-                      showConfirmed={this.state.filter.showConfirmed}
-                      showUnConfirmed={this.state.filter.showUnConfirmed}
-                      showAll={this.state.filter.showAll}
+                      confirmed={this.state.filter.confirmed}
                     />
 
                   </div>

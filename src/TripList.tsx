@@ -8,13 +8,13 @@ const TripList = props =>
     {
       props.trips
       .filter(trip => {
-        if (trip.isConfirmed === true && props.showConfirmed === true) {
+        if (trip.isConfirmed === true && props.confirmed === 'confirmed') {
           return true
         } 
-        if (trip.isConfirmed === false && props.showUnConfirmed === true) {
+        if (trip.isConfirmed === false && props.confirmed === 'uncofirmed') {
           return true
         }
-        if (props.showAll) {
+        if (props.confirmed === '') {
           return true
         }      
         else {
@@ -39,9 +39,7 @@ const TripList = props =>
 TripList.propTypes = {
   trips: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
-  showConfirmed: PropTypes.bool.isRequired,
-  showUnConfirmed: PropTypes.bool.isRequired,
-  showAll: PropTypes.bool.isRequired
+  confirmed: PropTypes.string.isRequired
 };
 
 export default TripList;

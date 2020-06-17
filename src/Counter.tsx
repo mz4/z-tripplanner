@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Counter = (props) => {
-  const { setConfirmed, setUnConfirmed, setAll, showConfirmed, showUnConfirmed, showAll } = props;
+  const { setConfirmed, confirmed } = props;
   return (
     <div className="counter">
 
-      <div className={"counter__type " + (showAll ? "counter__type--selected" : "")} onClick={setAll}>
+      <div className={"counter__type " + ((confirmed=='') ? "counter__type--selected" : "")} onClick={() => setConfirmed('')}>
         <div className="counter__type__title">
           All
         </div>
@@ -15,7 +15,7 @@ const Counter = (props) => {
         </div>
       </div>
 
-      <div className={"counter__type " + (showConfirmed ? "counter__type--selected" : "")} onClick={setConfirmed}>
+      <div className={"counter__type " + (confirmed === 'confirmed' ? "counter__type--selected" : "")} onClick={() => setConfirmed('confirmed')}>
         <div className="counter__type__title">
           Confirmed
         </div>
@@ -24,7 +24,7 @@ const Counter = (props) => {
         </div>
       </div>
 
-      <div className={"counter__type " + (showUnConfirmed ? "counter__type--selected" : "")} onClick={setUnConfirmed}>
+      <div className={"counter__type " + ((confirmed === 'unconfimed') ? "counter__type--selected" : "")} onClick={() => setConfirmed('unconfirmed')}>
         <div className="counter__type__title">
           Unconfirmed
         </div>
@@ -42,11 +42,7 @@ Counter.propTypes = {
   numberUnconfirmed: PropTypes.number,
   totalTrips: PropTypes.number,
   setConfirmed: PropTypes.func.isRequired,
-  setUnConfirmed: PropTypes.func.isRequired,
-  setAll: PropTypes.func.isRequired,
-  showConfirmed: PropTypes.bool.isRequired,
-  showUnConfirmed: PropTypes.bool.isRequired,
-  showAll: PropTypes.bool.isRequired,
+  confirmed: PropTypes.string.isRequired,
 };
 
 export default Counter;

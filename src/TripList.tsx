@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 import Trip from './Trip';
 
 const TripList = props => 
+{
+  return (
   <>
     {
       props.trips
       .filter(trip => {
-        if (trip.isConfirmed === true && props.confirmed === 'confirmed') {
+        if (trip.isConfirmed && props.confirmed == 'confirmed') {
           return true
         } 
-        if (trip.isConfirmed === false && props.confirmed === 'uncofirmed') {
+        if (!trip.isConfirmed && props.confirmed == "unconfirmed") {
           return true
         }
-        if (props.confirmed === '') {
+        if (props.confirmed == '') {
           return true
         }      
         else {
@@ -23,18 +25,19 @@ const TripList = props =>
       })
       .map(trip =>
         (<Trip
-          id={trip.id}
-          name={trip.name}
-          dateStart={trip.dateStart}
-          dateEnd={trip.dateEnd}
-          isConfirmed={trip.isConfirmed}
-          isEditing={trip.isEditing}
-          key={trip.id}
-          keyid={trip.id}
+            id={trip.id}
+            name={trip.name}
+            dateStart={trip.dateStart}
+            dateEnd={trip.dateEnd}
+            isConfirmed={trip.isConfirmed}
+            isEditing={trip.isEditing}
+            key={trip.id}
+            keyid={trip.id}
         />)
       )
     }
-  </>;
+  </>)
+}
 
 TripList.propTypes = {
   trips: PropTypes.array.isRequired,

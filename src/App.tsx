@@ -101,7 +101,6 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   setConfirmed(status) {
-    console.log('setconfirmed----------', status);
     this.setState({
       filter: {
         ...this.state.filter,
@@ -190,10 +189,11 @@ class App extends React.Component<MyProps, MyState> {
             this._subscribeToToggledTrips(subscribeToMore)
 
             const trips = data?.trips || [];
+            console.log(JSON.stringify(trips));
             const totalTrips = this.getTotalTrips(trips);
             const numberConfirmed = this.getConfirmedTrips(trips);
             const numberUnconfirmed = totalTrips - numberConfirmed;
-            // const setConfirmed = () => this.setConfirmed(status);
+            const setConfirmed = () => this.setConfirmed(status);
 
             return (
               <React.Fragment>

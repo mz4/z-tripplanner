@@ -81,7 +81,7 @@ const TripForm: React.FC<IProps> = (props) => {
           initialValues={{
             name: "",
             dateStart: "",
-            dateEnd
+            dateEnd: ""
           }}
           validationSchema={Yup.object({
             name: Yup.string()
@@ -97,7 +97,9 @@ const TripForm: React.FC<IProps> = (props) => {
               addTrip({ variables: { 
                 name: values.name,
                 dateStart: values.dateStart,
-                dateEnd: values.dateEnd 
+                dateEnd: values.dateEnd,
+                isConfirmed: false,
+                isEditing: false
               } });
               resetForm({})
               setSubmitting(false);

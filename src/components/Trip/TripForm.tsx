@@ -5,6 +5,7 @@ import { Formik, Form, useField } from 'formik';
 import { DatePickerField, MyTextInput } from "./DatePicker";
 import "react-datepicker/dist/react-datepicker.css";
 import * as Yup from 'yup';
+import moment from 'moment';
 import gql from 'graphql-tag';
 
 // Add Trip
@@ -74,8 +75,8 @@ const TripForm: React.FC<IProps> = (props) => {
             setTimeout(() => {
               addTrip({ variables: { 
                 name: values.name,
-                dateStart: values.dateStart,
-                dateEnd: values.dateEnd,
+                dateStart: moment(values.dateStart).format('YYYY/MM/DD'),
+                dateEnd: moment(values.dateEnd).format('YYYY/MM/DD'),
                 isConfirmed: false,
                 isEditing: false
               } });

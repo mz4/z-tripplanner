@@ -19,7 +19,6 @@ body {
   margin: 2.5em auto;
   border-radius: .35em;
   background: #fcfcfc;
-  overflow: hidden;
 }
 
 h1,
@@ -49,7 +48,6 @@ form {
   width: 100%;
   background: white;
   display: inline-block;
-  overflow: hidden;
   display: -ms-flexbox;
   display: flex;
 }
@@ -259,7 +257,6 @@ td:last-child {
   }
   form {
     margin: 1em auto 0;
-    z-index: 3000;
     position: relative;
   }
   .wrapper {
@@ -268,7 +265,6 @@ td:last-child {
   .main {
     padding: 1em 1em 1em;
     position: relative;
-    z-index: 10;
   }
   .options {
     display: inline-block;

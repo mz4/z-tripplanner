@@ -18,3 +18,11 @@
     cursor: pointer;
     background-color: rgb(95, 219, 99);
   }
+
+.react-datepicker-popper {
+  position: absolute;
+  will-change: transform;
+  top: 0px;
+  left: 0px;
+  transform: translate3d(677px, 301px, 0px);
+}

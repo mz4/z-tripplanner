@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo';
 import { Formik, Form, useField } from 'formik';
+import { DatePickerField, MyTextInput } from "./DatePicker";
+import "react-datepicker/dist/react-datepicker.css";
 import * as Yup from 'yup';
 import gql from 'graphql-tag';
 
@@ -29,30 +31,6 @@ const POST_TRIP = gql`
     }
   }
 `
-interface IPropsInput {
-  name: string,
-  placeholder: string,
-}
-
-const MyTextInput: React.FC<IPropsInput> = (props) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <input 
-        className="text-input"
-        autoComplete="off" 
-        {...field} 
-        {...props} 
-      />
-      {meta.touched && meta.error ? (
-        <div className="error">
-          {meta.error}
-        </div>
-      ) : null}
-    </>
-  );
-};
-
 
 interface IProps {
   name: string,
@@ -118,20 +96,23 @@ const TripForm: React.FC<IProps> = (props) => {
                     />
                   </div>
                   <div className="col-md-2">
-                    <MyTextInput
+                    <DatePickerField
                       name="dateStart"
-                      placeholder="Date Start"
-                    />
-                  </div>
+                      placeholderText="Date Start"
+                    />                  </div>
                   <div className="col-md-2">
-                    <MyTextInput
+                    <DatePickerField
                       name="dateEnd"
-                      placeholder="Date End"
+                      placeholderText="Date End"
                     />
                   </div>
-
                   <div className="col-md-2">
-                    <button type="submit">Submit</button>
+                    <button 
+                      type="submit"
+                      className="primary"  
+                    >
+                      Submit
+                    </button>
                   </div>
                 </div>
               </div>

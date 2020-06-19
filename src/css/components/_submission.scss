@@ -1,6 +1,5 @@
 .destination {
   border: 1px solid $color-border;
-  height: 6em;
   padding: 1rem;
   text-align: center;
   background-blend-mode: multiply;
@@ -23,7 +22,7 @@
   text-align: left;
 }
 
-.destination button {
+.destination .primary {
   background-color: #4CAF50; /* Green */
   border: 1px solid #d5d5d5;
   color: white;
@@ -34,7 +33,7 @@
   font-size: 1rem;
 }
 
-.destination button:hover {
+.destination .primary:hover {
   cursor: pointer;
   background-color: rgb(95, 219, 99);
 }

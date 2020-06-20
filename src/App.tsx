@@ -15,6 +15,7 @@ import getAPIUrl from './constants/serverAPI';
 import Counter from './Counter';
 import TripList from './TripList';
 import TripForm from './components/Trip/TripForm';
+import { Loader } from './components/Loader/Loader';
 import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from './queries/Queries';
 
 import './css/main.scss';
@@ -180,7 +181,7 @@ class App extends React.Component<MyProps, MyState> {
         <Query<Data> query={GET_TRIPS}>
           {({ loading, error, data, subscribeToMore }) => {
 
-            if (loading) return <div>Fetching...</div>
+            if (loading) return <Loader size='100' color = '#34d100' sizeUnit = 'px' />
 
             if (error) return <div>Error</div>
 

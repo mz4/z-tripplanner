@@ -72,17 +72,15 @@ const TripForm: React.FC<IProps> = (props) => {
               .required("Required"),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            setTimeout(() => {
-              addTrip({ variables: { 
-                name: values.name,
-                dateStart: moment(values.dateStart).format('YYYY/MM/DD'),
-                dateEnd: moment(values.dateEnd).format('YYYY/MM/DD'),
-                isConfirmed: false,
-                isEditing: false
-              } });
-              resetForm({})
-              setSubmitting(false);
-            }, 400);
+            addTrip({ variables: { 
+              name: values.name,
+              dateStart: moment(values.dateStart).format('YYYY/MM/DD'),
+              dateEnd: moment(values.dateEnd).format('YYYY/MM/DD'),
+              isConfirmed: false,
+              isEditing: false
+            } });
+            resetForm({})
+            setSubmitting(false);
           }}
           >
             <Form 

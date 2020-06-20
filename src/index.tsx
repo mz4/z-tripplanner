@@ -4,17 +4,17 @@ import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo'
-
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
-import { split } from 'apollo-link';
+import { split } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 
 import AppRouter from './AppRouter'
 export const AUTH_TOKEN = 'auth-token'
 
+import 'normalize.css'
 import './index.css'
 
 const initialState = {

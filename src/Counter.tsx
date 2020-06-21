@@ -24,7 +24,7 @@ const Counter = (props) => {
         </div>
       </div>
 
-      <div className={"counter__type " + ((confirmed === 'unconfimed') ? "counter__type--selected" : "")} onClick={() => setConfirmed('unconfirmed')}>
+      <div className={"counter__type " + ((confirmed === 'unconfirmed') ? "counter__type--selected" : "")} onClick={() => setConfirmed('unconfirmed')}>
         <div className="counter__type__title">
           Unconfirmed
         </div>

@@ -190,7 +190,6 @@ class App extends React.Component<MyProps, MyState> {
             this._subscribeToToggledTrips(subscribeToMore)
 
             const trips = data?.trips || [];
-            console.log(JSON.stringify(trips));
             const totalTrips = this.getTotalTrips(trips);
             const numberConfirmed = this.getConfirmedTrips(trips);
             const numberUnconfirmed = totalTrips - numberConfirmed;

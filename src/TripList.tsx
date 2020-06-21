@@ -9,20 +9,10 @@ const TripList = props =>
   <>
     {
       props.trips
-      .filter(trip => {
-        if (trip.isConfirmed && props.confirmed == 'confirmed') {
-          return true
-        } 
-        if (!trip.isConfirmed && props.confirmed == "unconfirmed") {
-          return true
-        }
-        if (props.confirmed == '') {
-          return true
-        }      
-        else {
-          return false
-        }
-      })
+      .filter(trip => 
+        (props.confirmed == 'confirmed') ? trip.isConfirmed : 
+        (props.confirmed == 'unconfirmed') ? !trip.isConfirmed : 
+        (props.confirmed == '') ? true : false)
       .map(trip =>
         (<Trip
             id={trip.id}

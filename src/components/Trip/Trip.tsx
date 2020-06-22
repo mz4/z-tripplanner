@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TripName from './TripName';
 import TripDate from './TripDate';
-import TripDelete from './components/TripDelete';
-import TripConfirm from './components/TripConfirm';
+import TripDelete from './TripDelete';
+import TripConfirm from './TripConfirm';
 
 const Trip = props =>
   <div key={props.keyid} className="row">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import setAuth from '../src/actions/authActions';
+import setAuth from '../../actions/authActions';
 import LoginForm from './LoginForm';
 import axios from 'axios';
 import Cookies from 'universal-cookie';

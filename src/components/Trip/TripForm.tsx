@@ -1,12 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Mutation } from 'react-apollo';
-import { Formik, Form, useField } from 'formik';
-import { DatePickerField, MyTextInput } from "./DatePicker";
-import "react-datepicker/dist/react-datepicker.css";
-import * as Yup from 'yup';
-import moment from 'moment';
-import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo'
+import { Formik, Form, useField } from 'formik'
+import { DatePickerField, MyTextInput } from "../Fields/Fields"
+import { Button } from '../Elements/button/Button'
+import "react-datepicker/dist/react-datepicker.css"
+import * as Yup from 'yup'
+import moment from 'moment'
+import gql from 'graphql-tag'
 
 // Add Trip
 const POST_TRIP = gql`
@@ -106,12 +107,22 @@ const TripForm: React.FC<IProps> = (props) => {
                     />
                   </div>
                   <div className="col-md-2">
-                    <button 
-                      type="submit"
-                      className="primary"  
+                    <Button 
+                      appearance = "primary" 
+                      type = "submit" 
+                      name = "submit" 
+                      value = "submit"
+                      isLoading = {false}
+                      loadingText = {null}
+                      isLink = {false}
+                      isDisabled = {false}
+                      isUnclickable = {false}
+                      containsIcon = {false}
+                      size = ''
+                      onClick = {undefined}
                     >
-                      Submit
-                    </button>
+                      Save
+                    </Button>
                   </div>
                 </div>
               </div>

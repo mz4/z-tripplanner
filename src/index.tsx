@@ -11,7 +11,7 @@ import { getMainDefinition } from 'apollo-utilities'
 import { split } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 
-import AppRouter from './AppRouter'
+import AppRouter from './containers/Router/AppRouter'
 export const AUTH_TOKEN = 'auth-token'
 
 import 'normalize.css'

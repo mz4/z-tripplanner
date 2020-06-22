@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import App from './App';
-import Login from './Login';
+import App from '../App/App';
+import Login from '../../components/Login/Login';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();

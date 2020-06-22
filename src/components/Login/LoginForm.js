@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { Button } from '../Elements/button/Button'
 
 const LoginForm = props =>
   <React.Fragment>
@@ -38,9 +39,14 @@ const LoginForm = props =>
 
             <div className="row">
               <div className="col-md-10 mb-md-1">
-                <button type="submit" name="submit" value="submit">
-                  Submit
-                </button>
+                <Button 
+                  appearance="primary" 
+                  type="submit" 
+                  name="submit" 
+                  value="submit"
+                >
+                  Login
+                </Button>
               </div>
             </div>
 

@@ -10,15 +10,15 @@ import {
   setTripDateStartDispatcher,
   setTripNameDispatcher,
   tripsListDispatcher
-} from '../src/actions/tripsActions';
-import getAPIUrl from './constants/serverAPI';
-import Counter from './Counter';
-import TripList from './TripList';
-import TripForm from './components/Trip/TripForm';
-import { Loader } from './components/Loader/Loader';
-import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from './queries/Queries';
+} from '../../actions/tripsActions';
+import getAPIUrl from '../../constants/serverAPI';
+import Counter from '../../components/Counter/Counter';
+import TripList from '../../components/Counter/TripList';
+import TripForm from '../../components/Trip/TripForm';
+import { Loader } from '../../components/Elements/Loader/Loader';
+import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries';
 
-import './css/main.scss';
+import '../../css/main.scss';
 
 export interface Trips {
   id: string,
@@ -168,7 +168,6 @@ class App extends React.Component<MyProps, MyState> {
         if (!subscriptionData.data) return prev
         const toggleTrip = subscriptionData.data
         const prevtrips = prev.trips;
-        console.log(toggleTrip)
         return
       }
     })

@@ -14,6 +14,12 @@
   width: 100%;
 }
 
+.destination .field {
+  @media only screen and (max-width: $bp-medium) {
+    height: 5em;
+  }
+}
+
 .destination .error {
   color: #A50000;
   padding: 2px;
@@ -39,3 +45,6 @@
   background-color: rgb(95, 219, 99);
 }
 
+.react-datepicker-wrapper {
+  display: unset;
+}

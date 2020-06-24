@@ -1,7 +1,32 @@
 .trip {
-    padding: 1em;
-    border: 1px solid rgba(88, 183, 205, .15);
+  display: -ms-flexbox;
+  display: flex;
+  clear: both;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-top: 1.25em;
+  padding: 1em;
+  border: 1px solid rgba(88, 183, 205, .15);
+  @media only screen and (max-width: $bp-medium) {
+    flex-direction: column;
   }
+}
+
+.trip__item {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-preferred-size: 90%;
+  flex-basis: 90%;
+}
+
+.destination .action {
+  @media only screen and (max-width: $bp-medium) {
+    width: 10em;
+  }
+}
 
 .react-datepicker-popper {
   position: absolute;

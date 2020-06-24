@@ -32,7 +32,6 @@ export const MyTextInput: React.FC<IPropsInput> = (props) => {
 };
 
 export const DatePickerField: React.FC<IPropsDate> = (props) => {
-  console.log(JSON.stringify(props))
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(props);
   return (

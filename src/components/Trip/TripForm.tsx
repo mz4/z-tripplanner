@@ -89,24 +89,24 @@ const TripForm: React.FC<IProps> = (props) => {
               >
               <div className="destination">
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-4 field">
                     <MyTextInput
                       name="name"
                       placeholder="Name"
                     />
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-md-2 field">
                     <DatePickerField
                       name="dateStart"
                       placeholderText="Date Start"
                     />                  </div>
-                  <div className="col-md-2">
+                  <div className="col-md-2 field">
                     <DatePickerField
                       name="dateEnd"
                       placeholderText="Date End"
                     />
                   </div>
-                  <div className="col-md-2">
+                  <div className="action">
                     <Button 
                       appearance = "primary" 
                       type = "submit" 
@@ -118,7 +118,7 @@ const TripForm: React.FC<IProps> = (props) => {
                       isDisabled = {false}
                       isUnclickable = {false}
                       containsIcon = {false}
-                      size = ''
+                      size = 'medium'
                       onClick = {undefined}
                     >
                       Save

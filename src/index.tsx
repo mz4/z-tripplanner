@@ -15,7 +15,6 @@ import AppRouter from './containers/Router/AppRouter'
 export const AUTH_TOKEN = 'auth-token'
 
 import 'normalize.css'
-import './index.css'
 
 const initialState = {
     trips: {

@@ -196,14 +196,13 @@ class App extends React.Component<MyProps, MyState> {
 
             return (
               <React.Fragment>
+                <header className="header">
+                  <div className="header__logo">
+                    <h2>Trip Planner!</h2>
+                  </div>
+                </header>
                 <div className="App">
                   <div className="main">
-
-                    <header className="header">
-                      <div className="header__logo">
-                        <h2>Trip Planner!</h2>
-                      </div>
-                    </header>
 
                     <TripForm
                       name={name}

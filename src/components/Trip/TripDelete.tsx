@@ -22,22 +22,24 @@ const TripDelete = props => {
       }}
     >
       {deleteTrip => (
-        <Button 
-          appearance = "secondary" 
-          type = "submit" 
-          name = "submit" 
-          value = "submit"
-          isLoading = {false}
-          loadingText = {null}
-          isLink = {false}
-          isDisabled = {false}
-          isUnclickable = {false}
-          containsIcon = {false}
-          size = ''
-          onClick = {deleteTrip}
-        >
-          Remove
-        </Button>
+        <div className="action">
+          <Button 
+            appearance = "secondary" 
+            type = "submit" 
+            name = "submit" 
+            value = "submit"
+            isLoading = {false}
+            loadingText = {null}
+            isLink = {false}
+            isDisabled = {false}
+            isUnclickable = {false}
+            containsIcon = {false}
+            size = ''
+            onClick = {deleteTrip}
+          >
+            Remove
+          </Button>
+        </div>
       )}
     </Mutation>
   );

@@ -1,8 +1,10 @@
 .header {
   height: 4rem;
-  position: relative;
+  position: sticky;
+  top: 0px;
   background-color: $color-grey-light-1;
-  border: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+  z-index: 999;
 
   &__logo {
     margin: 0;

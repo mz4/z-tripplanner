@@ -4,8 +4,9 @@
 
 .App {
   width: 100%;
-  max-width: 1200px;
-  margin: 2.5em auto;
+  max-width: 75rem;
+  min-width: 25rem;
+  margin: 2em auto;
   overflow: hidden;
   border: 1px solid $color-border;
   background-color: $color-white;
@@ -13,7 +14,8 @@
 
 .AppLogin {
   width: 100%;
-  max-width: 600px;
+  min-width: 25rem;
+  max-width: 37.5rem;
   margin: 10em auto;
   overflow: hidden;
   border: 1px solid $color-border;
@@ -49,48 +51,37 @@
   margin-left: 10px;
 }
 
-/* =================================
-  Media Queries
-==================================== */
-@media (min-width: 769px) {
-  div > label {
-    margin-top: 12px;
-  }
-  h1 {
-    font-size: 5.8em;
-  }
-  h2 {
-    font-size: 1.95em;
-  }
-  form {
-    margin-top: 1rem;
-    position: relative;
-  }
-  .wrapper {
-    width: 90%;
-  }
-  .main {
-    padding: 1em 1em 1em;
-    position: relative;
-  }
-  .filter {
-    display: inline-block;
-  }
-  td:last-child {
-    padding-left: 5px;
-  }
-  .main > div {
-    margin-top: 2em;
-  }
+div > label {
+  margin-top: 12px;
+}
+h1 {
+  font-size: 5.8em;
+}
+h2 {
+  font-size: 1.95em;
+}
+form {
+  margin: 1em auto 0;
+  position: relative;
+}
+.wrapper {
+  width: 90%;
+}
+.main {
+  padding: 1em;
+  position: relative;
+}
+.options {
+  display: inline-block;
+  width: 100%;
+}
+.filter {
+  display: inline-block;
+}
+td:last-child {
+  padding-left: 5px;
+}
+.main > div {
+  margin-top: 1em;
 }
 
-// @media (min-width: 880px) {
-//   .trip__item {
-//     -ms-flex-preferred-size: 90%;
-//     flex-basis: 90%;
-//   }
-// }
-
-// .trips {
-//   width: 100%;
-// }

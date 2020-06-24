@@ -6,6 +6,9 @@
   align-items: center;
   padding: 1rem;
   border: 1px solid $color-border;
+  @media only screen and (max-width: $bp-medium) {
+    flex-direction: column;
+  }
 }
 
 .counter__type {
@@ -16,6 +19,9 @@
   background-color: $color-tertiary-grey;
   text-align: center;
   position: relative;
+  @media only screen and (max-width: $bp-medium) {
+    margin-top: 1em;
+  }
 }
 
 .counter__type__title {

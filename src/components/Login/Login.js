@@ -4,7 +4,6 @@ import { setAuth } from '../../actions/authActions'
 import LoginForm from './LoginForm'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
-// import { deleteCookie, getCookie, setCookie } from '../../common/Constants'
 
 const cookies = new Cookies()
 

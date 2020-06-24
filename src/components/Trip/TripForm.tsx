@@ -88,7 +88,7 @@ const TripForm: React.FC<IProps> = (props) => {
               translate=""
               >
               <div className="destination">
-                <div className="row">
+                <div className="destination__form row">
                   <div className="col-md-4 field">
                     <MyTextInput
                       name="name"

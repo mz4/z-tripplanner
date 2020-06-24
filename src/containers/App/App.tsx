@@ -16,7 +16,7 @@ import {
 import { logoutAuth } from '../../actions/authActions'
 import getAPIUrl from '../../constants/serverAPI'
 import Counter from '../../components/Counter/Counter'
-import TripList from '../../components/Counter/TripList'
+import TripList from '../../components/Trips/TripList'
 import TripForm from '../../components/Trip/TripForm'
 import { Loader } from '../../components/Elements/Loader/Loader'
 import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries'

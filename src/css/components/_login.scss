@@ -1,0 +1,50 @@
+.login {
+  border: 1px solid $color-border;
+  padding: 1rem;
+  text-align: center;
+  background-blend-mode: multiply;
+  background-size: cover;
+}
+
+.login input {
+  float: left;
+  padding: 12px;
+  font-size: 1.15em;
+  border: 1px solid #d5d5d5;
+  width: 100%;
+}
+
+.login .field {
+  @media only screen and (max-width: $bp-medium) {
+    height: 5em;
+  }
+}
+
+.login .error {
+  color: #A50000;
+  padding: 2px;
+  font-size: 1em;
+  width: 100%;
+  text-align: left;
+  margin-top: -10px;
+}
+
+.login .primary {
+  background-color: #4CAF50; /* Green */
+  border: 1px solid #d5d5d5;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+}
+
+.login .primary:hover {
+  cursor: pointer;
+  background-color: rgb(95, 219, 99);
+}
+
+.react-datepicker-wrapper {
+  display: unset;
+}

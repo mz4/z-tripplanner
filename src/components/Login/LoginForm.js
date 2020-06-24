@@ -13,7 +13,7 @@ const LoginForm = props =>
         </header>
 
         <form onSubmit={props.newTripSubmitHandler}>
-          <div className="destination">
+          <div className="login">
 
             <div className="row">
               <div className="col-md-offset-1 col-md-9 mb-md-1">

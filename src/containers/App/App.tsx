@@ -1,24 +1,29 @@
-import axios from 'axios';
-import React from 'react';
+import axios from 'axios'
+import React from 'react'
 import {
   Query
-} from 'react-apollo';
-import { hot } from 'react-hot-loader';
-import { connect } from 'react-redux';
+} from 'react-apollo'
+import { hot } from 'react-hot-loader'
+import { connect } from 'react-redux'
+import Cookies from 'universal-cookie'
+import { Button } from '../../components/Elements/button/Button'
 import {
   setTripDateEndDispatcher,
   setTripDateStartDispatcher,
   setTripNameDispatcher,
   tripsListDispatcher
-} from '../../actions/tripsActions';
-import getAPIUrl from '../../constants/serverAPI';
-import Counter from '../../components/Counter/Counter';
-import TripList from '../../components/Counter/TripList';
-import TripForm from '../../components/Trip/TripForm';
-import { Loader } from '../../components/Elements/Loader/Loader';
-import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries';
+} from '../../actions/tripsActions'
+import { logoutAuth } from '../../actions/authActions'
+import getAPIUrl from '../../constants/serverAPI'
+import Counter from '../../components/Counter/Counter'
+import TripList from '../../components/Counter/TripList'
+import TripForm from '../../components/Trip/TripForm'
+import { Loader } from '../../components/Elements/Loader/Loader'
+import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries'
 
 import '../../css/main.scss';
+
+const cookies = new Cookies();
 
 export interface Trips {
   id: string,
@@ -51,6 +56,7 @@ interface MyProps {
   setTripName: (trip) => void,
   setDateStart: (trip) => void,
   setDateEnd: (trip) => void,
+  logoutAuth: (isAuthenticated: boolean, token: string, authErrorMsg: string) => void,
 };
 
 interface MyState {
@@ -99,6 +105,13 @@ class App extends React.Component<MyProps, MyState> {
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
     this.setConfirmed = this.setConfirmed.bind(this);
+    this.Logout = this.Logout.bind(this);
+  }
+
+  Logout() {
+    cookies.remove('token')
+    cookies.remove('auth')
+    this.props.logoutAuth(false, '', '');
   }
 
   setConfirmed(status) {
@@ -196,11 +209,39 @@ class App extends React.Component<MyProps, MyState> {
 
             return (
               <React.Fragment>
+
                 <header className="header">
-                  <div className="header__logo">
-                    <h2>Trip Planner!</h2>
-                  </div>
+                  <ul className="header__menu">
+                    <li>
+                      <div className="header__logo">
+                        <h2>Trip Planner!</h2>
+                      </div>
+                    </li>
+                    <li className="header__right">
+                      <div className="header__settings">
+                      <div className="action">
+                        <Button 
+                          appearance = "tertiary" 
+                          type = "submit" 
+                          name = "submit" 
+                          value = "submit"
+                          isLoading = {false}
+                          loadingText = {null}
+                          isLink = {false}
+                          isDisabled = {false}
+                          isUnclickable = {false}
+                          containsIcon = {false}
+                          size = 'medium'
+                          onClick = {this.Logout}
+                        >
+                          Logout
+                        </Button>
+                      </div>
+                      </div>
+                    </li>
+                  </ul>
                 </header>
+
                 <div className="App">
                   <div className="main">
 
@@ -246,7 +287,16 @@ const mapDispatchToProps = dispatch => ({
   tripsListLoad: (token) => dispatch(tripsListDispatcher(token)),
   setTripName: (trip) => dispatch(setTripNameDispatcher(trip)),
   setDateStart: (trip) => dispatch(setTripDateStartDispatcher(trip)),
-  setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip))
+  setDateEnd: (trip) => dispatch(setTripDateEndDispatcher(trip)),
+  logoutAuth: (
+    isAuthenticated, 
+    token, 
+    authErrorMsg) => 
+      dispatch(
+        logoutAuth(
+          isAuthenticated, 
+          token, 
+          authErrorMsg)),
 });
 
 export default hot(module)(connect(

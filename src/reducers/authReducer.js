@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, GET_CURRENT_USER } from '../constants/actionTypes';
+import { SET_CURRENT_USER, GET_CURRENT_USER, LOGOUT_CURRENT_USER } from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 
 export default function authReducer(state = [], action) {
@@ -14,6 +14,15 @@ export default function authReducer(state = [], action) {
     }
     case GET_CURRENT_USER: {
       return state;
+    }
+    case LOGOUT_CURRENT_USER: {
+      console.log(JSON.stringify(state))
+      return {
+        ...state,
+        isAuthenticated: false,
+        token: action.token,
+        authErrorMsg: action.authErrorMsg
+      };
     }
     default:
       return state;

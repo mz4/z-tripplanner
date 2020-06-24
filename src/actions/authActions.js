@@ -1,9 +1,9 @@
-import { SET_CURRENT_USER } from '../constants/actionTypes';
+import { SET_CURRENT_USER, LOGOUT_CURRENT_USER } from '../constants/actionTypes';
 
 /**
  * Dispatch action when user authentication state changes
  */
-function setAuth(isAuthenticated, token, authErrorMsg) {
+export function setAuth(isAuthenticated, token, authErrorMsg) {
   return {
     type: SET_CURRENT_USER,
     isAuthenticated,
@@ -12,4 +12,11 @@ function setAuth(isAuthenticated, token, authErrorMsg) {
   };
 }
 
-export default setAuth;
+export function logoutAuth(isAuthenticated, token, authErrorMsg) {
+  return {
+    type: LOGOUT_CURRENT_USER,
+    isAuthenticated,
+    token,
+    authErrorMsg,
+  };
+}

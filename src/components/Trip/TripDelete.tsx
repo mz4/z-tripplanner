@@ -2,6 +2,7 @@ import { Mutation } from "react-apollo"
 import { Button } from '../Elements/button/Button'
 import React from "react"
 import gql from 'graphql-tag'
+import i18n from '../../utils/i18ns'
 
 // Delete Trip
 const DELETE_TRIP = gql`
@@ -37,7 +38,7 @@ const TripDelete = props => {
             size = ''
             onClick = {deleteTrip}
           >
-            Remove
+            {i18n.t('Removed')}
           </Button>
         </div>
       )}

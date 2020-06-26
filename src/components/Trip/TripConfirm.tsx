@@ -1,6 +1,7 @@
 import { Mutation } from "react-apollo";
 import React from "react";
 import gql from 'graphql-tag';
+import i18n from '../../utils/i18ns'
 
 // Toggle Trip
 const TOGGLE_TRIP = gql`
@@ -27,7 +28,9 @@ const TripConfirm = props => {
               type="checkbox"
               checked={isConfirmed}
               onChange={() => toggleTrip({ variables: {id: id, isConfirmed: !isConfirmed }})} />
-            <span className="confirmed">Confirmed</span>
+            <span className="confirmed">
+              {i18n.t('ConfirmedOne')}
+            </span>
           </label>
         </div>
       )}

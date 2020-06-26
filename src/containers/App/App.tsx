@@ -5,7 +5,10 @@ import {
 } from 'react-apollo'
 import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
+import { compose } from 'recompose'
 import Cookies from 'universal-cookie'
+import { withTranslation } from 'react-i18next'
+import i18n from '../../utils/i18ns'
 import { Button } from '../../components/Elements/button/Button'
 import {
   setTripDateEndDispatcher,
@@ -52,6 +55,8 @@ interface MyProps {
       isEditing: boolean,
     }
   ],
+  t: (ReactNode) => string,
+  i18n?: any;
   tripsListLoad: (token) => void,
   setTripName: (trip) => void,
   setDateStart: (trip) => void,
@@ -77,7 +82,8 @@ interface MyState {
     dateEnd: string,
     isConfirmed: boolean,
     isEditing: boolean,
-  }
+  },
+  language: string
 };
 
 class App extends React.Component<MyProps, MyState> {
@@ -101,17 +107,28 @@ class App extends React.Component<MyProps, MyState> {
         dateEnd: "",
         isConfirmed: false,
         isEditing: false,
-      }
+      },
+      language: 'en'
     };
     this.getTotalTrips = this.getTotalTrips.bind(this);
     this.setConfirmed = this.setConfirmed.bind(this);
     this.Logout = this.Logout.bind(this);
+    this.setLanguage = this.setLanguage.bind(this);
   }
 
   Logout() {
     cookies.remove('token')
     cookies.remove('auth')
     this.props.logoutAuth(false, '', '');
+  }
+
+  setLanguage(language: string) {
+    console.log(language);
+    this.setState(prevState => ({ language: language }));
+    console.log("state value is", language);
+    this.props.i18n.changeLanguage(language);
+    // cookies.remove('token')
+    // this.props.logoutAuth(false, '', '');
   }
 
   setConfirmed(status) {
@@ -187,7 +204,9 @@ class App extends React.Component<MyProps, MyState> {
   }
 
   render() {
+    const { t, i18n } = this.props;
     const { name, dateStart, dateEnd } = this.state.form
+    const { language } = this.state
     return (
       <React.Fragment>
         <Query<Data> query={GET_TRIPS}>
@@ -214,12 +233,44 @@ class App extends React.Component<MyProps, MyState> {
                   <ul className="header__menu">
                     <li>
                       <div className="header__logo">
-                        <h2>Trip Planner!</h2>
+                        <h2>Trip <span>{i18n.t('Title', { language })}</span> </h2>
                       </div>
                     </li>
                     <li className="header__right">
                       <div className="header__settings">
                       <div className="action">
+                        <Button 
+                          appearance = "primary" 
+                          type = "submit" 
+                          name = "submit" 
+                          value = "submit"
+                          isLoading = {false}
+                          loadingText = {null}
+                          isLink = {false}
+                          isDisabled = {false}
+                          isUnclickable = {false}
+                          containsIcon = {false}
+                          size = 'medium'
+                          onClick = {() => this.setLanguage('it')}
+                        >
+                          IT
+                        </Button>
+                        <Button 
+                          appearance = "secondary" 
+                          type = "submit" 
+                          name = "submit" 
+                          value = "submit"
+                          isLoading = {false}
+                          loadingText = {null}
+                          isLink = {false}
+                          isDisabled = {false}
+                          isUnclickable = {false}
+                          containsIcon = {false}
+                          size = 'medium'
+                          onClick = {() => this.setLanguage('en')}
+                        >
+                          EN
+                        </Button>
                         <Button 
                           appearance = "tertiary" 
                           type = "submit" 
@@ -234,7 +285,7 @@ class App extends React.Component<MyProps, MyState> {
                           size = 'medium'
                           onClick = {this.Logout}
                         >
-                          Logout
+                          {i18n.t('Logout')}
                         </Button>
                       </div>
                       </div>
@@ -299,7 +350,8 @@ const mapDispatchToProps = dispatch => ({
           authErrorMsg)),
 });
 
-export default hot(module)(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App));
+export default compose(
+  hot(module),
+  withTranslation(),
+  connect(mapStateToProps, mapDispatchToProps)
+)(App)

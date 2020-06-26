@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import * as Yup from 'yup'
 import moment from 'moment'
 import gql from 'graphql-tag'
+import i18n from '../../utils/i18ns'
 
 // Add Trip
 const POST_TRIP = gql`
@@ -92,18 +93,19 @@ const TripForm: React.FC<IProps> = (props) => {
                   <div className="col-md-4 field">
                     <MyTextInput
                       name="name"
-                      placeholder="Name"
+                      placeholder={i18n.t('Name')}
                     />
                   </div>
                   <div className="col-md-2 field">
                     <DatePickerField
                       name="dateStart"
-                      placeholderText="Date Start"
-                    />                  </div>
+                      placeholderText={i18n.t('DateStart')}
+                    />                  
+                  </div>
                   <div className="col-md-2 field">
                     <DatePickerField
                       name="dateEnd"
-                      placeholderText="Date End"
+                      placeholderText={i18n.t('DateEnd')}
                     />
                   </div>
                   <div className="action">
@@ -121,7 +123,7 @@ const TripForm: React.FC<IProps> = (props) => {
                       size = 'medium'
                       onClick = {undefined}
                     >
-                      Save
+                      {i18n.t('Save')}
                     </Button>
                   </div>
                 </div>

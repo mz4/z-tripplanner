@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import i18n from '../../utils/i18ns'
 
 const Counter = (props) => {
   const { setConfirmed, confirmed } = props;
@@ -8,7 +9,7 @@ const Counter = (props) => {
 
       <div className={"counter__type " + ((confirmed=='') ? "counter__type--selected" : "")} onClick={() => setConfirmed('')}>
         <div className="counter__type__title">
-          All
+          {i18n.t('All')}
         </div>
         <div className="counter__type__value">
           {props.totalTrips}
@@ -17,7 +18,7 @@ const Counter = (props) => {
 
       <div className={"counter__type " + (confirmed === 'confirmed' ? "counter__type--selected" : "")} onClick={() => setConfirmed('confirmed')}>
         <div className="counter__type__title">
-          Confirmed
+          {i18n.t('Confirmed')}
         </div>
         <div className="counter__type__value">
           {props.numberConfirmed}
@@ -26,7 +27,7 @@ const Counter = (props) => {
 
       <div className={"counter__type " + ((confirmed === 'unconfirmed') ? "counter__type--selected" : "")} onClick={() => setConfirmed('unconfirmed')}>
         <div className="counter__type__title">
-          Unconfirmed
+          {i18n.t('Unconfirmed')}
         </div>
         <div className="counter__type__value">
           {props.numberUnconfirmed}

@@ -12,7 +12,7 @@ const LoginForm = props =>
           </div>
         </header>
 
-        <form onSubmit={props.newTripSubmitHandler}>
+        <form onSubmit={props.submitHandler}>
           <div className="login">
 
             <div className="row">

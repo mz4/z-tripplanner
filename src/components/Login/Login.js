@@ -14,7 +14,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
 
-  const newTripSubmitHandler = e => {
+  const submitHandler = e => {
     e.preventDefault()
     const body = {}
     body.email = username
@@ -45,7 +45,7 @@ const Login = () => {
       <LoginForm
         username={username}
         password={password}
-        newTripSubmitHandler={newTripSubmitHandler}
+        submitHandler={submitHandler}
         handleUserName={handleUserName}
         handlePassword={handlePassword}
       />
@@ -64,20 +64,5 @@ const mapStateToProps = (state) => {
     authErrorMsg: state.auth.authErrorMsg,
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   console.log('Dispatch!!!')
-//   return {
-//     setAuth: (
-//       isAuthenticated, 
-//       token, 
-//       authErrorMsg) => 
-//         dispatch(
-//           setAuth(
-//             isAuthenticated, 
-//             token, 
-//             authErrorMsg)),
-//   }
-// }
 
 export default connect(mapStateToProps)(Login)

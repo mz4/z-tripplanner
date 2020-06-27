@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Query
 } from 'react-apollo'
@@ -86,77 +86,92 @@ interface MyState {
   language: string
 };
 
-class App extends React.Component<MyProps, MyState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      filter: {
-        confirmed: ''
-      },
-      form: {
-        name: "",
-        dateStart: "",
-        dateEnd: ""
-      },
-      count: 0,
-      trip: {
-        id: "",
-        key: "",
-        name: "",
-        dateStart: "",
-        dateEnd: "",
-        isConfirmed: false,
-        isEditing: false,
-      },
-      language: 'en'
-    };
-    this.getTotalTrips = this.getTotalTrips.bind(this);
-    this.setConfirmed = this.setConfirmed.bind(this);
-    this.Logout = this.Logout.bind(this);
-    this.setLanguage = this.setLanguage.bind(this);
-  }
+const App: React.FC<MyProps> = (props) => {
+  const [ values, setValues ] = useState(
+  {
+    filter: {
+      confirmed: ''
+    },
+    form: {
+      name: "",
+      dateStart: "",
+      dateEnd: ""
+    },
+    count: 0,
+    trip: {
+      id: "",
+      key: "",
+      name: "",
+      dateStart: "",
+      dateEnd: "",
+      isConfirmed: false,
+      isEditing: false,
+    },
+    language: 'en'
+  });
 
-  Logout() {
+  const Logout = () => {
     cookies.remove('token')
     cookies.remove('auth')
-    this.props.logoutAuth(false, '', '');
+    props.logoutAuth(false, '', '');
   }
 
-  setLanguage(language: string) {
+  const setLanguage = (language: string) => {
     console.log(language);
-    this.setState(prevState => ({ language: language }));
-    console.log("state value is", language);
-    this.props.i18n.changeLanguage(language);
-    // cookies.remove('token')
-    // this.props.logoutAuth(false, '', '');
-  }
-
-  setConfirmed(status) {
-    this.setState({
-      filter: {
-        ...this.state.filter,
-        confirmed: status,
-      }
+    setValues({
+      ...values,
+      language: language
     });
+    console.log("state value is", language);
+    props.i18n.changeLanguage(language);
+    // cookies.remove('token')
+    // props.logoutAuth(false, '', '');
   }
 
-  handleChange = e =>
-    this.setState({
+  const setConfirmed = (status) => {
+    console.log('........................');
+    console.log(status);
+    setValues({
+      ...values,
+      filter: {
+        ...values.filter,
+        confirmed: status
+      }
+    })
+    // setState({
+    //   filter: {
+    //     ....values.filter,
+    //     confirmed: status,
+    //   }
+    // });
+  }
+
+  const handleChange = e => {
+    setValues({
+      ...values,
       form: {
-        ...this.state.form,
+        ...values.form,
         [e.target.name]: e.target.value
       }
     })
+    // setValues({
+    //   form: {
+    //     ...values.form,
+    //     [e.target.name]: e.target.value
+    //   }
+    // })
+  }
 
-  private getTotalTrips = (trips) => trips.length;
 
-  getConfirmedTrips = (trips) =>
+  const getTotalTrips = (trips) => trips.length;
+
+  const getConfirmedTrips = (trips) =>
     trips.reduce(
       (total, trip) => trip.isConfirmed ? total + 1 : total,
       0
     );
 
-  _subscribeToNewTrips = subscribeToMore => {
+  const _subscribeToNewTrips = subscribeToMore => {
     subscribeToMore({
       document: NEW_TRIPS_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
@@ -173,7 +188,7 @@ class App extends React.Component<MyProps, MyState> {
     })
   }
 
-  _subscribeToDeletedTrips = subscribeToMore => {
+  const _subscribeToDeletedTrips = subscribeToMore => {
     subscribeToMore({
       document: DELETE_TRIP_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
@@ -191,7 +206,7 @@ class App extends React.Component<MyProps, MyState> {
     })
   }
 
-  _subscribeToToggledTrips = subscribeToMore => {
+  const _subscribeToToggledTrips = subscribeToMore => {
     subscribeToMore({
       document: TOGGLE_TRIP_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
@@ -203,129 +218,127 @@ class App extends React.Component<MyProps, MyState> {
     })
   }
 
-  render() {
-    const { t, i18n } = this.props;
-    const { name, dateStart, dateEnd } = this.state.form
-    const { language } = this.state
-    return (
-      <React.Fragment>
-        <Query<Data> query={GET_TRIPS}>
-          {({ loading, error, data, subscribeToMore }) => {
+  const { t, i18n } = props
+  const { name, dateStart, dateEnd } = values.form
+  const { language } = values
+  return (
+    <React.Fragment>
+      <Query<Data> query={GET_TRIPS}>
+        {({ loading, error, data, subscribeToMore }) => {
 
-            if (loading) return <Loader size='100' color = '#34d100' sizeUnit = 'px' />
+          if (loading) return <Loader size='100' color = '#34d100' sizeUnit = 'px' />
 
-            if (error) return <div>Error</div>
+          if (error) return <div>Error</div>
 
-            this._subscribeToNewTrips(subscribeToMore)
-            this._subscribeToDeletedTrips(subscribeToMore)
-            this._subscribeToToggledTrips(subscribeToMore)
+          _subscribeToNewTrips(subscribeToMore)
+          _subscribeToDeletedTrips(subscribeToMore)
+          _subscribeToToggledTrips(subscribeToMore)
 
-            const trips = data?.trips || [];
-            const totalTrips = this.getTotalTrips(trips);
-            const numberConfirmed = this.getConfirmedTrips(trips);
-            const numberUnconfirmed = totalTrips - numberConfirmed;
-            const setConfirmed = () => this.setConfirmed(status);
+          const trips = data?.trips || [];
+          const totalTrips = getTotalTrips(trips);
+          const numberConfirmed = getConfirmedTrips(trips);
+          const numberUnconfirmed = totalTrips - numberConfirmed;
+          // const setConfirmed = () => setConfirmed(status);
 
-            return (
-              <React.Fragment>
+          return (
+            <React.Fragment>
 
-                <header className="header">
-                  <ul className="header__menu">
-                    <li>
-                      <div className="header__logo">
-                        <h2>Trip <span>{i18n.t('Title', { language })}</span> </h2>
-                      </div>
-                    </li>
-                    <li className="header__right">
-                      <div className="header__settings">
-                      <div className="action">
-                        <Button 
-                          appearance = "primary" 
-                          type = "submit" 
-                          name = "submit" 
-                          value = "submit"
-                          isLoading = {false}
-                          loadingText = {null}
-                          isLink = {false}
-                          isDisabled = {false}
-                          isUnclickable = {false}
-                          containsIcon = {false}
-                          size = 'medium'
-                          onClick = {() => this.setLanguage('it')}
-                        >
-                          IT
-                        </Button>
-                        <Button 
-                          appearance = "secondary" 
-                          type = "submit" 
-                          name = "submit" 
-                          value = "submit"
-                          isLoading = {false}
-                          loadingText = {null}
-                          isLink = {false}
-                          isDisabled = {false}
-                          isUnclickable = {false}
-                          containsIcon = {false}
-                          size = 'medium'
-                          onClick = {() => this.setLanguage('en')}
-                        >
-                          EN
-                        </Button>
-                        <Button 
-                          appearance = "tertiary" 
-                          type = "submit" 
-                          name = "submit" 
-                          value = "submit"
-                          isLoading = {false}
-                          loadingText = {null}
-                          isLink = {false}
-                          isDisabled = {false}
-                          isUnclickable = {false}
-                          containsIcon = {false}
-                          size = 'medium'
-                          onClick = {this.Logout}
-                        >
-                          {i18n.t('Logout')}
-                        </Button>
-                      </div>
-                      </div>
-                    </li>
-                  </ul>
-                </header>
+              <header className="header">
+                <ul className="header__menu">
+                  <li>
+                    <div className="header__logo">
+                      <h2>Trip <span>{i18n.t('Title', { language })}</span> </h2>
+                    </div>
+                  </li>
+                  <li className="header__right">
+                    <div className="header__settings">
+                    <div className="action">
+                      <Button 
+                        appearance = "primary" 
+                        type = "submit" 
+                        name = "submit" 
+                        value = "submit"
+                        isLoading = {false}
+                        loadingText = {null}
+                        isLink = {false}
+                        isDisabled = {false}
+                        isUnclickable = {false}
+                        containsIcon = {false}
+                        size = 'medium'
+                        onClick = {() => setLanguage('it')}
+                      >
+                        IT
+                      </Button>
+                      <Button 
+                        appearance = "secondary" 
+                        type = "submit" 
+                        name = "submit" 
+                        value = "submit"
+                        isLoading = {false}
+                        loadingText = {null}
+                        isLink = {false}
+                        isDisabled = {false}
+                        isUnclickable = {false}
+                        containsIcon = {false}
+                        size = 'medium'
+                        onClick = {() => setLanguage('en')}
+                      >
+                        EN
+                      </Button>
+                      <Button 
+                        appearance = "tertiary" 
+                        type = "submit" 
+                        name = "submit" 
+                        value = "submit"
+                        isLoading = {false}
+                        loadingText = {null}
+                        isLink = {false}
+                        isDisabled = {false}
+                        isUnclickable = {false}
+                        containsIcon = {false}
+                        size = 'medium'
+                        onClick = {Logout}
+                      >
+                        {i18n.t('Logout')}
+                      </Button>
+                    </div>
+                    </div>
+                  </li>
+                </ul>
+              </header>
 
-                <div className="App">
-                  <div className="main">
+              <div className="App">
+                <div className="main">
 
-                    <TripForm
-                      name={name}
-                      dateStart={dateStart}
-                      dateEnd={dateEnd}
-                    />
+                  <TripForm
+                    name={name}
+                    dateStart={dateStart}
+                    dateEnd={dateEnd}
+                  />
 
-                    <Counter
-                      totalTrips={totalTrips}
-                      numberConfirmed={numberConfirmed}
-                      numberUnconfirmed={numberUnconfirmed}
-                      setConfirmed={this.setConfirmed}
-                      confirmed={this.state.filter.confirmed}
-                    />
+                  <Counter
+                    totalTrips={totalTrips}
+                    numberConfirmed={numberConfirmed}
+                    numberUnconfirmed={numberUnconfirmed}
+                    setConfirmed={(status) => setConfirmed(status)}
+                    confirmed={values.filter.confirmed}
+                  />
 
-                    <TripList
-                      trips={trips}
-                      name={this.state.form.name}
-                      confirmed={this.state.filter.confirmed}
-                    />
+                  <TripList
+                    trips={trips}
+                    name={values.form.name}
+                    confirmed={values.filter.confirmed}
+                  />
 
-                  </div>
                 </div>
-              </React.Fragment>
-            );
+              </div>
+            </React.Fragment>
+          );
 
-          }}
-        </Query>
-      </React.Fragment>
-    )
-  }
+        }}
+      </Query>
+    </React.Fragment>
+  )
 }
 
 const mapStateToProps = (state) => {

@@ -11,6 +11,8 @@ import { getMainDefinition } from 'apollo-utilities'
 import { split } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { I18nextProvider } from "react-i18next"
+import { ThemeProvider, createGlobalStyle } from "styled-components"
+import theme from "./theme/theme"
 import i18n from "../src/utils/i18ns"
 
 import AppRouter from './containers/Router/AppRouter'
@@ -62,7 +64,9 @@ render(
     <BrowserRouter>
       <ApolloProvider client={client}>
         <I18nextProvider i18n={i18n}>
-          <AppRouter />
+          <ThemeProvider theme={theme}>
+            <AppRouter />
+          </ThemeProvider>
         </I18nextProvider>
       </ApolloProvider>
     </BrowserRouter>

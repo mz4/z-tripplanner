@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setAuth } from '../../actions/authActions'
 import LoginForm from './LoginForm'
 import axios from 'axios'
@@ -7,60 +8,49 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
 
-class Login extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-    }
-    this.newTripSubmitHandler = this.newTripSubmitHandler.bind(this)
-    this.handleUserName = this.handleUserName.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-  }
+const Login = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch();
 
-  newTripSubmitHandler = e => {
+
+  const newTripSubmitHandler = e => {
     e.preventDefault()
-    const {username, password } = this.state
     const body = {}
     body.email = username
     body.password = password
+    console.log('login------')
+    console.log(username)
+    console.log(password)
     axios.post(`http://localhost:3030/signin`, body)
       .then(res => {
         cookies.set('token', res.data.token, { path: '/' })
         cookies.set('auth', true, { path: '/' })
-        this.props.setAuth(true, res.data.token, '')
+        dispatch(setAuth(true, res.data.token, ''))
       })
   }
 
-  handleUserName = e => {
+  const handleUserName = e => {
     e.preventDefault()
-    this.setState({
-      username: e.target.value
-    })
+    setUsername(e.target.value)
   }
 
-  handlePassword = e => {
+  const handlePassword = e => {
     e.preventDefault()
-    this.setState({
-      password: e.target.value
-    })
+    setPassword(e.target.value)
   }
 
-  render() {
-    const {username, password} = this.state
-    return (
-      <div>
-        <LoginForm
-          username={username}
-          password={password}
-          newTripSubmitHandler={this.newTripSubmitHandler}
-          handleUserName={this.handleUserName}
-          handlePassword={this.handlePassword}
-        />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <LoginForm
+        username={username}
+        password={password}
+        newTripSubmitHandler={newTripSubmitHandler}
+        handleUserName={handleUserName}
+        handlePassword={handlePassword}
+      />
+    </div>
+  )
 }
 
 Login.propTypes = {
@@ -75,18 +65,19 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setAuth: (
-      isAuthenticated, 
-      token, 
-      authErrorMsg) => 
-        dispatch(
-          setAuth(
-            isAuthenticated, 
-            token, 
-            authErrorMsg)),
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   console.log('Dispatch!!!')
+//   return {
+//     setAuth: (
+//       isAuthenticated, 
+//       token, 
+//       authErrorMsg) => 
+//         dispatch(
+//           setAuth(
+//             isAuthenticated, 
+//             token, 
+//             authErrorMsg)),
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps)(Login)

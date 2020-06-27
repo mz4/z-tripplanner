@@ -154,7 +154,7 @@ const StyledButton = styled.button`
   ${props =>
     props.appearance === APPEARANCES.PRIMARY &&
     `
-      background: ${color.primary};
+      background: ${props.theme.color.primary};
       color: ${color.lightest};
 
       ${!props.isLoading &&

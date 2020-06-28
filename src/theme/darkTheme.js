@@ -1,7 +1,7 @@
-const theme = {
+const darkTheme = {
   color: {
     // Palette
-    primary: '#029C44', // green
+    primary: '#CCC', // green
     secondary: '#1EA7FD', // ocean
     tertiary: '#DDDDDD',
 
@@ -36,4 +36,4 @@ const theme = {
   }
 }
 
-export default theme;
+export default darkTheme;

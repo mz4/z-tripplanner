@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import Cookies from 'universal-cookie'
 import { withTranslation } from 'react-i18next'
+import { useTheme } from "../../context/ThemeContext";
 import i18n from '../../utils/i18ns'
 import { Button } from '../../components/Elements/button/Button'
 import {
@@ -87,6 +88,7 @@ interface MyState {
 };
 
 const App: React.FC<MyProps> = (props) => {
+  const themeToggle = useTheme();
   const [ values, setValues ] = useState(
   {
     filter: {
@@ -253,6 +255,22 @@ const App: React.FC<MyProps> = (props) => {
                   <li className="header__right">
                     <div className="header__settings">
                     <div className="action">
+                      <Button 
+                        appearance = "primary" 
+                        type = "submit" 
+                        name = "submit" 
+                        value = "submit"
+                        isLoading = {false}
+                        loadingText = {null}
+                        isLink = {false}
+                        isDisabled = {false}
+                        isUnclickable = {false}
+                        containsIcon = {false}
+                        size = 'medium'
+                        onClick = {() => themeToggle.toggle()}
+                      >
+                        Theme
+                      </Button>
                       <Button 
                         appearance = "primary" 
                         type = "submit" 

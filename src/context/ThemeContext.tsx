@@ -4,7 +4,11 @@ import lightTheme from '../theme/lightTheme'
 import darkTheme from '../theme/darkTheme'
 import { createGlobalStyle } from 'styled-components'
 
-const ThemeToggleContext = React.createContext(null)
+interface AppContextInterface {
+  toggle: () => void
+}
+
+const ThemeToggleContext = React.createContext<AppContextInterface | any>('');
 
 export const useTheme = () => React.useContext(ThemeToggleContext)
 

@@ -12,8 +12,7 @@ import { split } from 'apollo-link'
 import { HttpLink } from 'apollo-link-http'
 import { I18nextProvider } from "react-i18next"
 import {ThemeProviderContext} from "./context/ThemeContext"
-import styled, { ThemeProvider } from "styled-components"
-import lightTheme from './theme/lightTheme'
+import {myProviderContext} from "./context/themec"
 import i18n from "../src/utils/i18ns"
 
 import AppRouter from './containers/Router/AppRouter'

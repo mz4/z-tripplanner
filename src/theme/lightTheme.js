@@ -4,6 +4,7 @@ const lightTheme = {
     primary: '#66BF3C', // green
     secondary: '#1EA7FD', // ocean
     tertiary: '#DDDDDD',
+    headerbackground: "#F7F7F7",
 
     orange: '#FC521F',
     gold: '#FFAE00',

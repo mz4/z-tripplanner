@@ -9,8 +9,6 @@ import { compose } from 'recompose'
 import Cookies from 'universal-cookie'
 import { withTranslation } from 'react-i18next'
 import { useTheme } from "../../context/ThemeContext";
-import i18n from '../../utils/i18ns'
-import { Button } from '../../components/Elements/button/Button'
 import {
   setTripDateEndDispatcher,
   setTripDateStartDispatcher,
@@ -19,6 +17,7 @@ import {
 } from '../../actions/tripsActions'
 import { logoutAuth } from '../../actions/authActions'
 import getAPIUrl from '../../constants/serverAPI'
+import Header from '../../components/Header/Header'
 import Counter from '../../components/Counter/Counter'
 import TripList from '../../components/Trips/TripList'
 import TripForm from '../../components/Trip/TripForm'
@@ -245,85 +244,12 @@ const App: React.FC<MyProps> = (props) => {
           return (
             <React.Fragment>
 
-              <header className="header">
-                <ul className="header__menu">
-                  <li>
-                    <div className="header__logo">
-                      <h2>Trip <span>{i18n.t('Title', { language })}</span> </h2>
-                    </div>
-                  </li>
-                  <li className="header__right">
-                    <div className="header__settings">
-                    <div className="action">
-                      <Button 
-                        appearance = "primary" 
-                        type = "submit" 
-                        name = "submit" 
-                        value = "submit"
-                        isLoading = {false}
-                        loadingText = {null}
-                        isLink = {false}
-                        isDisabled = {false}
-                        isUnclickable = {false}
-                        containsIcon = {false}
-                        size = 'medium'
-                        onClick = {() => themeToggle.toggle()}
-                      >
-                        Theme
-                      </Button>
-                      <Button 
-                        appearance = "primary" 
-                        type = "submit" 
-                        name = "submit" 
-                        value = "submit"
-                        isLoading = {false}
-                        loadingText = {null}
-                        isLink = {false}
-                        isDisabled = {false}
-                        isUnclickable = {false}
-                        containsIcon = {false}
-                        size = 'medium'
-                        onClick = {() => setLanguage('it')}
-                      >
-                        IT
-                      </Button>
-                      <Button 
-                        appearance = "secondary" 
-                        type = "submit" 
-                        name = "submit" 
-                        value = "submit"
-                        isLoading = {false}
-                        loadingText = {null}
-                        isLink = {false}
-                        isDisabled = {false}
-                        isUnclickable = {false}
-                        containsIcon = {false}
-                        size = 'medium'
-                        onClick = {() => setLanguage('en')}
-                      >
-                        EN
-                      </Button>
-                      <Button 
-                        appearance = "tertiary" 
-                        type = "submit" 
-                        name = "submit" 
-                        value = "submit"
-                        isLoading = {false}
-                        loadingText = {null}
-                        isLink = {false}
-                        isDisabled = {false}
-                        isUnclickable = {false}
-                        containsIcon = {false}
-                        size = 'medium'
-                        onClick = {Logout}
-                      >
-                        {i18n.t('Logout')}
-                      </Button>
-                    </div>
-                    </div>
-                  </li>
-                </ul>
-              </header>
+              <Header
+                setLanguage = {(language) => setLanguage(language)}
+                themeToggle={() => themeToggle.toggle()}
+                Logout={Logout}
+              />
+
 
               <div className="App">
                 <div className="main">

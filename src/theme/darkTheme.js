@@ -1,9 +1,12 @@
+import { background } from "../components/Elements/shared/styles";
+
 const darkTheme = {
   color: {
     // Palette
     primary: '#CCC', // green
     secondary: '#1EA7FD', // ocean
     tertiary: '#DDDDDD',
+    headerbackground: "#272c33",
 
     orange: '#FC521F',
     gold: '#FFAE00',

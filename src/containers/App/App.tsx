@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import {
   Query
@@ -16,13 +15,14 @@ import {
   tripsListDispatcher
 } from '../../actions/tripsActions'
 import { logoutAuth } from '../../actions/authActions'
-import getAPIUrl from '../../constants/serverAPI'
 import Header from '../../components/Header/Header'
 import Counter from '../../components/Counter/Counter'
 import TripList from '../../components/Trips/TripList'
 import TripForm from '../../components/Trip/TripForm'
 import { Loader } from '../../components/Elements/Loader/Loader'
+import { App_main, App_inner } from './App.style'
 import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries'
+
 
 import '../../css/main.scss';
 
@@ -64,28 +64,6 @@ interface MyProps {
   logoutAuth: (isAuthenticated: boolean, token: string, authErrorMsg: string) => void,
 };
 
-interface MyState {
-  filter: {
-    confirmed: string,
-  },
-  form: {
-    name: string,
-    dateStart: string,
-    dateEnd: string
-  },
-  count: number,
-  trip: {
-    id: string,
-    key: string,
-    name: string,
-    dateStart: string,
-    dateEnd: string,
-    isConfirmed: boolean,
-    isEditing: boolean,
-  },
-  language: string
-};
-
 const App: React.FC<MyProps> = (props) => {
   const themeToggle = useTheme();
   const [ values, setValues ] = useState(
@@ -125,13 +103,9 @@ const App: React.FC<MyProps> = (props) => {
     });
     console.log("state value is", language);
     props.i18n.changeLanguage(language);
-    // cookies.remove('token')
-    // props.logoutAuth(false, '', '');
   }
 
   const setConfirmed = (status) => {
-    console.log('........................');
-    console.log(status);
     setValues({
       ...values,
       filter: {
@@ -139,30 +113,7 @@ const App: React.FC<MyProps> = (props) => {
         confirmed: status
       }
     })
-    // setState({
-    //   filter: {
-    //     ....values.filter,
-    //     confirmed: status,
-    //   }
-    // });
   }
-
-  const handleChange = e => {
-    setValues({
-      ...values,
-      form: {
-        ...values.form,
-        [e.target.name]: e.target.value
-      }
-    })
-    // setValues({
-    //   form: {
-    //     ...values.form,
-    //     [e.target.name]: e.target.value
-    //   }
-    // })
-  }
-
 
   const getTotalTrips = (trips) => trips.length;
 
@@ -219,9 +170,7 @@ const App: React.FC<MyProps> = (props) => {
     })
   }
 
-  const { t, i18n } = props
   const { name, dateStart, dateEnd } = values.form
-  const { language } = values
   return (
     <React.Fragment>
       <Query<Data> query={GET_TRIPS}>
@@ -239,7 +188,6 @@ const App: React.FC<MyProps> = (props) => {
           const totalTrips = getTotalTrips(trips);
           const numberConfirmed = getConfirmedTrips(trips);
           const numberUnconfirmed = totalTrips - numberConfirmed;
-          // const setConfirmed = () => setConfirmed(status);
 
           return (
             <React.Fragment>
@@ -251,8 +199,8 @@ const App: React.FC<MyProps> = (props) => {
               />
 
 
-              <div className="App">
-                <div className="main">
+              <App_main>
+                <App_inner>
 
                   <TripForm
                     name={name}
@@ -274,8 +222,8 @@ const App: React.FC<MyProps> = (props) => {
                     confirmed={values.filter.confirmed}
                   />
 
-                </div>
-              </div>
+                </App_inner>
+              </App_main>
             </React.Fragment>
           );
 

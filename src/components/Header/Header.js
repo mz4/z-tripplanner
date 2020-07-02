@@ -41,6 +41,16 @@ const Header__settings = styled.div`
   padding-left: 1rem;
 `;
 
+const Title = styled.h2`
+  display: inline;
+  color: ${props => props.theme.color.title};
+`;
+
+const Sub_title = styled.h3`
+  display: inline;
+  color: ${props => props.theme.color.subtitle};
+`;
+
 const Header = props => {
   const { setLanguage, themeToggle, Logout } = props;
   return (
@@ -48,7 +58,8 @@ const Header = props => {
       <Header_menu>
         <Header_list>
           <Header_logo>
-            <h2>Trip <span>{i18n.t('Title')}</span> </h2>
+            <Title>ASGARD </Title>
+            <Sub_title>{i18n.t('Title')}</Sub_title>
           </Header_logo>
         </Header_list>
         <Header_right>

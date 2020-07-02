@@ -1,11 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import i18n from '../../utils/i18ns'
+import { 
+  Counter_main, Counter_type, 
+  Counter_type_selected, Counter_type_title, 
+  Counter_type_value } from './Counter.style'
 
 const Counter = (props) => {
   const { setConfirmed, confirmed } = props;
   return (
-    <div className="counter">
+    <Counter_main>
 
       <div className={"counter__type " + ((confirmed=='') ? "counter__type--selected" : "")} onClick={() => setConfirmed('')}>
         <div className="counter__type__title">
@@ -34,7 +38,7 @@ const Counter = (props) => {
         </div>
       </div>
 
-    </div>
+    </Counter_main>
   )
 }
 

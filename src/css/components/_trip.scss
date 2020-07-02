@@ -9,7 +9,9 @@
   flex-direction: row;
   padding-top: 1.25em;
   padding: 1em;
-  border: 1px solid rgba(88, 183, 205, .15);
+  // border: 1px solid rgba(88, 183, 205, .15);
+  background-color: #272c33;
+  margin-bottom: 1rem;
   @media only screen and (max-width: $bp-medium) {
     flex-direction: column;
   }

@@ -5,10 +5,12 @@ import TripDate from './TripDate';
 import TripDelete from './TripDelete';
 import TripConfirm from './TripConfirm';
 
+import { Trip_main, Col_md_10 } from './Trip.style'
+
 const Trip = props =>
   <div key={props.keyid} className="row">
-    <div className="col-md-10">
-      <div className="trip">
+    <Col_md_10>
+      <Trip_main>
         <div>
           <TripName
             isEditing={props.isEditing}
@@ -38,8 +40,8 @@ const Trip = props =>
         <TripDelete 
           id={props.id}
         />
-      </div>
-    </div>
+      </Trip_main>
+    </Col_md_10>
   </div>;
 
 Trip.propTypes = {

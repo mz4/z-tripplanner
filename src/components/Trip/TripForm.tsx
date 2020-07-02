@@ -9,6 +9,7 @@ import * as Yup from 'yup'
 import moment from 'moment'
 import gql from 'graphql-tag'
 import i18n from '../../utils/i18ns'
+import { Destination_main } from './TripForm.style'
 
 // Add Trip
 const POST_TRIP = gql`
@@ -88,46 +89,44 @@ const TripForm: React.FC<IProps> = (props) => {
             <Form 
               translate=""
               >
-              <div className="destination">
-                <div className="destination__form row">
-                  <div className="col-md-4 field">
-                    <MyTextInput
-                      name="name"
-                      placeholder={i18n.t('Name')}
-                    />
-                  </div>
-                  <div className="col-md-2 field">
-                    <DatePickerField
-                      name="dateStart"
-                      placeholderText={i18n.t('DateStart')}
-                    />                  
-                  </div>
-                  <div className="col-md-2 field">
-                    <DatePickerField
-                      name="dateEnd"
-                      placeholderText={i18n.t('DateEnd')}
-                    />
-                  </div>
-                  <div className="action">
-                    <Button 
-                      appearance = "primary" 
-                      type = "submit" 
-                      name = "submit" 
-                      value = "submit"
-                      isLoading = {false}
-                      loadingText = {null}
-                      isLink = {false}
-                      isDisabled = {false}
-                      isUnclickable = {false}
-                      containsIcon = {false}
-                      size = 'medium'
-                      onClick = {undefined}
-                    >
-                      {i18n.t('Save')}
-                    </Button>
-                  </div>
+              <Destination_main>
+                <div>
+                  <MyTextInput
+                    name="name"
+                    placeholder={i18n.t('Name')}
+                  />
                 </div>
-              </div>
+                <div>
+                  <DatePickerField
+                    name="dateStart"
+                    placeholderText={i18n.t('DateStart')}
+                  />                  
+                </div>
+                <div>
+                  <DatePickerField
+                    name="dateEnd"
+                    placeholderText={i18n.t('DateEnd')}
+                  />
+                </div>
+                <div className="action">
+                  <Button 
+                    appearance = "primary" 
+                    type = "submit" 
+                    name = "submit" 
+                    value = "submit"
+                    isLoading = {false}
+                    loadingText = {null}
+                    isLink = {false}
+                    isDisabled = {false}
+                    isUnclickable = {false}
+                    containsIcon = {false}
+                    size = 'medium'
+                    onClick = {undefined}
+                  >
+                    {i18n.t('Save')}
+                  </Button>
+                </div>
+              </Destination_main>
             </Form>
           </Formik>
         )}

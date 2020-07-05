@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Query
 } from 'react-apollo'
@@ -23,6 +23,8 @@ import { Loader } from '../../components/Elements/Loader/Loader'
 import { App_main, App_inner } from './App.style'
 import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries'
 
+import { listTrips } from '../../graphql/queries'
+import { API, graphqlOperation } from 'aws-amplify'
 
 import '../../css/main.scss';
 
@@ -88,6 +90,14 @@ const App: React.FC<MyProps> = (props) => {
     },
     language: 'en'
   });
+
+  useEffect(() => {
+    const prova = async () => {
+      const result = await API.graphql(graphqlOperation(listTrips))
+      console.log(JSON.stringify(result))
+    }
+    prova()
+  }, [])
 
   const Logout = () => {
     cookies.remove('token')

@@ -18,6 +18,11 @@ import i18n from "../src/utils/i18ns"
 import AppRouter from './containers/Router/AppRouter'
 export const AUTH_TOKEN = 'auth-token'
 
+import Amplify from 'aws-amplify'
+import aws_exports from './aws-exports'
+
+Amplify.configure(aws_exports)
+
 import 'normalize.css'
 
 const initialState = {

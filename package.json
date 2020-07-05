@@ -65,6 +65,8 @@
     "apollo-link-http": "^1.5.16",
     "apollo-link-ws": "^1.0.19",
     "apollo-upload-client": "^12.1.0",
+    "aws-amplify": "^3.0.18",
+    "aws-amplify-react": "^4.1.17",
     "axios": "^0.19.0",
     "formik": "^2.1.4",
     "graphql": "^14.6.0",

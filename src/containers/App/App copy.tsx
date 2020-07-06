@@ -68,8 +68,7 @@ interface MyProps {
 
 const App: React.FC<MyProps> = (props) => {
   const themeToggle = useTheme();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({ hits: [] });
   const [ values, setValues ] = useState(
   {
     filter: {
@@ -95,14 +94,9 @@ const App: React.FC<MyProps> = (props) => {
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const result: any = await API.graphql(graphqlOperation(listTrips))
-        setData(result.data.listTrips.items)
-        setIsLoaded(true)
-        console.log(JSON.stringify(result.data.listTrips.items))
-      } catch (error) {
-        console.log(error)
-      }
+      const result = await API.graphql(graphqlOperation(listTrips))
+      setData(result.data.listTrips.items)
+      console.log(JSON.stringify(result.data.listTrips.items))
     }
     getData()
   }, [])
@@ -144,23 +138,58 @@ const App: React.FC<MyProps> = (props) => {
   const { name, dateStart, dateEnd } = values.form
   return (
     <React.Fragment>
-      <Header
-        setLanguage = {(language) => setLanguage(language)}
-        themeToggle={() => themeToggle.toggle()}
-        Logout={Logout}
-      />
-      <App_main>
-        <App_inner>
-          {isLoaded === false ? 
-          <Loader size='100' color = '#34d100' sizeUnit = 'px' /> : 
-          <TripList
-            trips={data}
-            name={values.form.name}
-            confirmed={values.filter.confirmed}
-          />
-        }
-        </App_inner>
-      </App_main>
+      {/* <Query<Data> query={GET_TRIPS}>
+        {({ loading, error, data, subscribeToMore }) => {
+
+          if (loading) return <Loader size='100' color = '#34d100' sizeUnit = 'px' />
+
+          if (error) return <div>Error</div>
+
+          const trips = data?.trips || [];
+          const totalTrips = getTotalTrips(trips);
+          const numberConfirmed = getConfirmedTrips(trips);
+          const numberUnconfirmed = totalTrips - numberConfirmed;
+
+          return (
+            <React.Fragment>
+
+              <Header
+                setLanguage = {(language) => setLanguage(language)}
+                themeToggle={() => themeToggle.toggle()}
+                Logout={Logout}
+              />
+
+
+              <App_main>
+                <App_inner>
+
+                  <TripForm
+                    name={name}
+                    dateStart={dateStart}
+                    dateEnd={dateEnd}
+                  />
+
+                  <Counter
+                    totalTrips={totalTrips}
+                    numberConfirmed={numberConfirmed}
+                    numberUnconfirmed={numberUnconfirmed}
+                    setConfirmed={(status) => setConfirmed(status)}
+                    confirmed={values.filter.confirmed}
+                  />
+
+                  <TripList
+                    trips={trips}
+                    name={values.form.name}
+                    confirmed={values.filter.confirmed}
+                  />
+
+                </App_inner>
+              </App_main>
+            </React.Fragment>
+          );
+
+        }}
+      </Query> */}
     </React.Fragment>
   )
 }

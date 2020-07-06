@@ -92,11 +92,11 @@ const App: React.FC<MyProps> = (props) => {
   });
 
   useEffect(() => {
-    const prova = async () => {
+    const data = async () => {
       const result = await API.graphql(graphqlOperation(listTrips))
       console.log(JSON.stringify(result))
     }
-    prova()
+    data()
   }, [])
 
   const Logout = () => {

@@ -13,7 +13,7 @@ type Activity @model {
 	id: ID!
 	userId: String!
 	activityUsername: String!
-	post: Post @connection(name: "PostActivities")
+	trip: Trip @connection(name: "PostActivities")
   content: String!
   dateActivity: String!
 	createdAt: String!  

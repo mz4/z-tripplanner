@@ -17,7 +17,8 @@
         }
     }],
     ["transform-react-remove-prop-types"],
-    ["@babel/proposal-class-properties"]
+    ["@babel/proposal-class-properties"],
+    ["@babel/transform-runtime"]
   ],
   "env": {
     "test": {

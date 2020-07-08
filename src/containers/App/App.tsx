@@ -142,6 +142,9 @@ const App: React.FC<MyProps> = (props) => {
     );
 
   const { name, dateStart, dateEnd } = values.form
+  const totalTrips = getTotalTrips(data);
+  const numberConfirmed = getConfirmedTrips(data);
+  const numberUnconfirmed = totalTrips - numberConfirmed;
   return (
     <React.Fragment>
       <Header
@@ -152,12 +155,28 @@ const App: React.FC<MyProps> = (props) => {
       <App_main>
         <App_inner>
           {isLoaded === false ? 
-          <Loader size='100' color = '#34d100' sizeUnit = 'px' /> : 
-          <TripList
-            trips={data}
-            name={values.form.name}
-            confirmed={values.filter.confirmed}
-          />
+          <Loader size='100' color = '#34d100' sizeUnit = 'px' /> :
+          <> 
+            <TripForm
+              name={name}
+              dateStart={dateStart}
+              dateEnd={dateEnd}
+            />
+
+            <Counter
+              totalTrips={totalTrips}
+              numberConfirmed={numberConfirmed}
+              numberUnconfirmed={numberUnconfirmed}
+              setConfirmed={(status) => setConfirmed(status)}
+              confirmed={values.filter.confirmed}
+            />
+
+            <TripList
+              trips={data}
+              name={values.form.name}
+              confirmed={values.filter.confirmed}
+            />
+          </>
         }
         </App_inner>
       </App_main>

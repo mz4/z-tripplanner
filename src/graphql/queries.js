@@ -41,11 +41,6 @@ export const listTrips = /* GraphQL */ `
         dateEnd
         isConfirmed
         isEditing
-        createdAt
-        activities {
-          nextToken
-        }
-        updatedAt
       }
       nextToken
     }

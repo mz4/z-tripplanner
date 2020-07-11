@@ -10,20 +10,6 @@ export const onCreateTrip = /* GraphQL */ `
       dateEnd
       isConfirmed
       isEditing
-      createdAt
-      activities {
-        items {
-          id
-          userId
-          activityUsername
-          content
-          dateActivity
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
     }
   }
 `;
@@ -36,20 +22,6 @@ export const onUpdateTrip = /* GraphQL */ `
       dateEnd
       isConfirmed
       isEditing
-      createdAt
-      activities {
-        items {
-          id
-          userId
-          activityUsername
-          content
-          dateActivity
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
     }
   }
 `;

@@ -25,6 +25,7 @@
     "@types/react-dom": "^16.9.1",
     "@types/webpack-env": "^1.15.2",
     "@types/yup": "^0.29.3",
+    "@types/zen-observable": "^0.8.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.8.0",

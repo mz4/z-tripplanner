@@ -33,47 +33,45 @@ const initialState = {
 
 const store = configureStore(initialState);
 
-const httpLink = new HttpLink({
-  uri: 'http://localhost:3030/graphql',
-});
+// const httpLink = new HttpLink({
+//   uri: 'http://localhost:3030/graphql',
+// });
 
-const token = localStorage.getItem(AUTH_TOKEN);
-const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:3030/subscriptions',
-  options: {
-    reconnect: true,
-    connectionParams: {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-   }    
-  },  
-});
+// const token = localStorage.getItem(AUTH_TOKEN);
+// const wsLink = new WebSocketLink({
+//   uri: 'ws://localhost:3030/subscriptions',
+//   options: {
+//     reconnect: true,
+//     connectionParams: {
+//       headers: {
+//         Authorization: `Bearer ${token}`
+//       }
+//    }    
+//   },  
+// });
 
-const link = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
-  },
-  wsLink,
-  httpLink
-);
+// const link = split(
+//   ({ query }) => {
+//     const definition = getMainDefinition(query);
+//     return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+//   },
+//   wsLink,
+//   httpLink
+// );
 
-const client = new ApolloClient({
-  link,
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   link,
+//   cache: new InMemoryCache(),
+// });
 
 render(
   <Provider store={store}>
     <BrowserRouter>
-      <ApolloProvider client={client}>
         <I18nextProvider i18n={i18n}>
           <ThemeProviderContext>
             <AppRouter />
           </ThemeProviderContext>
         </I18nextProvider>
-      </ApolloProvider>
     </BrowserRouter>
   </Provider>,
   document.getElementById("app")

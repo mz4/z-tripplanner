@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Query
-} from 'react-apollo'
 import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import Cookies from 'universal-cookie'
 import { withTranslation } from 'react-i18next'
+import { Observable } from 'zen-observable-ts';
 import { useTheme } from "../../context/ThemeContext";
 import {
   setTripDateEndDispatcher,
@@ -21,12 +19,13 @@ import TripList from '../../components/Trips/TripList'
 import TripForm from '../../components/Trip/TripForm'
 import { Loader } from '../../components/Elements/Loader/Loader'
 import { App_main, App_inner } from './App.style'
-import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries'
 
 import { listTrips } from '../../graphql/queries'
+import { onCreateTrip, onUpdateTrip } from '../../graphql/subscriptions'
 import { API, graphqlOperation } from 'aws-amplify'
 
 import '../../css/main.scss';
+import { getDataFromTree } from 'react-apollo'
 
 const cookies = new Cookies();
 
@@ -40,8 +39,34 @@ export interface Trips {
   isEditing: boolean,
 }
 
+export interface Trip {
+  id: string,
+  key: string,
+  name: string,
+  dateStart: string,
+  dateEnd: string,
+  isConfirmed: boolean,
+  isEditing: boolean
+}
+
 interface Data {
   trips: Trips[];
+}
+
+interface tripData {
+  value: {
+    data: {
+      onCreateTrip: Trip
+    }
+  }
+}
+
+interface tripDataUpdate {
+  value: {
+    data: {
+      onUpdateTrip: Trip
+    }
+  }
 }
 
 interface MyProps {
@@ -70,7 +95,7 @@ const App: React.FC<MyProps> = (props) => {
   const themeToggle = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
-  const [ values, setValues ] = useState(
+  const [values, setValues] = useState(
   {
     filter: {
       confirmed: ''
@@ -93,19 +118,40 @@ const App: React.FC<MyProps> = (props) => {
     language: 'en'
   });
 
+  const getData = async () => {
+    const result: any = await API.graphql(graphqlOperation(listTrips))
+    setData(result.data.listTrips.items)
+    setIsLoaded(true)
+  }
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const result: any = await API.graphql(graphqlOperation(listTrips))
-        setData(result.data.listTrips.items)
-        setIsLoaded(true)
-        console.log(JSON.stringify(result.data.listTrips.items))
-      } catch (error) {
-        console.log(error)
-      }
-    }
     getData()
-  }, [])
+
+    const onCreate = (API.graphql(graphqlOperation(onCreateTrip)) as Observable<object>)
+    .subscribe({
+      next: (tripData: tripData) => {
+        const newTrip = tripData.value.data.onCreateTrip
+        const prevTrips = data.filter( (trip: Trips) => trip.id !== newTrip.id)
+        const updatedTrips: any = [newTrip, ...prevTrips]
+        setData(updatedTrips)
+      }
+    })
+
+    const onUpdateSubscription = (API.graphql(graphqlOperation(onUpdateTrip)) as Observable<object>)
+    .subscribe({
+      next: (tripData: tripDataUpdate) => {
+        const updatedTrip: any = tripData.value.data.onUpdateTrip
+        const updatedTrips: any = data.map((d: any) => d.id === updatedTrip.id ? updatedTrip : d)
+        setData(data)
+      }
+    })
+
+    return () => {
+      onUpdateSubscription.unsubscribe()
+      onCreate.unsubscribe()
+    };
+
+  })
 
   const Logout = () => {
     cookies.remove('token')
@@ -114,12 +160,10 @@ const App: React.FC<MyProps> = (props) => {
   }
 
   const setLanguage = (language: string) => {
-    console.log(language);
     setValues({
       ...values,
       language: language
     });
-    console.log("state value is", language);
     props.i18n.changeLanguage(language);
   }
 
@@ -142,9 +186,9 @@ const App: React.FC<MyProps> = (props) => {
     );
 
   const { name, dateStart, dateEnd } = values.form
-  const totalTrips = getTotalTrips(data);
-  const numberConfirmed = getConfirmedTrips(data);
-  const numberUnconfirmed = totalTrips - numberConfirmed;
+  const totalTrips = getTotalTrips(data)
+  const numberConfirmed = getConfirmedTrips(data)
+  const numberUnconfirmed = totalTrips - numberConfirmed
   return (
     <React.Fragment>
       <Header

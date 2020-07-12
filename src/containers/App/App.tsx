@@ -21,11 +21,16 @@ import { Loader } from '../../components/Elements/Loader/Loader'
 import { App_main, App_inner } from './App.style'
 
 import { listTrips } from '../../graphql/queries'
-import { onCreateTrip, onUpdateTrip } from '../../graphql/subscriptions'
+import { 
+  onCreateTrip, 
+  onUpdateTrip,
+  onDeleteTrip
+} from '../../graphql/subscriptions'
 import { API, graphqlOperation } from 'aws-amplify'
 
 import '../../css/main.scss';
 import { getDataFromTree } from 'react-apollo'
+import { updateTrip } from '../../graphql/mutations'
 
 const cookies = new Cookies();
 
@@ -65,6 +70,14 @@ interface tripDataUpdate {
   value: {
     data: {
       onUpdateTrip: Trip
+    }
+  }
+}
+
+interface tripDataDelete {
+  value: {
+    data: {
+      onDeleteTrip: Trip
     }
   }
 }
@@ -146,9 +159,24 @@ const App: React.FC<MyProps> = (props) => {
       }
     })
 
+    const onDeleteSubscription = (API.graphql(graphqlOperation(onDeleteTrip)) as Observable<object>)
+    .subscribe({
+      next: (tripData: tripDataDelete) => {
+        const updatedTrip: any = tripData.value.data.onDeleteTrip
+        const updatedTrips: any = data.map(
+          (d: any) => {
+            if (d.id !== updateTrip) {
+              return d
+            }
+          })
+        setData(updatedTrips)
+      }
+    })
+
     return () => {
       onUpdateSubscription.unsubscribe()
       onCreate.unsubscribe()
+      onDeleteSubscription.unsubscribe()
     };
 
   })

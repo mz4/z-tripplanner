@@ -34,20 +34,6 @@ export const onDeleteTrip = /* GraphQL */ `
       dateEnd
       isConfirmed
       isEditing
-      createdAt
-      activities {
-        items {
-          id
-          userId
-          activityUsername
-          content
-          dateActivity
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
     }
   }
 `;

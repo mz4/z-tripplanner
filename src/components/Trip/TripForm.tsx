@@ -67,76 +67,76 @@ const TripForm: React.FC<IProps> = (props) => {
   const isConfirmed = false;
   const isEditing = false;
   return (
-        <Formik
-        initialValues={{
-          name: "",
-          dateStart: "",
-          dateEnd: ""
-        }}
-        validationSchema={Yup.object({
-          name: Yup.string()
-            .max(15, "Must be 15 characters max")
-            .required("Required"),
-          dateStart: Yup.string()
-            .required("Required"),
-          dateEnd: Yup.string()
-            .required("Required"),
-        })}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          handleSubmit({ variables: { 
-            name: values.name,
-            dateStart: moment(values.dateStart).format('YYYY/MM/DD'),
-            dateEnd: moment(values.dateEnd).format('YYYY/MM/DD'),
-            isConfirmed: false,
-            isEditing: false
-          } });
-          resetForm({})
-          setSubmitting(false);
-        }}
-        >
-          <Form 
-            translate=""
-            >
-            <Destination_main>
-              <div>
-                <MyTextInput
-                  name="name"
-                  placeholder={i18n.t('Name')}
-                />
-              </div>
-              <div>
-                <DatePickerField
-                  name="dateStart"
-                  placeholderText={i18n.t('DateStart')}
-                />                  
-              </div>
-              <div>
-                <DatePickerField
-                  name="dateEnd"
-                  placeholderText={i18n.t('DateEnd')}
-                />
-              </div>
-              <div className="action">
-                <Button 
-                  appearance = "primary" 
-                  type = "submit" 
-                  name = "submit" 
-                  value = "submit"
-                  isLoading = {false}
-                  loadingText = {null}
-                  isLink = {false}
-                  isDisabled = {false}
-                  isUnclickable = {false}
-                  containsIcon = {false}
-                  size = 'medium'
-                  onClick = {undefined}
-                >
-                  {i18n.t('Save')}
-                </Button>
-              </div>
-            </Destination_main>
-          </Form>
-        </Formik>
+    <Formik
+      initialValues={{
+        name: "",
+        dateStart: "",
+        dateEnd: ""
+      }}
+      validationSchema={Yup.object({
+        name: Yup.string()
+          .max(15, i18n.t('Max15'))
+          .required(i18n.t('Required')),
+        dateStart: Yup.string()
+          .required(i18n.t('Required')),
+        dateEnd: Yup.string()
+          .required(i18n.t('Required')),
+      })}
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        handleSubmit({ variables: { 
+          name: values.name,
+          dateStart: moment(values.dateStart).format('YYYY/MM/DD'),
+          dateEnd: moment(values.dateEnd).format('YYYY/MM/DD'),
+          isConfirmed: false,
+          isEditing: false
+        } });
+        resetForm({})
+        setSubmitting(false);
+      }}
+      >
+        <Form 
+          translate=""
+          >
+          <Destination_main>
+            <div>
+              <MyTextInput
+                name="name"
+                placeholder={i18n.t('Name')}
+              />
+            </div>
+            <div>
+              <DatePickerField
+                name="dateStart"
+                placeholderText={i18n.t('DateStart')}
+              />                  
+            </div>
+            <div>
+              <DatePickerField
+                name="dateEnd"
+                placeholderText={i18n.t('DateEnd')}
+              />
+            </div>
+            <div className="action">
+              <Button 
+                appearance = "primary" 
+                type = "submit" 
+                name = "submit" 
+                value = "submit"
+                isLoading = {false}
+                loadingText = {null}
+                isLink = {false}
+                isDisabled = {false}
+                isUnclickable = {false}
+                containsIcon = {false}
+                size = 'medium'
+                onClick = {undefined}
+              >
+                {i18n.t('Save')}
+              </Button>
+            </div>
+          </Destination_main>
+        </Form>
+      </Formik>
   )
 }
 

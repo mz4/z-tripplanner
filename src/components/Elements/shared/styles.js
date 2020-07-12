@@ -42,7 +42,9 @@ export const color = {
 
   // Alert
   alert: '#f5ed07',
-  error: '#c90a2a'
+  error: '#c90a2a',
+
+  logout: '#AD001D'
 };
 
 export const spacing = {

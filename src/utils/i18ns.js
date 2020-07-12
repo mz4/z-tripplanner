@@ -24,6 +24,9 @@ i18n
     resources: {
       en: {
         translations: {
+          "Max15": "Must be 15 characters max",
+          "Required": "Required",
+          "changeTheme": "Toggle Theme",
           "Title": "make your trip",
           "Name": "Name",
           "DateStart": "Date Start",
@@ -39,6 +42,9 @@ i18n
       },
       it: {
         translations: {
+          "Max15": "Massimo 15 caratteri",
+          "Required": "Richiesto",
+          "changeTheme": "Cambia Tema",
           "Title": "prepara il tuo viaggio",
           "Name": "Nome",
           "DateStart": "Data inizio",

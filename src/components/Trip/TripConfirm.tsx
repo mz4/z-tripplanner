@@ -14,7 +14,6 @@ const TripConfirm = props => {
   }
 
   const { id, isConfirmed } = props;
-  console.log(isConfirmed)
   return (
     <div className="checkboxes">
       <label>

@@ -139,6 +139,9 @@ const App: React.FC<MyProps> = (props) => {
 
   useEffect(() => {
     getData()
+  }, [])
+
+  useEffect(() => {
 
     const onCreate = (API.graphql(graphqlOperation(onCreateTrip)) as Observable<object>)
     .subscribe({
@@ -155,7 +158,7 @@ const App: React.FC<MyProps> = (props) => {
       next: (tripData: tripDataUpdate) => {
         const updatedTrip: any = tripData.value.data.onUpdateTrip
         const updatedTrips: any = data.map((d: any) => d.id === updatedTrip.id ? updatedTrip : d)
-        setData(data)
+        setData(updatedTrips)
       }
     })
 
@@ -163,12 +166,7 @@ const App: React.FC<MyProps> = (props) => {
     .subscribe({
       next: (tripData: tripDataDelete) => {
         const updatedTrip: any = tripData.value.data.onDeleteTrip
-        const updatedTrips: any = data.map(
-          (d: any) => {
-            if (d.id !== updateTrip) {
-              return d
-            }
-          })
+        const updatedTrips: any = data.filter((d: any) => d.id != updatedTrip.id)
         setData(updatedTrips)
       }
     })

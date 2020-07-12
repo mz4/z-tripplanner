@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 
 // import { Icon } from './Icon/Icon';
-import { color, typography } from '../shared/styles';
+import { color } from '../shared/styles';
 
 const linkStyles = css`
   display: inline-block;
@@ -105,26 +105,14 @@ const LinkA = styled.a`
   ${linkStyles};
 `;
 
-const applyStyle = LinkWrapper => {
-  return (
-    LinkWrapper &&
-    styled(({ containsIcon, inverse, nochrome, secondary, tertiary, ...linkWrapperRest }) => (
-      <LinkWrapper {...linkWrapperRest} />
-    ))`
-      ${linkStyles};
-    `
-  );
-};
-
 /**
  * Links can contains text and/or icons. Be careful using only icons, you must provide a text alternative via aria-label for accessibility.
  */
-export function Link({ isButton, withArrow, LinkWrapper, children, ...rest }) {
+export function Link({ isButton, LinkWrapper, children, ...rest }) {
   const content = (
     <Fragment>
-      <LinkInner withArrow={withArrow}>
+      <LinkInner>
         {children}
-        {withArrow}
       </LinkInner>
     </Fragment>
   );
@@ -137,7 +125,6 @@ export function Link({ isButton, withArrow, LinkWrapper, children, ...rest }) {
 Link.propTypes = {
   isButton: PropTypes.bool,
   children: PropTypes.node,
-  withArrow: PropTypes.bool,
   containsIcon: PropTypes.bool,
   LinkWrapper: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   inverse: PropTypes.bool,
@@ -149,7 +136,6 @@ Link.propTypes = {
 Link.defaultProps = {
   isButton: false,
   children: null,
-  withArrow: false,
   containsIcon: false,
   LinkWrapper: undefined,
   inverse: false,

@@ -14,6 +14,12 @@ export const Trip_main = styled.div`
   border: 1px solid ${props => props.theme.color.appborder};
   background-color: ${props => props.theme.color.componentbackground};
   margin-bottom: 1rem;
+
+  :hover {
+    background-color: ${props => props.theme.color.tripHover};
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: $bp-medium) {
     flex-direction: column;
   }

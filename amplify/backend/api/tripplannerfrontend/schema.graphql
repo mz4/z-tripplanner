@@ -6,7 +6,7 @@ type Trip @model {
   isConfirmed: Boolean!
   isEditing: Boolean!
 	createdAt: String
-	activities: [Activity] @connection(name: "PostActivities") #relationship
+	activities: [Activity] @connection(name: "PostActivities")
 }
 
 type Activity @model {

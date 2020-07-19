@@ -66,13 +66,11 @@ const store = configureStore(initialState);
 
 render(
   <Provider store={store}>
-    <BrowserRouter>
-        <I18nextProvider i18n={i18n}>
-          <ThemeProviderContext>
-            <AppRouter />
-          </ThemeProviderContext>
-        </I18nextProvider>
-    </BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProviderContext>
+        <AppRouter />
+      </ThemeProviderContext>
+    </I18nextProvider>
   </Provider>,
   document.getElementById("app")
 );

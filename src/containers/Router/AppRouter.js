@@ -1,8 +1,13 @@
 import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { 
+  HashRouter as Router,
+  Route, 
+  Switch
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import App from '../App/App';
+import TripView from '../TripView/TripView';
 import Login from '../../components/Login/Login';
 import Cookies from 'universal-cookie';
 
@@ -18,17 +23,15 @@ const AppRouter = (props) => {
   let { auth, token } = props;
   token = cookies.get('token');
   auth = cookies.get('auth');
-  console.log('--ROUTES-----');
-  console.log(auth);
   return (
-    <div>
-      {
+    <Router>
+      <div>
         <Switch>
-          <PrivateRoute exact path="/" component={App} isAuthenticated={auth} token={token} />
-          <PrivateRoute path="/*" component={App} isAuthenticated={auth} token={token} />
+          <PrivateRoute exact path={["/", "/app"]} component={App} isAuthenticated={auth} token={token} />
+          <PrivateRoute path="/a" component={TripView} isAuthenticated={auth} token={token} />
         </Switch>
-      }
-    </div>
+      </div>
+    </Router>
   );
 };
 
@@ -45,7 +48,8 @@ const PrivateRoute = ({ component: Component, isAuthenticated, token, ...rest })
         ? (
         <Component 
           token = {token}
-          {...props} />
+          {...props} 
+        />
       ) : (
         <Login />
       ))
@@ -77,4 +81,5 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
   };
 };
-export default withRouter(connect(mapStateToProps)(AppRouter));
+
+export default connect(mapStateToProps)(AppRouter);

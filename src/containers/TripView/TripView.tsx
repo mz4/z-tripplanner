@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom'
 import { Loader } from '../../components/Elements/Loader/Loader'
 import PropTypes from 'prop-types'
 import TripName from '../../components/Trip/TripName'
-import { App_main, App_inner } from '../App/App.style'
+import ActivityForm from '../../components/Activity/ActivityForm'
+import { Trip_main, Trip_inner } from './TripView.style'
 
-import { Trip_main, Col_md_10 } from '../../components/Trip/Trip.style'
+import { Col_md_10 } from '../../components/Trip/Trip.style'
 
 const Trip = (props) => {
   const { id } = useParams();
@@ -19,8 +20,8 @@ const Trip = (props) => {
 
   return (
     <React.Fragment>
-      <App_main>
-        <App_inner>
+      <Trip_main>
+        <Trip_inner>
           {isLoaded === false ? 
           <Loader 
             size='100' 
@@ -28,11 +29,13 @@ const Trip = (props) => {
             sizeUnit = 'px' 
           /> :
           <> 
-            <h4>ID: {id}</h4>
+            <ActivityForm
+              tripId= 'aaaaa'
+            />
           </>
         }
-        </App_inner>
-      </App_main>
+        </Trip_inner>
+      </Trip_main>
     </React.Fragment>
   )
 }

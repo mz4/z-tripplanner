@@ -6,7 +6,8 @@ import i18n from '../../utils/i18ns'
 
 const TripDelete = props => {
 
-  const handleDelete = async Id => {
+  const handleDelete = async (e, Id) => {
+    e.stopPropagation()
     const input = {
       id: Id
     }
@@ -28,7 +29,7 @@ const TripDelete = props => {
         isUnclickable = {false}
         containsIcon = {false}
         size = ''
-        onClick = {() => handleDelete(id)}
+        onClick = {(e) => handleDelete(e, id)}
       >
         {i18n.t('Removed')}
       </Button>

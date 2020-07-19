@@ -4,15 +4,17 @@ import TripName from './TripName';
 import TripDate from './TripDate';
 import TripDelete from './TripDelete';
 import TripConfirm from './TripConfirm';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { Trip_main, Col_md_10 } from './Trip.style'
 
 const Trip = props => {
+  const myhistory = useHistory()
 
   const handleView = (Id) => {
-    console.log(Id)
+    myhistory.push('/main/' + Id)
   }
+
   return (
     <div key={props.keyid} className="row">
       <Col_md_10>

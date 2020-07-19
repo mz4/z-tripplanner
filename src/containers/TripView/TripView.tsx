@@ -1,34 +1,41 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import TripName from '../../components/Trip/TripName';
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { Loader } from '../../components/Elements/Loader/Loader'
+import PropTypes from 'prop-types'
+import TripName from '../../components/Trip/TripName'
+import { App_main, App_inner } from '../App/App.style'
 
 import { Trip_main, Col_md_10 } from '../../components/Trip/Trip.style'
 
-const Trip = props =>
-  <div key={props.keyid} className="row">
-    <Col_md_10>
-      <Trip_main>
-        <div>
-          <TripName
-            isEditing={props.isEditing}
-            handleNameEdits={e => props.setName(e.target.value, props.id)}
-            >
-            {props.name}
-          </TripName>
-        </div>
-      </Trip_main>
-    </Col_md_10>
-  </div>;
+const Trip = (props) => {
+  const { id } = useParams();
+  const [isLoaded, setIsLoaded] = useState(false);
 
-Trip.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  dateStart: PropTypes.string.isRequired,
-  dateEnd: PropTypes.string.isRequired,
-  isConfirmed: PropTypes.bool.isRequired,
-  isEditing: PropTypes.bool.isRequired,
-  key: PropTypes.any,
-  keyid: PropTypes.any,
-};
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true)
+    }, 1000)
+  })
+
+  return (
+    <React.Fragment>
+      <App_main>
+        <App_inner>
+          {isLoaded === false ? 
+          <Loader 
+            size='100' 
+            color = '#34d100' 
+            sizeUnit = 'px' 
+          /> :
+          <> 
+            <h4>ID: {id}</h4>
+          </>
+        }
+        </App_inner>
+      </App_main>
+    </React.Fragment>
+  )
+}
+
 
 export default Trip;

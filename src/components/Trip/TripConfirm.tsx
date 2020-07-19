@@ -5,7 +5,8 @@ import i18n from '../../utils/i18ns'
 
 const TripConfirm = props => {
 
-  const handleToggle = async (id, isConfirmed ) => {
+  const handleToggle = async (e, id, isConfirmed ) => {
+    e.stopPropagation();
     const input = {
       id: id,
       isConfirmed: isConfirmed
@@ -20,7 +21,7 @@ const TripConfirm = props => {
         <input
           type="checkbox"
           checked={isConfirmed}
-          onChange={() => handleToggle(id, !isConfirmed )} />
+          onChange={(e) => handleToggle(e, id, !isConfirmed )} />
         <span className="confirmed">
           {i18n.t('ConfirmedOne')}
         </span>

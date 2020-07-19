@@ -1,15 +1,16 @@
-import React from 'react';
+import React from 'react'
 import { 
   HashRouter as Router,
   Route, 
   Switch
-} from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import App from '../App/App';
-import TripView from '../TripView/TripView';
-import Login from '../../components/Login/Login';
-import Cookies from 'universal-cookie';
+} from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import App from '../App/App'
+import Navbar from '../Navbar/Navbar'
+import TripView from '../TripView/TripView'
+import Login from '../../components/Login/Login'
+import Cookies from 'universal-cookie'
 
 const cookies = new Cookies();
 /**
@@ -27,8 +28,8 @@ const AppRouter = (props) => {
     <Router>
       <div>
         <Switch>
-          <PrivateRoute exact path={["/", "/app"]} component={App} isAuthenticated={auth} token={token} />
-          <PrivateRoute path="/a" component={TripView} isAuthenticated={auth} token={token} />
+          <PrivateRoute exact path={["/", "/main"]} component={App} isAuthenticated={auth} token={token} />
+          <PrivateRoute path="/main/:id" component={TripView} isAuthenticated={auth} token={token} />
         </Switch>
       </div>
     </Router>
@@ -46,10 +47,13 @@ const PrivateRoute = ({ component: Component, isAuthenticated, token, ...rest })
     render={props =>
       (isAuthenticated
         ? (
-        <Component 
-          token = {token}
-          {...props} 
-        />
+          <>
+            <Navbar/>
+            <Component 
+              token = {token}
+              {...props} 
+            />
+          </>
       ) : (
         <Login />
       ))

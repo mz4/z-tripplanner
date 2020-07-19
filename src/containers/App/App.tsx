@@ -5,7 +5,6 @@ import { compose } from 'recompose'
 import Cookies from 'universal-cookie'
 import { withTranslation } from 'react-i18next'
 import { Observable } from 'zen-observable-ts';
-import { useTheme } from "../../context/ThemeContext";
 import {
   setTripDateEndDispatcher,
   setTripDateStartDispatcher,
@@ -13,13 +12,11 @@ import {
   tripsListDispatcher
 } from '../../actions/tripsActions'
 import { logoutAuth } from '../../actions/authActions'
-import Header from '../../components/Header/Header'
 import Counter from '../../components/Counter/Counter'
 import TripList from '../../components/Trips/TripList'
 import TripForm from '../../components/Trip/TripForm'
 import { Loader } from '../../components/Elements/Loader/Loader'
 import { App_main, App_inner } from './App.style'
-
 import { listTrips } from '../../graphql/queries'
 import { 
   onCreateTrip, 
@@ -29,10 +26,6 @@ import {
 import { API, graphqlOperation } from 'aws-amplify'
 
 import '../../css/main.scss';
-import { getDataFromTree } from 'react-apollo'
-import { updateTrip } from '../../graphql/mutations'
-
-const cookies = new Cookies();
 
 export interface Trips {
   id: string,
@@ -105,7 +98,6 @@ interface MyProps {
 };
 
 const App: React.FC<MyProps> = (props) => {
-  const themeToggle = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
   const [values, setValues] = useState(
@@ -179,20 +171,6 @@ const App: React.FC<MyProps> = (props) => {
 
   })
 
-  const Logout = () => {
-    cookies.remove('token')
-    cookies.remove('auth')
-    props.logoutAuth(false, '', '');
-  }
-
-  const setLanguage = (language: string) => {
-    setValues({
-      ...values,
-      language: language
-    });
-    props.i18n.changeLanguage(language);
-  }
-
   const setConfirmed = (status) => {
     setValues({
       ...values,
@@ -217,15 +195,14 @@ const App: React.FC<MyProps> = (props) => {
   const numberUnconfirmed = totalTrips - numberConfirmed
   return (
     <React.Fragment>
-      <Header
-        setLanguage = {(language) => setLanguage(language)}
-        themeToggle={() => themeToggle.toggle()}
-        Logout={Logout}
-      />
       <App_main>
         <App_inner>
           {isLoaded === false ? 
-          <Loader size='100' color = '#34d100' sizeUnit = 'px' /> :
+          <Loader 
+            size='100' 
+            color = '#34d100' 
+            sizeUnit = 'px' 
+          /> :
           <> 
             <TripForm
               name={name}

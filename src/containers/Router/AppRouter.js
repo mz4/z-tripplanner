@@ -1,10 +1,16 @@
-import React from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import App from '../App/App';
-import Login from '../../components/Login/Login';
-import Cookies from 'universal-cookie';
+import React from 'react'
+import { 
+  HashRouter as Router,
+  Route, 
+  Switch
+} from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import App from '../App/App'
+import Navbar from '../Navbar/Navbar'
+import TripView from '../TripView/TripView'
+import Login from '../../components/Login/Login'
+import Cookies from 'universal-cookie'
 
 const cookies = new Cookies();
 /**
@@ -18,17 +24,15 @@ const AppRouter = (props) => {
   let { auth, token } = props;
   token = cookies.get('token');
   auth = cookies.get('auth');
-  console.log('--ROUTES-----');
-  console.log(auth);
   return (
-    <div>
-      {
+    <Router>
+      <div>
         <Switch>
-          <PrivateRoute exact path="/" component={App} isAuthenticated={auth} token={token} />
-          <PrivateRoute path="/*" component={App} isAuthenticated={auth} token={token} />
+          <PrivateRoute exact path={["/", "/main"]} component={App} isAuthenticated={auth} token={token} />
+          <PrivateRoute path="/main/:id" component={TripView} isAuthenticated={auth} token={token} />
         </Switch>
-      }
-    </div>
+      </div>
+    </Router>
   );
 };
 
@@ -43,9 +47,13 @@ const PrivateRoute = ({ component: Component, isAuthenticated, token, ...rest })
     render={props =>
       (isAuthenticated
         ? (
-        <Component 
-          token = {token}
-          {...props} />
+          <>
+            <Navbar/>
+            <Component 
+              token = {token}
+              {...props} 
+            />
+          </>
       ) : (
         <Login />
       ))
@@ -77,4 +85,5 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
   };
 };
-export default withRouter(connect(mapStateToProps)(AppRouter));
+
+export default connect(mapStateToProps)(AppRouter);

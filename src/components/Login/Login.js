@@ -5,6 +5,7 @@ import { setAuth } from '../../actions/authActions'
 import LoginForm from './LoginForm'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
+import { Auth } from 'aws-amplify'
 
 const cookies = new Cookies()
 
@@ -13,6 +14,17 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const dispatch = useDispatch();
 
+  async function submitter(username, password) {
+    try {
+      const user = await Auth.signIn(username, password)
+      console.log('DISPATCH!!!!')
+      cookies.set('token', 'CX123456', { path: '/' })
+      cookies.set('auth', true, { path: '/' })
+      dispatch(setAuth(true, 'CX123456', ''))
+    } catch (error) {
+      console.log('error signing in', error);
+    }
+  }
 
   const submitHandler = e => {
     e.preventDefault()
@@ -22,12 +34,14 @@ const Login = () => {
     console.log('login------')
     console.log(username)
     console.log(password)
-    axios.post(`http://localhost:3030/signin`, body)
-      .then(res => {
-        cookies.set('token', res.data.token, { path: '/' })
-        cookies.set('auth', true, { path: '/' })
-        dispatch(setAuth(true, res.data.token, ''))
-      })
+
+    submitter(username, password);
+    // axios.post(`http://localhost:3030/signin`, body)
+    //   .then(res => {
+    //     cookies.set('token', res.data.token, { path: '/' })
+    //     cookies.set('auth', true, { path: '/' })
+    //     dispatch(setAuth(true, res.data.token, ''))
+    //   })
   }
 
   const handleUserName = e => {

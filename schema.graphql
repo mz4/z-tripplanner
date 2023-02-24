@@ -1,0 +1,20 @@
+type Trip @model {
+	id: ID!
+	name: String!
+	dateStart: String!
+	dateEnd: String!
+  isConfirmed: Boolean!
+  isEditing: Boolean!
+	createdAt: String
+	activities: [Activity] @connection(name: "PostActivities") #relationship
+}
+
+type Activity @model {
+	id: ID!
+	userId: String!
+	activityUsername: String!
+	trip: Trip @connection(name: "PostActivities")
+  content: String!
+  dateActivity: String!
+	createdAt: String!  
+}

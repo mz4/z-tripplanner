@@ -7,6 +7,7 @@ const darkTheme = {
     tertiary: '#DDDDDD',
     headerbackground: "#272c33",
     componentbackground: "#272c33",
+    tripHover: "#343A43",
     title: "#f7f7f7",
     subtitle: "#b3b3b3",
     appbackground: "#1f1f1f",

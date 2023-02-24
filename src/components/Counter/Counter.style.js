@@ -13,6 +13,9 @@ export const Counter_main = styled.div`
   margin-top: 1rem;
   border: 1px solid ${props => props.theme.color.appborder};
   background-color: ${props => props.theme.color.componentbackground};
+  :hover {
+    cursor: pointer;
+  }
   @media only screen and (max-width: $bp-medium) {
     flex-direction: column;
   }

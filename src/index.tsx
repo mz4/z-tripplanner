@@ -18,6 +18,11 @@ import i18n from "../src/utils/i18ns"
 import AppRouter from './containers/Router/AppRouter'
 export const AUTH_TOKEN = 'auth-token'
 
+import Amplify from 'aws-amplify'
+import aws_exports from './aws-exports'
+
+Amplify.configure(aws_exports)
+
 import 'normalize.css'
 
 const initialState = {
@@ -28,48 +33,44 @@ const initialState = {
 
 const store = configureStore(initialState);
 
-const httpLink = new HttpLink({
-  uri: 'http://localhost:3030/graphql',
-});
+// const httpLink = new HttpLink({
+//   uri: 'http://localhost:3030/graphql',
+// });
 
-const token = localStorage.getItem(AUTH_TOKEN);
-const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:3030/subscriptions',
-  options: {
-    reconnect: true,
-    connectionParams: {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-   }    
-  },  
-});
+// const token = localStorage.getItem(AUTH_TOKEN);
+// const wsLink = new WebSocketLink({
+//   uri: 'ws://localhost:3030/subscriptions',
+//   options: {
+//     reconnect: true,
+//     connectionParams: {
+//       headers: {
+//         Authorization: `Bearer ${token}`
+//       }
+//    }    
+//   },  
+// });
 
-const link = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
-  },
-  wsLink,
-  httpLink
-);
+// const link = split(
+//   ({ query }) => {
+//     const definition = getMainDefinition(query);
+//     return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+//   },
+//   wsLink,
+//   httpLink
+// );
 
-const client = new ApolloClient({
-  link,
-  cache: new InMemoryCache(),
-});
+// const client = new ApolloClient({
+//   link,
+//   cache: new InMemoryCache(),
+// });
 
 render(
   <Provider store={store}>
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <I18nextProvider i18n={i18n}>
-          <ThemeProviderContext>
-            <AppRouter />
-          </ThemeProviderContext>
-        </I18nextProvider>
-      </ApolloProvider>
-    </BrowserRouter>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProviderContext>
+        <AppRouter />
+      </ThemeProviderContext>
+    </I18nextProvider>
   </Provider>,
   document.getElementById("app")
 );

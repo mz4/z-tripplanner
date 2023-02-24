@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
-import {
-  Query
-} from 'react-apollo'
+import React, { useState, useEffect } from 'react'
 import { hot } from 'react-hot-loader'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import Cookies from 'universal-cookie'
 import { withTranslation } from 'react-i18next'
-import { useTheme } from "../../context/ThemeContext";
+import { Observable } from 'zen-observable-ts';
 import {
   setTripDateEndDispatcher,
   setTripDateStartDispatcher,
@@ -15,18 +12,20 @@ import {
   tripsListDispatcher
 } from '../../actions/tripsActions'
 import { logoutAuth } from '../../actions/authActions'
-import Header from '../../components/Header/Header'
 import Counter from '../../components/Counter/Counter'
 import TripList from '../../components/Trips/TripList'
 import TripForm from '../../components/Trip/TripForm'
 import { Loader } from '../../components/Elements/Loader/Loader'
 import { App_main, App_inner } from './App.style'
-import { GET_TRIPS, NEW_TRIPS_SUBSCRIPTION, DELETE_TRIP_SUBSCRIPTION, TOGGLE_TRIP_SUBSCRIPTION } from '../../queries/Queries'
-
+import { listTrips } from '../../graphql/queries'
+import { 
+  onCreateTrip, 
+  onUpdateTrip,
+  onDeleteTrip
+} from '../../graphql/subscriptions'
+import { API, graphqlOperation } from 'aws-amplify'
 
 import '../../css/main.scss';
-
-const cookies = new Cookies();
 
 export interface Trips {
   id: string,
@@ -38,8 +37,42 @@ export interface Trips {
   isEditing: boolean,
 }
 
+export interface Trip {
+  id: string,
+  key: string,
+  name: string,
+  dateStart: string,
+  dateEnd: string,
+  isConfirmed: boolean,
+  isEditing: boolean
+}
+
 interface Data {
   trips: Trips[];
+}
+
+interface tripData {
+  value: {
+    data: {
+      onCreateTrip: Trip
+    }
+  }
+}
+
+interface tripDataUpdate {
+  value: {
+    data: {
+      onUpdateTrip: Trip
+    }
+  }
+}
+
+interface tripDataDelete {
+  value: {
+    data: {
+      onDeleteTrip: Trip
+    }
+  }
 }
 
 interface MyProps {
@@ -65,8 +98,9 @@ interface MyProps {
 };
 
 const App: React.FC<MyProps> = (props) => {
-  const themeToggle = useTheme();
-  const [ values, setValues ] = useState(
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [data, setData] = useState([]);
+  const [values, setValues] = useState(
   {
     filter: {
       confirmed: ''
@@ -89,21 +123,53 @@ const App: React.FC<MyProps> = (props) => {
     language: 'en'
   });
 
-  const Logout = () => {
-    cookies.remove('token')
-    cookies.remove('auth')
-    props.logoutAuth(false, '', '');
+  const getData = async () => {
+    const result: any = await API.graphql(graphqlOperation(listTrips))
+    setData(result.data.listTrips.items)
+    setIsLoaded(true)
   }
 
-  const setLanguage = (language: string) => {
-    console.log(language);
-    setValues({
-      ...values,
-      language: language
-    });
-    console.log("state value is", language);
-    props.i18n.changeLanguage(language);
-  }
+  useEffect(() => {
+    getData()
+  }, [])
+
+  useEffect(() => {
+
+    const onCreate = (API.graphql(graphqlOperation(onCreateTrip)) as Observable<object>)
+    .subscribe({
+      next: (tripData: tripData) => {
+        const newTrip = tripData.value.data.onCreateTrip
+        const prevTrips = data.filter( (trip: Trips) => trip.id !== newTrip.id)
+        const updatedTrips: any = [newTrip, ...prevTrips]
+        setData(updatedTrips)
+      }
+    })
+
+    const onUpdateSubscription = (API.graphql(graphqlOperation(onUpdateTrip)) as Observable<object>)
+    .subscribe({
+      next: (tripData: tripDataUpdate) => {
+        const updatedTrip: any = tripData.value.data.onUpdateTrip
+        const updatedTrips: any = data.map((d: any) => d.id === updatedTrip.id ? updatedTrip : d)
+        setData(updatedTrips)
+      }
+    })
+
+    const onDeleteSubscription = (API.graphql(graphqlOperation(onDeleteTrip)) as Observable<object>)
+    .subscribe({
+      next: (tripData: tripDataDelete) => {
+        const updatedTrip: any = tripData.value.data.onDeleteTrip
+        const updatedTrips: any = data.filter((d: any) => d.id != updatedTrip.id)
+        setData(updatedTrips)
+      }
+    })
+
+    return () => {
+      onUpdateSubscription.unsubscribe()
+      onCreate.unsubscribe()
+      onDeleteSubscription.unsubscribe()
+    };
+
+  })
 
   const setConfirmed = (status) => {
     setValues({
@@ -123,112 +189,44 @@ const App: React.FC<MyProps> = (props) => {
       0
     );
 
-  const _subscribeToNewTrips = subscribeToMore => {
-    subscribeToMore({
-      document: NEW_TRIPS_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const newTrip = subscriptionData.data.newTrip
-
-        const exists = prev.trips.find(trip => trip.id === newTrip.id);
-        if (exists) return prev;
-
-        return Object.assign({}, prev, {
-          trips: [newTrip, ...prev.trips],
-        })
-      }
-    })
-  }
-
-  const _subscribeToDeletedTrips = subscribeToMore => {
-    subscribeToMore({
-      document: DELETE_TRIP_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const deleteTrip = subscriptionData.data.deleteTrip
-        const prevtrips = prev.trips;
-        const newtrips = prevtrips.filter(function( obj ) {
-          return obj.id !== deleteTrip.id
-        })
-        const alltrips = {
-          trips: newtrips
-        };
-        return alltrips;
-      }
-    })
-  }
-
-  const _subscribeToToggledTrips = subscribeToMore => {
-    subscribeToMore({
-      document: TOGGLE_TRIP_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const toggleTrip = subscriptionData.data
-        const prevtrips = prev.trips;
-        return
-      }
-    })
-  }
-
   const { name, dateStart, dateEnd } = values.form
+  const totalTrips = getTotalTrips(data)
+  const numberConfirmed = getConfirmedTrips(data)
+  const numberUnconfirmed = totalTrips - numberConfirmed
   return (
     <React.Fragment>
-      <Query<Data> query={GET_TRIPS}>
-        {({ loading, error, data, subscribeToMore }) => {
+      <App_main>
+        <App_inner>
+          {isLoaded === false ? 
+          <Loader 
+            size='100' 
+            color = '#34d100' 
+            sizeUnit = 'px' 
+          /> :
+          <> 
+            <TripForm
+              name={name}
+              dateStart={dateStart}
+              dateEnd={dateEnd}
+            />
 
-          if (loading) return <Loader size='100' color = '#34d100' sizeUnit = 'px' />
+            <Counter
+              totalTrips={totalTrips}
+              numberConfirmed={numberConfirmed}
+              numberUnconfirmed={numberUnconfirmed}
+              setConfirmed={(status) => setConfirmed(status)}
+              confirmed={values.filter.confirmed}
+            />
 
-          if (error) return <div>Error</div>
-
-          _subscribeToNewTrips(subscribeToMore)
-          _subscribeToDeletedTrips(subscribeToMore)
-          _subscribeToToggledTrips(subscribeToMore)
-
-          const trips = data?.trips || [];
-          const totalTrips = getTotalTrips(trips);
-          const numberConfirmed = getConfirmedTrips(trips);
-          const numberUnconfirmed = totalTrips - numberConfirmed;
-
-          return (
-            <React.Fragment>
-
-              <Header
-                setLanguage = {(language) => setLanguage(language)}
-                themeToggle={() => themeToggle.toggle()}
-                Logout={Logout}
-              />
-
-
-              <App_main>
-                <App_inner>
-
-                  <TripForm
-                    name={name}
-                    dateStart={dateStart}
-                    dateEnd={dateEnd}
-                  />
-
-                  <Counter
-                    totalTrips={totalTrips}
-                    numberConfirmed={numberConfirmed}
-                    numberUnconfirmed={numberUnconfirmed}
-                    setConfirmed={(status) => setConfirmed(status)}
-                    confirmed={values.filter.confirmed}
-                  />
-
-                  <TripList
-                    trips={trips}
-                    name={values.form.name}
-                    confirmed={values.filter.confirmed}
-                  />
-
-                </App_inner>
-              </App_main>
-            </React.Fragment>
-          );
-
-        }}
-      </Query>
+            <TripList
+              trips={data}
+              name={values.form.name}
+              confirmed={values.filter.confirmed}
+            />
+          </>
+        }
+        </App_inner>
+      </App_main>
     </React.Fragment>
   )
 }

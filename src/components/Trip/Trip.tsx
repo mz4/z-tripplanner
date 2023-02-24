@@ -4,45 +4,59 @@ import TripName from './TripName';
 import TripDate from './TripDate';
 import TripDelete from './TripDelete';
 import TripConfirm from './TripConfirm';
+import { useHistory } from "react-router-dom";
 
 import { Trip_main, Col_md_10 } from './Trip.style'
 
-const Trip = props =>
-  <div key={props.keyid} className="row">
-    <Col_md_10>
-      <Trip_main>
-        <div>
-          <TripName
-            isEditing={props.isEditing}
-            handleNameEdits={e => props.setName(e.target.value, props.id)}
-            >
-            {props.name}
-          </TripName>
-        </div>
-        <div>
-          <TripDate
-            isEditing={props.isEditing}
-            handleDateEdits={e => props.setDateStart(e.target.value, props.id)}>
-            {props.dateStart}
-          </TripDate>
-        </div>
-        <div>
-          <TripDate
-            isEditing={props.isEditing}
-            handleDateEdits={e => props.setDateEnd(e.target.value, props.id)}>
-            {props.dateEnd}
-          </TripDate>
-        </div>
-        <TripConfirm
-          id={props.id}
-          isConfirmed={props.isConfirmed}
-        />
-        <TripDelete 
-          id={props.id}
-        />
-      </Trip_main>
-    </Col_md_10>
-  </div>;
+const Trip = props => {
+  const myhistory = useHistory()
+
+  const handleView = (Id) => {
+    myhistory.push('/main/' + Id)
+  }
+
+  return (
+    <div key={props.keyid} className="row">
+      <Col_md_10>
+        <Trip_main
+          onClick = {() => handleView(props.id)}
+        >
+          <div>
+            <TripName
+              isEditing={props.isEditing}
+              handleNameEdits={e => props.setName(e.target.value, props.id)}
+              >
+              {props.name}
+            </TripName>
+          </div>
+          <div>
+            <TripDate
+              isEditing={props.isEditing}
+              handleDateEdits={e => props.setDateStart(e.target.value, props.id)}>
+              {props.dateStart}
+            </TripDate>
+          </div>
+          <div>
+            <TripDate
+              isEditing={props.isEditing}
+              handleDateEdits={e => props.setDateEnd(e.target.value, props.id)}>
+              {props.dateEnd}
+            </TripDate>
+          </div>
+          <TripConfirm
+            id={props.id}
+            isConfirmed={props.isConfirmed}
+          />
+          <TripDelete 
+            id={props.id}
+          />
+        </Trip_main>
+      </Col_md_10>
+    </div>
+  )
+}
+
+
 
 Trip.propTypes = {
   id: PropTypes.string.isRequired,

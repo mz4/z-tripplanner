@@ -1,0 +1,28 @@
+{
+    "api": {
+        "tripplannerfrontend": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "",
+                            "apiKeyExpirationDays": "300"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "auth": {
+        "tripplannerfrontenddbacc8ca": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false
+        }
+    }
+}
